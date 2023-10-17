@@ -24,6 +24,7 @@
 
     <modules>
         <module>calculator-server</module>
+        <module>management-framework</module>
     </modules>
 
 </project>
