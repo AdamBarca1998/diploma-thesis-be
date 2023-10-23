@@ -3,9 +3,9 @@ package sk.adambarca.calculatorserver;
 import sk.adambarca.managementframework.annotation.MResource;
 
 @MResource
-public class HelloMResource {
+final public class CalculatorMResource {
 
-    String getString() {
+    String hello() {
         return "Hello Calculator!";
     }
 }
