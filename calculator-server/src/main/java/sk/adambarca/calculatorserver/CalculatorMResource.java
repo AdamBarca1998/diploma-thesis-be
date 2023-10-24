@@ -2,10 +2,14 @@ package sk.adambarca.calculatorserver;
 
 import sk.adambarca.managementframework.annotation.MResource;
 
-@MResource
-final public class CalculatorMResource {
+import java.util.Arrays;
 
-    String hello() {
-        return "Hello Calculator!";
+@MResource
+public final class CalculatorMResource {
+
+    public Double result = null;
+
+    public double addAll(double[] numbers) {
+        return Arrays.stream(numbers).sum();
     }
 }
