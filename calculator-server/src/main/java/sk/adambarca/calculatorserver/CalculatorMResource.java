@@ -12,4 +12,8 @@ public final class CalculatorMResource {
     public double sumAll(double[] numbers) {
         return Arrays.stream(numbers).sum();
     }
+
+    public double sumAll(int[] numbers) {
+        return Arrays.stream(numbers).sum();
+    }
 }
