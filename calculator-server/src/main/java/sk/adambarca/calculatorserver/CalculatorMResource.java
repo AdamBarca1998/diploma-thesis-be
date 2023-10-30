@@ -7,7 +7,22 @@ public final class CalculatorMResource {
 
     public Double result = 0.1;
 
-    public double sumAll(int a, double b, long c) {
-        return a + b + c;
+    public double sumAllPrimitieves(
+            byte _byte,
+            short _short,
+            int _int,
+            byte _long,
+            float _float,
+            double _double,
+            char _char,
+            boolean _boolean
+    ) {
+        final var result = _byte + _short + _int + _long + _float + _double + _char;
+
+        if (_boolean) {
+            return result + 1;
+        }
+
+        return result;
     }
 }
