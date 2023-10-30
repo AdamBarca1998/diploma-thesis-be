@@ -12,7 +12,7 @@ public class CalculatorMResource {
     public double sumAll(
         int a, // allowed type
         double b, // allowed type
-        SuperFileUtils c // not allowed type 
+        SuperFileTypeXYZ c // not allowed type
     ) {
         return a + b + c;
     }
