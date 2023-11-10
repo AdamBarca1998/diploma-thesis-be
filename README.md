@@ -1,7 +1,10 @@
 # Diploma Thesis
 
-## Data types
-Data types that the framework allows used in methods like parameter types
+## Property
+Properties are arguments in methods, and fields in classes. Return type in the method **is not property**.
+
+### Data types
+Data types that the framework allows used in arguments or fields.
 
 Example:
 
