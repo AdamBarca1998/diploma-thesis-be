@@ -7,11 +7,11 @@ public final class CalculatorMResource {
 
     public Double result = 0.1;
 
-    public double sumAllPrimitieves(
+    public double sumAllPrimitives(
             byte _byte,
             short _short,
             int _int,
-            byte _long,
+            long _long,
             float _float,
             double _double,
             char _char,
