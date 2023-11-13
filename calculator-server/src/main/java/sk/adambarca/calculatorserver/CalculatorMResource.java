@@ -2,27 +2,16 @@ package sk.adambarca.calculatorserver;
 
 import sk.adambarca.managementframework.resource.MResource;
 
+import java.util.Optional;
+
 @MResource
 public final class CalculatorMResource {
 
-    public Double result = 0.1;
-
-    public double sumAllPrimitives(
-            byte _byte,
-            short _short,
-            int _int,
-            long _long,
-            float _float,
-            double _double,
-            char _char,
-            boolean _boolean
+    public double sumOptionals(
+            Optional<Double> a,
+            Optional<Integer> b,
+            Optional<Float> c
     ) {
-        final var result = _byte + _short + _int + _long + _float + _double + _char;
-
-        if (_boolean) {
-            return result + 1;
-        }
-
-        return result;
+        return a.orElse(0.0) + b.orElse(0) + c.orElse(0.0f);
     }
 }

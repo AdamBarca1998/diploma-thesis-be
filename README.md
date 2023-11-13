@@ -33,7 +33,7 @@ public class CalculatorMResource {
 * char
 * boolean
 
-### supports primitive wrapper class:
+### supports primitive wrapper classes:
 * Byte
 * Short
 * Integer
@@ -42,5 +42,8 @@ public class CalculatorMResource {
 * Double
 * Character
 * Boolean
+
+### support basic classes:
+* String
 
 
