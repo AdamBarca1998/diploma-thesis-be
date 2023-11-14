@@ -4,18 +4,17 @@
 Properties are arguments in methods, and fields in classes. Return type in the method **is not property**.
 
 ### Data types
-Data types that the framework allows used in arguments or fields.
+Data types that the framework allows used in properties.
 
 Example:
-
 ```java
 @MResource
 public class CalculatorMResource {
 
     public double sumAll(
-        int a, // allowed type
-        double b, // allowed type
-        SuperFileTypeXYZ c // not allowed type
+            int a, // allowed type
+            double b, // allowed type
+            SuperFileTypeXYZ c // not allowed type
     ) {
         return a + b + c;
     }
@@ -46,4 +45,32 @@ public class CalculatorMResource {
 ### support basic classes:
 * String
 
+### optional
+If you want to create optional arguments, you have to wrap the argument in the **class Optional**.
+Optional works **only in arguments**.
 
+Example:
+```java
+import java.util.Optional;
+
+@MResource
+public class CalculatorMResource {
+
+    public double sumAll(
+            Optional<Double> optionalVariable, 
+            Double notOptiovalVariable
+    ) {
+        return optionalVariable.orElse(0.0) + notOptiovalVariable;
+    }
+}
+```
+
+Errors:
+
+NotCorrectNumberOfProperties
+* Status Code: 400
+* Message: Method '\{method.getName()}' has \{requiredCount} required properties, not \{params.size()}
+
+NotOptionalProperty
+* Status Code: 400
+* Message: Property '\{parameter.getName()}' can't have null value!
