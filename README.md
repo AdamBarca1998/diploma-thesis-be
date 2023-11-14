@@ -53,8 +53,6 @@ If you want to create optional arguments, you have to wrap the argument in the *
 
 Example:
 ```java
-import java.util.Optional;
-
 @MResource
 public class CalculatorMResource {
 
