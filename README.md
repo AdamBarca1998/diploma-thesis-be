@@ -1,4 +1,4 @@
-# Diploma Thesis
+# Management Framework
 
 ## Property
 Properties are arguments in methods, and fields in classes. Return type in the method **is not property**.
@@ -45,9 +45,11 @@ public class CalculatorMResource {
 ### support basic classes:
 * String
 
-### optional
+### Specific for arguments
+Things that are specific only to arguments.
+
+#### optional
 If you want to create optional arguments, you have to wrap the argument in the **class Optional**.
-Optional works **only in arguments**.
 
 Example:
 ```java
@@ -66,11 +68,10 @@ public class CalculatorMResource {
 ```
 
 Errors:
+* NotCorrectNumberOfProperties
+  * Status Code: 400
+  * Message: Method '\{method.getName()}' has \{requiredCount} required properties, not \{params.size()}
 
-NotCorrectNumberOfProperties
-* Status Code: 400
-* Message: Method '\{method.getName()}' has \{requiredCount} required properties, not \{params.size()}
-
-NotOptionalProperty
-* Status Code: 400
-* Message: Property '\{parameter.getName()}' can't have null value!
+* NotOptionalProperty
+    * Status Code: 400
+    * Message: Property '\{parameter.getName()}' can't have null value!
