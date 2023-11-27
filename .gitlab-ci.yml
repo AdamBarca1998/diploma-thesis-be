@@ -20,10 +20,10 @@ test:
   stage: test
   script:
     - echo "We are testing your project, $GITLAB_USER_LOGIN"
-    - mvn test
+    - mvn test -f management-framework -N
 
 build:
     stage: build
     script:
      - echo "We are building your project, $GITLAB_USER_LOGIN"
-     - mvn clean install
+     - mvn clean install -f management-framework -N
