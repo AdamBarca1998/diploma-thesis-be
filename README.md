@@ -1,7 +1,7 @@
 # Management Framework
 
 ## Property
-Properties are arguments in methods, and fields in classes. Return type in the method **is not property**.
+Properties are arguments in methods. Return type in the method **is not property**.
 
 ### Data types
 Data types that the framework allows used in properties.
@@ -45,10 +45,12 @@ public class CalculatorMResource {
 ### support basic classes:
 * String
 
-### Specific for arguments
-Things that are specific only to arguments.
+### data structures:
+* List
+  * every element must be split with **','** example: **numbers=1,2,3**
+  * for empty string you write only name example: **numbers=**
 
-#### optional
+### optional
 If you want to create optional arguments, you have to wrap the argument in the **class Optional**.
 
 Example:
