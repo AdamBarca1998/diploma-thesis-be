@@ -12,18 +12,18 @@ variables:
 image: 'maven:latest'
 
 stages:
-  - build
   - test
+  - build
   - deploy
+
+test:
+  stage: test
+  script:
+    - echo "We are testing your project, $GITLAB_USER_LOGIN"
+    - mvn test
 
 build:
     stage: build
     script:
      - echo "We are building your project, $GITLAB_USER_LOGIN"
-     - ./management-framework/mvnw clean install $MAVEN_CLI_OPTS
-     
-test:
-    stage: test
-    script:
-     - echo "We are testing your project, $GITLAB_USER_LOGIN"
-     - ./management-framework/mvnw test $MAVEN_CLI_OPTS
+     - mvn clean install
