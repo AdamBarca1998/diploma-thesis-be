@@ -17,17 +17,13 @@ stages:
   - deploy
 
 build:
-    tags:
-     - shared-fi
     stage: build
     script:
      - echo "We are building your project, $GITLAB_USER_LOGIN"
-     - ./mvnw clean install $MAVEN_CLI_OPTS
+     - ./management-framework/mvnw clean install $MAVEN_CLI_OPTS
      
 test:
-    tags:
-     - shared-fi
     stage: test
     script:
      - echo "We are testing your project, $GITLAB_USER_LOGIN"
-     - ./mvnw test $MAVEN_CLI_OPTS
+     - ./management-framework/mvnw test $MAVEN_CLI_OPTS
