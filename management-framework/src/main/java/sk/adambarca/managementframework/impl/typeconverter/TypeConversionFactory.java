@@ -1,10 +1,9 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.lang.StringTemplate.STR;
 
 public class TypeConversionFactory {
 
@@ -35,10 +34,12 @@ public class TypeConversionFactory {
     }
 
     public void register(Class<?> type, TypeConversionStrategy<?> strategy) {
-        final var optional = STR."\{JAVA_UTIL}Optional<\{type.getTypeName()}>";
-
         conversionMap.put(type.getTypeName(), strategy);
+        conversionMap.put(Array.newInstance(type, 0).getClass().getTypeName(), new ArrayConversionStrategy(strategy, type));
+
         if (!type.isPrimitive()) {
+            final var optional = STR."\{JAVA_UTIL}Optional<\{type.getTypeName()}>";
+
             conversionMap.put(optional, new OptionalConversionStrategy(strategy));
             conversionMap.put(STR."\{JAVA_UTIL}List<\{type.getTypeName()}>", new ListConversionStrategy(strategy));
             conversionMap.put(STR."\{JAVA_UTIL}List<\{optional}>", new ListConversionStrategy(new OptionalConversionStrategy(strategy)));
