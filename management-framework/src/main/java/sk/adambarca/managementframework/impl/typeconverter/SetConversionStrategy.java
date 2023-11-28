@@ -1,26 +1,27 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
-class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
+class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
 
     private final TypeConversionStrategy<?> valuesStrategy;
 
-    public ListConversionStrategy(TypeConversionStrategy<?> strategy) {
+    public SetConversionStrategy(TypeConversionStrategy<?> strategy) {
         this.valuesStrategy = strategy;
     }
 
     @Override
-    public List<?> convert(String value) {
+    public Set<?> convert(String value) {
         if (value.isEmpty()) {
-            return List.of();
+            return Set.of();
         }
 
         String[] elements = value.split(",");
 
         return Arrays.stream(elements)
                 .map(valuesStrategy::convert)
-                .toList();
+                .collect(Collectors.toSet());
     }
 }

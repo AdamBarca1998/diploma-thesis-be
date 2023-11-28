@@ -42,6 +42,9 @@ public class TypeConversionFactory {
 
             conversionMap.put(STR."\{JAVA_UTIL}List<\{type.getTypeName()}>", new ListConversionStrategy(strategy));
             conversionMap.put(STR."\{JAVA_UTIL}List<\{optional}>", new ListConversionStrategy(new OptionalConversionStrategy(strategy)));
+
+            conversionMap.put(STR."\{JAVA_UTIL}Set<\{type.getTypeName()}>", new SetConversionStrategy(strategy));
+            conversionMap.put(STR."\{JAVA_UTIL}Set<\{optional}>", new SetConversionStrategy(new OptionalConversionStrategy(strategy)));
         }
     }
 
