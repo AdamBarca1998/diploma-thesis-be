@@ -69,9 +69,9 @@ public class CalculatorMResource {
 
 Errors:
 * NotCorrectNumberOfProperties
-  * Status Code: 400
+  * Status Code: 406
   * Message: Method '\{method.getName()}' has \{requiredCount} required properties, not \{params.size()}
 
 * NotOptionalProperty
-    * Status Code: 400
+    * Status Code: 406
     * Message: Property '\{parameter.getName()}' can't have null value!

@@ -122,7 +122,7 @@ class PropertyTests extends AbstractTests {
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            assertEquals(400, response.statusCode());
+            assertEquals(406, response.statusCode());
             assertEquals("Method 'sumAllPrimitives' has 8 required properties, not 7", response.body());
         }
 
@@ -140,45 +140,49 @@ class PropertyTests extends AbstractTests {
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            assertEquals(400, response.statusCode());
+            assertEquals(406, response.statusCode());
             assertEquals(STR."Property '\{propertyName}' can't have null value!", response.body());
         }
     }
 
     @Nested
     class DataStructuresTest {
-        @Test
-        void testListType() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("numbers", "1,null,2")
-            );
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sum"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
-                    .build();
 
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
+        @Nested
+        class ListTest {
+            @Test
+            void testListType() throws URISyntaxException, IOException, InterruptedException {
+                final Map<String, Object> params = Map.ofEntries(
+                        Map.entry("numbers", "1,null,2")
+                );
+                final var request = HttpRequest.newBuilder()
+                        .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sum"))
+                        .POST(HttpRequest.BodyPublishers.ofString(""))
+                        .build();
 
-            assertEquals(200, response.statusCode());
-            assertEquals(3, result);
-        }
+                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                final var result = Double.parseDouble(response.body());
 
-        @Test
-        void testEmptyList() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("numbers", "")
-            );
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sum"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
-                    .build();
+                assertEquals(200, response.statusCode());
+                assertEquals(3, result);
+            }
 
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
+            @Test
+            void testEmptyList() throws URISyntaxException, IOException, InterruptedException {
+                final Map<String, Object> params = Map.ofEntries(
+                        Map.entry("numbers", "")
+                );
+                final var request = HttpRequest.newBuilder()
+                        .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sum"))
+                        .POST(HttpRequest.BodyPublishers.ofString(""))
+                        .build();
 
-            assertEquals(200, response.statusCode());
-            assertEquals(0, result);
+                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                final var result = Double.parseDouble(response.body());
+
+                assertEquals(200, response.statusCode());
+                assertEquals(0, result);
+            }
         }
     }
 }

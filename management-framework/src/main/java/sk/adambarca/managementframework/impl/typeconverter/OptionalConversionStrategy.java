@@ -12,7 +12,7 @@ class OptionalConversionStrategy implements TypeConversionStrategy<Optional<?>> 
 
     @Override
     public Optional<Object> convert(String value) {
-        if (value == null) {
+        if (value == null || value.equals("null")) {
             return Optional.empty();
         }
 

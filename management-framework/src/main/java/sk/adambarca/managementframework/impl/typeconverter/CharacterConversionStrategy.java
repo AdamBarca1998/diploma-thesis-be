@@ -6,10 +6,10 @@ class CharacterConversionStrategy implements TypeConversionStrategy<Character> {
 
     @Override
     public Character convert(String value) {
-        if (value.length() != 1) {
+        if (value.length() > 1) {
             throw new IllegalArgumentException(STR."Argument \{value} must be character!");
         }
 
-        return value.charAt(0);
+        return value.isEmpty() ? '\u0000' : value.charAt(0);
     }
 }

@@ -43,7 +43,7 @@ final class ManagementController {
         try {
             return ResponseEntity.of(managementService.callFunction(classType, functionName, params));
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
     }
 }

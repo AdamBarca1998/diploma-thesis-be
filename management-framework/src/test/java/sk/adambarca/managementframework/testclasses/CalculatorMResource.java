@@ -2,6 +2,7 @@ package sk.adambarca.managementframework.testclasses;
 
 import sk.adambarca.managementframework.resource.MResource;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,5 +60,14 @@ public final class CalculatorMResource {
     public double sum(List<Optional<Integer>> numbers) {
         return numbers.stream().mapToInt(e -> e.orElse(0))
                 .sum();
+    }
+
+    public double sumArrays(int[] ints, Integer[] integers, Optional<Boolean>[] booleans) {
+        return Arrays.stream(ints).sum() +
+                Arrays.stream(integers).reduce(0, Integer::sum) +
+                Arrays.stream(booleans)
+                        .map(b -> Boolean.compare(b.orElse(false), true))
+                        .reduce(0, Integer::sum)
+                ;
     }
 }
