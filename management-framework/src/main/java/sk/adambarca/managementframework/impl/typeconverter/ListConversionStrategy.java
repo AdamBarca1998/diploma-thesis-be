@@ -13,11 +13,12 @@ class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
 
     @Override
     public List<?> convert(String value) {
-        if (value.isEmpty()) {
+        value = value.replaceAll("\\s", "");
+        if (value.equals("[]")) {
             return List.of();
         }
-
-        String[] elements = value.split(",");
+        String trimmedValue = value.substring(1, value.length() - 1);
+        String[] elements = trimmedValue.split(",");
 
         return Arrays.stream(elements)
                 .map(valuesStrategy::convert)

@@ -13,7 +13,6 @@ import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -32,7 +31,7 @@ class ResourceTests extends AbstractTests {
     @Test
     void testGetAll() throws URISyntaxException, IOException, InterruptedException {
         final var request = HttpRequest.newBuilder()
-                .uri(getUriWithParams(Map.of()))
+                .uri(getUri())
                 .GET()
                 .build();
 
@@ -46,7 +45,7 @@ class ResourceTests extends AbstractTests {
     @Test
     void testFindByType() throws URISyntaxException, IOException, InterruptedException {
         final var request = HttpRequest.newBuilder()
-                .uri(getUriWithParams(Map.of(), CalculatorMResource.class.getSimpleName()))
+                .uri(getUri(CalculatorMResource.class.getSimpleName()))
                 .GET()
                 .build();
 

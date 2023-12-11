@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import sk.adambarca.managementframework.resource.Resource;
 
@@ -38,7 +38,7 @@ final class ManagementController {
     ResponseEntity<Object> callFunction(
             @PathVariable String classType,
             @PathVariable String functionName,
-            @RequestParam Map<String,String> params
+            @RequestBody Map<String, Object> params
     ) {
         try {
             return ResponseEntity.of(managementService.callFunction(classType, functionName, params));

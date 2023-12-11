@@ -44,8 +44,9 @@ class PropertyTests extends AbstractTests {
         @Test
         void testPrimitiveTypes() throws URISyntaxException, IOException, InterruptedException {
             final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(primitiveParams, CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(primitiveParams)))
                     .build();
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -58,8 +59,9 @@ class PropertyTests extends AbstractTests {
         @Test
         void testPrimitiveWrapperTypes() throws URISyntaxException, IOException, InterruptedException {
             final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(primitiveParams, CalculatorMResource.class.getSimpleName(), "sumAllPrimitiveWrappers"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitiveWrappers"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(primitiveParams)))
                     .build();
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -81,8 +83,9 @@ class PropertyTests extends AbstractTests {
             );
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sumOptionals"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumOptionals"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -99,8 +102,9 @@ class PropertyTests extends AbstractTests {
             );
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sumOptionals"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumOptionals"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -116,8 +120,9 @@ class PropertyTests extends AbstractTests {
             params.remove("_double");
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -134,8 +139,9 @@ class PropertyTests extends AbstractTests {
             params.put("_something", 1.0);
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
+                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -153,11 +159,12 @@ class PropertyTests extends AbstractTests {
             @Test
             void testListType() throws URISyntaxException, IOException, InterruptedException {
                 final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("numbers", "1,null,2")
+                        Map.entry("numbers", "[1,null,2]")
                 );
                 final var request = HttpRequest.newBuilder()
-                        .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sum"))
-                        .POST(HttpRequest.BodyPublishers.ofString(""))
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sum"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                         .build();
 
                 final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -170,11 +177,12 @@ class PropertyTests extends AbstractTests {
             @Test
             void testEmptyList() throws URISyntaxException, IOException, InterruptedException {
                 final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("numbers", "")
+                        Map.entry("numbers", "[]")
                 );
                 final var request = HttpRequest.newBuilder()
-                        .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sum"))
-                        .POST(HttpRequest.BodyPublishers.ofString(""))
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sum"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                         .build();
 
                 final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -190,12 +198,13 @@ class PropertyTests extends AbstractTests {
             @Test
             void testSetType() throws URISyntaxException, IOException, InterruptedException {
                 final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("a", "1,null,2,2"),
-                        Map.entry("b", "1,2")
+                        Map.entry("a", "[1,null,2,2]"),
+                        Map.entry("b", "[1,2]")
                 );
                 final var request = HttpRequest.newBuilder()
-                        .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sumSets"))
-                        .POST(HttpRequest.BodyPublishers.ofString(""))
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumSets"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                         .build();
 
                 final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -208,12 +217,13 @@ class PropertyTests extends AbstractTests {
             @Test
             void testEmptySet() throws URISyntaxException, IOException, InterruptedException {
                 final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("a", ""),
-                        Map.entry("b", "")
+                        Map.entry("a", "[]"),
+                        Map.entry("b", "[]")
                 );
                 final var request = HttpRequest.newBuilder()
-                        .uri(getUriWithParams(params, CalculatorMResource.class.getSimpleName(), "sumSets"))
-                        .POST(HttpRequest.BodyPublishers.ofString(""))
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumSets"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                         .build();
 
                 final var response = client.send(request, HttpResponse.BodyHandlers.ofString());

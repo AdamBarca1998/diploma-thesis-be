@@ -31,7 +31,7 @@ public final class ManagementService {
         return annotationsScanner.findResourceByType(type);
     }
 
-    Optional<Object> callFunction(String classType, String functionName, Map<String, String> params)
+    Optional<Object> callFunction(String classType, String functionName, Map<String, Object> params)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
         final Object clazz = annotationsScanner.getClassByClassType(classType)
@@ -44,7 +44,7 @@ public final class ManagementService {
         return Optional.ofNullable(invokeMethodWithParams(clazz, method, params));
     }
 
-    private Object invokeMethodWithParams(Object clazz, Method method, Map<String, String> params) throws InvocationTargetException, IllegalAccessException {
+    private Object invokeMethodWithParams(Object clazz, Method method, Map<String, Object> params) throws InvocationTargetException, IllegalAccessException {
         final var parameters = method.getParameters();
         final var requiredCount = Arrays.stream(parameters)
                 .filter(this::isNotOptional)
@@ -59,7 +59,7 @@ public final class ManagementService {
         return method.invoke(clazz, convertParams(parameters, params).toArray());
     }
 
-    private List<Object> convertParams(Parameter[] parameters, Map<String, String> params) {
+    private List<Object> convertParams(Parameter[] parameters, Map<String, Object> params) {
         List<Object> userParameters = new ArrayList<>();
 
         Arrays.stream(parameters).forEach(parameter -> {
@@ -70,7 +70,7 @@ public final class ManagementService {
 
             final var conversionStrategy = typeConversionFactory.getStrategy(parameter.getParameterizedType());
 
-            userParameters.add(conversionStrategy.convert(value));
+            userParameters.add(conversionStrategy.convert(value == null ? null : value.toString()));
         });
 
         return userParameters;
