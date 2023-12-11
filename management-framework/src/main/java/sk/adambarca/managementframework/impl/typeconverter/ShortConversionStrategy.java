@@ -1,11 +1,13 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.lang.reflect.Type;
 
 class ShortConversionStrategy implements TypeConversionStrategy<Short> {
 
     @Override
-    public Short convert(String value, Type type) {
-        return Short.parseShort(value);
+    public Short convert(JsonNode json, Type type) {
+        return Short.parseShort(json.asText());
     }
 }

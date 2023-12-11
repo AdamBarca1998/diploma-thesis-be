@@ -1,5 +1,7 @@
 package sk.adambarca.managementframework.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import sk.adambarca.managementframework.impl.typeconverter.TypeConversionFactory;
 import sk.adambarca.managementframework.resource.Resource;
@@ -60,17 +62,18 @@ public final class ManagementService {
     }
 
     private List<Object> convertParams(Parameter[] parameters, Map<String, Object> params) {
-        List<Object> userParameters = new ArrayList<>();
+        final List<Object> userParameters = new ArrayList<>();
+        final JsonNode jsonNode = new ObjectMapper().valueToTree(params);
 
         Arrays.stream(parameters).forEach(parameter -> {
-            final var value = params.get(parameter.getName());
+            final var value = jsonNode.get(parameter.getName());
             if (value == null && isNotOptional(parameter)) {
                 throw new NotOptionalPropertyException(STR."Property '\{parameter.getName()}' can't have null value!");
             }
 
             final var conversionStrategy = typeConversionFactory.getStrategy(parameter.getType());
 
-            userParameters.add(conversionStrategy.convert(value == null ? null : value.toString(), parameter.getParameterizedType()));
+            userParameters.add(conversionStrategy.convert(value, parameter.getParameterizedType()));
         });
 
         return userParameters;

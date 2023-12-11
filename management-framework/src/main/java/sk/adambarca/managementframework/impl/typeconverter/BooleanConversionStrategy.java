@@ -1,11 +1,13 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.lang.reflect.Type;
 
 class BooleanConversionStrategy implements TypeConversionStrategy<Boolean> {
 
     @Override
-    public Boolean convert(String value, Type type) {
-        return Boolean.parseBoolean(value);
+    public Boolean convert(JsonNode json, Type type) {
+        return Boolean.parseBoolean(json.asText());
     }
 }

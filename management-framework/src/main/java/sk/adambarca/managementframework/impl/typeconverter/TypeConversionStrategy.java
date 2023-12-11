@@ -1,5 +1,7 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.regex.Pattern;
 
 public interface TypeConversionStrategy<T> {
 
-    T convert (String value, Type type);
+    T convert(JsonNode json, Type type);
 
     default Type extractSubType(ParameterizedType parameterizedType) {
         Type[] typeArguments = parameterizedType.getActualTypeArguments();

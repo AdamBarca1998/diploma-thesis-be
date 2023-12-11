@@ -36,6 +36,7 @@ public class TypeConversionFactory {
         register(Optional.class, new OptionalConversionStrategy(this));
         register(List.class, new ListConversionStrategy(this));
         register(Set.class, new SetConversionStrategy(this));
+        register(Map.class, new MapConversionStrategy(this));
     }
 
     public void register(Class<?> type, TypeConversionStrategy<?> strategy) {

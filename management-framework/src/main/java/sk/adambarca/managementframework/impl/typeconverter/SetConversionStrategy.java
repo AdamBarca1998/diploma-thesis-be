@@ -1,5 +1,8 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.TextNode;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Set;
@@ -14,8 +17,8 @@ class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
     }
 
     @Override
-    public Set<?> convert(String value, Type type) {
-        value = value.replaceAll("\\s", "");
+    public Set<?> convert(JsonNode json, Type type) {
+        final var value = json.asText().replaceAll("\\s", "");
         if (value.equals("[]")) {
             return Set.of();
         }
@@ -25,7 +28,7 @@ class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
             final var valuesStrategy = typeConversionFactory.getStrategy(extractCurrentType(subType));
 
             return extractList(value).stream()
-                    .map(e -> valuesStrategy.convert(e, subType))
+                    .map(e -> valuesStrategy.convert(new TextNode(e), subType))
                     .collect(Collectors.toSet());
         } else {
             throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");

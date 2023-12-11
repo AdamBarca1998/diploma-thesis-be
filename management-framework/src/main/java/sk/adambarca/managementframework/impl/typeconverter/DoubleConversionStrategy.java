@@ -1,11 +1,13 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.lang.reflect.Type;
 
 class DoubleConversionStrategy implements TypeConversionStrategy<Double> {
 
     @Override
-    public Double convert(String value, Type type) {
-        return Double.parseDouble(value);
+    public Double convert(JsonNode json, Type type) {
+        return Double.parseDouble(json.asText());
     }
 }

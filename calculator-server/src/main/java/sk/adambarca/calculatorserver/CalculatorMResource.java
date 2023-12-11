@@ -2,14 +2,16 @@ package sk.adambarca.calculatorserver;
 
 import sk.adambarca.managementframework.resource.MResource;
 
-import java.util.Optional;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
 @MResource
 public final class CalculatorMResource {
 
-    public double sumSets(Set<Optional<Integer>> a, Set<Integer> b) {
-        return a.stream().mapToInt(e -> e.orElse(0))
-                .sum() + b.stream().mapToInt(e -> e).sum();
+    public double sumMap(Map<String, List<Integer>> map) {
+        return map.values().stream()
+                .map(list -> list.stream().mapToInt(Integer::intValue).sum())
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 }
