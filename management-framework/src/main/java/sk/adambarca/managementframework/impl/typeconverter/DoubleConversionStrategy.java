@@ -8,6 +8,6 @@ class DoubleConversionStrategy implements TypeConversionStrategy<Double> {
 
     @Override
     public Double convert(JsonNode json, Type type) {
-        return Double.parseDouble(json.asText());
+        return json.asDouble();
     }
 }

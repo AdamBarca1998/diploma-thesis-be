@@ -1,8 +1,11 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.TextNode;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.Map;
 
 class MapConversionStrategy implements TypeConversionStrategy<Map<?, ?>> {
@@ -15,17 +18,27 @@ class MapConversionStrategy implements TypeConversionStrategy<Map<?, ?>> {
 
     @Override
     public Map<?, ?> convert(JsonNode json, Type type) {
-//        value = value.replaceAll("\\s", "");
-//        if (value.equals("{}")) {
-//            return Map.of();
-//        }
-//
-//        if (type instanceof ParameterizedType parameterizedType) {
-//            return Map.of();
-//        } else {
-//            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
-//        }
+        if (type instanceof ParameterizedType parameterizedType) {
+            final var keyType = parameterizedType.getActualTypeArguments()[0];
+            final var valueType = parameterizedType.getActualTypeArguments()[1];
+            final var keyStrategy = typeConversionFactory.getStrategy(extractCurrentType(keyType));
+            final var valueStrategy = typeConversionFactory.getStrategy(extractCurrentType(valueType));
 
-        return Map.of();
+            Map<Object, Object> resultMap = new HashMap<>();
+
+            final var entries = json.fields();
+            while (entries.hasNext()) {
+                final var entry = entries.next();
+
+                Object keyObject = keyStrategy.convert(new TextNode(entry.getKey()), keyType);
+                Object valueObject = valueStrategy.convert(entry.getValue(), valueType);
+
+                resultMap.put(keyObject, valueObject);
+            }
+
+            return resultMap;
+        } else {
+            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
+        }
     }
 }

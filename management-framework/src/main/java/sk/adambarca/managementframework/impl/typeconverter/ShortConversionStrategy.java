@@ -8,6 +8,6 @@ class ShortConversionStrategy implements TypeConversionStrategy<Short> {
 
     @Override
     public Short convert(JsonNode json, Type type) {
-        return Short.parseShort(json.asText());
+        return json.shortValue();
     }
 }

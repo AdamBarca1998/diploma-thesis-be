@@ -8,6 +8,6 @@ class IntegerConversionStrategy implements TypeConversionStrategy<Integer> {
 
     @Override
     public Integer convert(JsonNode json, Type type) {
-        return Integer.parseInt(json.asText());
+        return json.asInt();
     }
 }

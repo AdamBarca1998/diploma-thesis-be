@@ -8,6 +8,6 @@ class ByteConversionStrategy implements TypeConversionStrategy<Byte> {
 
     @Override
     public Byte convert(JsonNode json, Type type) {
-        return Byte.parseByte(json.asText());
+        return json.numberValue().byteValue();
     }
 }

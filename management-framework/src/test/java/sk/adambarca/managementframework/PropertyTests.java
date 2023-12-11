@@ -158,9 +158,13 @@ class PropertyTests extends AbstractTests {
         class ListTest {
             @Test
             void testListType() throws URISyntaxException, IOException, InterruptedException {
-                final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("numbers", "[1,null,2]")
-                );
+                final var params = objectMapper.createObjectNode();
+                final var numbersArray = objectMapper.createArrayNode()
+                        .add(1)
+                        .addNull()
+                        .add(2);
+                params.set("numbers", numbersArray);
+
                 final var request = HttpRequest.newBuilder()
                         .uri(getUri(CalculatorMResource.class.getSimpleName(), "sum"))
                         .header("Content-Type", "application/json")
@@ -176,9 +180,9 @@ class PropertyTests extends AbstractTests {
 
             @Test
             void testEmptyList() throws URISyntaxException, IOException, InterruptedException {
-                final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("numbers", "[]")
-                );
+                final var params = objectMapper.createObjectNode();
+                params.set("numbers", objectMapper.createArrayNode());
+
                 final var request = HttpRequest.newBuilder()
                         .uri(getUri(CalculatorMResource.class.getSimpleName(), "sum"))
                         .header("Content-Type", "application/json")
@@ -194,9 +198,18 @@ class PropertyTests extends AbstractTests {
 
             @Test
             void testNestedLists() throws URISyntaxException, IOException, InterruptedException {
-                final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("numbers", "[[1, 2], [-1, 5]]")
-                );
+                final var params = objectMapper.createObjectNode();
+                final var numbersArray = objectMapper.createArrayNode()
+                        .add(objectMapper.createArrayNode()
+                                .add(1)
+                                .add(2)
+                        )
+                        .add(objectMapper.createArrayNode()
+                                .add(-1)
+                                .add(5)
+                        );
+                params.set("numbers", numbersArray);
+
                 final var request = HttpRequest.newBuilder()
                         .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumNestedLists"))
                         .header("Content-Type", "application/json")
@@ -215,10 +228,18 @@ class PropertyTests extends AbstractTests {
         class SetTest {
             @Test
             void testSetType() throws URISyntaxException, IOException, InterruptedException {
-                final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("a", "[1,null,2,2]"),
-                        Map.entry("b", "[1,2]")
-                );
+                final var params = objectMapper.createObjectNode();
+                final var a = objectMapper.createArrayNode()
+                        .add(1)
+                        .addNull()
+                        .add(2)
+                        .add(2);
+                final var b = objectMapper.createArrayNode()
+                        .add(1)
+                        .add(2);
+                params.set("a", a);
+                params.set("b", b);
+
                 final var request = HttpRequest.newBuilder()
                         .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumSets"))
                         .header("Content-Type", "application/json")
@@ -234,10 +255,10 @@ class PropertyTests extends AbstractTests {
 
             @Test
             void testEmptySet() throws URISyntaxException, IOException, InterruptedException {
-                final Map<String, Object> params = Map.ofEntries(
-                        Map.entry("a", "[]"),
-                        Map.entry("b", "[]")
-                );
+                final var params = objectMapper.createObjectNode();
+                params.set("a", objectMapper.createArrayNode());
+                params.set("b", objectMapper.createArrayNode());
+
                 final var request = HttpRequest.newBuilder()
                         .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumSets"))
                         .header("Content-Type", "application/json")

@@ -1,11 +1,14 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.TextNode;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
 
@@ -17,17 +20,14 @@ class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
 
     @Override
     public List<?> convert(JsonNode json, Type type) {
-        var value = json.asText().replaceAll("\\s", "");
-        if (value.equals("[]")) {
-            return List.of();
-        }
-
-        if (type instanceof ParameterizedType parameterizedType) {
+        if (type instanceof ParameterizedType parameterizedType && json.isArray()) {
             final var subType = extractSubType(parameterizedType);
             final var valuesStrategy = typeConversionFactory.getStrategy(extractCurrentType(subType));
 
-            return extractList(value).stream()
-                    .map(e -> valuesStrategy.convert(new TextNode(e), subType))
+            Spliterator<JsonNode> spliterator = Spliterators.spliteratorUnknownSize(json.elements(), Spliterator.ORDERED);
+            Stream<JsonNode> stream = StreamSupport.stream(spliterator, false);
+
+            return stream.map(e -> valuesStrategy.convert(e, subType))
                     .toList();
         } else {
             throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");

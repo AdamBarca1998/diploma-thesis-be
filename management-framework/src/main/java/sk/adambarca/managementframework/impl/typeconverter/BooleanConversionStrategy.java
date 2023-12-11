@@ -8,6 +8,6 @@ class BooleanConversionStrategy implements TypeConversionStrategy<Boolean> {
 
     @Override
     public Boolean convert(JsonNode json, Type type) {
-        return Boolean.parseBoolean(json.asText());
+        return json.asBoolean();
     }
 }
