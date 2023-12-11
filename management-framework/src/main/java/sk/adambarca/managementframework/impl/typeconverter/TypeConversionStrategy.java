@@ -21,7 +21,7 @@ public interface TypeConversionStrategy<T> {
         }
     }
 
-    default Type extractRawType(Type type) {
+    default Type extractCurrentType(Type type) {
         if (type instanceof ParameterizedType parameterizedType) {
             return parameterizedType.getRawType();
         } else {

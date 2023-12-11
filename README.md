@@ -2,6 +2,7 @@
 
 ## Property
 Properties are arguments in methods. Return type in the method **is not property**.
+The Framework supports nested types, so you can have a list into a list.
 
 ### Data types
 Data types that the framework allows used in properties.
@@ -47,8 +48,7 @@ public class CalculatorMResource {
 
 ### data structures:
 * List
-  * every element must be split with **','** example: **numbers=1,2,3**
-  * for empty string you write only name example: **numbers=**
+* Set - syntax is same than **List**
 
 ### optional
 If you want to create optional arguments, you have to wrap the argument in the **class Optional**.

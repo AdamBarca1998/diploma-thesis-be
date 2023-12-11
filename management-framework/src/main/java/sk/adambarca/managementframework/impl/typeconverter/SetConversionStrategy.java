@@ -22,7 +22,7 @@ class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
 
         if (type instanceof ParameterizedType parameterizedType) {
             final var subType = extractSubType(parameterizedType);
-            final var valuesStrategy = typeConversionFactory.getStrategy(extractRawType(subType));
+            final var valuesStrategy = typeConversionFactory.getStrategy(extractCurrentType(subType));
 
             return extractList(value).stream()
                     .map(e -> valuesStrategy.convert(e, subType))

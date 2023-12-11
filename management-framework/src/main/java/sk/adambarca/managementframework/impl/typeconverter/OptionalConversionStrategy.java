@@ -20,7 +20,7 @@ class OptionalConversionStrategy implements TypeConversionStrategy<Optional<?>> 
 
         if (type instanceof ParameterizedType parameterizedType) {
             final var subType = extractSubType(parameterizedType);
-            final var valueStrategy = typeConversionFactory.getStrategy(subType);
+            final var valueStrategy = typeConversionFactory.getStrategy(extractCurrentType(subType));
             final var convertedValue = valueStrategy.convert(value, subType);
 
             return Optional.ofNullable(convertedValue);
