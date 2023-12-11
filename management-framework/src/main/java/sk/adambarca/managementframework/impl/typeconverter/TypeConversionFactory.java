@@ -2,7 +2,10 @@ package sk.adambarca.managementframework.impl.typeconverter;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 public class TypeConversionFactory {
 
@@ -30,22 +33,13 @@ public class TypeConversionFactory {
         register(Boolean.class, new BooleanConversionStrategy());
 
         register(String.class, new StringConversionStrategy());
+        register(Optional.class, new OptionalConversionStrategy(this));
+        register(List.class, new ListConversionStrategy(this));
+        register(Set.class, new SetConversionStrategy(this));
     }
 
     public void register(Class<?> type, TypeConversionStrategy<?> strategy) {
         conversionMap.put(type.getTypeName(), strategy);
-
-        if (!type.isPrimitive()) {
-            final var optional = STR."\{JAVA_UTIL}Optional<\{type.getTypeName()}>";
-
-            conversionMap.put(optional, new OptionalConversionStrategy(strategy));
-
-            conversionMap.put(STR."\{JAVA_UTIL}List<\{type.getTypeName()}>", new ListConversionStrategy(strategy));
-            conversionMap.put(STR."\{JAVA_UTIL}List<\{optional}>", new ListConversionStrategy(new OptionalConversionStrategy(strategy)));
-
-            conversionMap.put(STR."\{JAVA_UTIL}Set<\{type.getTypeName()}>", new SetConversionStrategy(strategy));
-            conversionMap.put(STR."\{JAVA_UTIL}Set<\{optional}>", new SetConversionStrategy(new OptionalConversionStrategy(strategy)));
-        }
     }
 
     public TypeConversionStrategy<?> getStrategy(Type type) {

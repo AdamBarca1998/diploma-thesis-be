@@ -1,28 +1,34 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-import java.util.Arrays;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
 
-    private final TypeConversionStrategy<?> valuesStrategy;
+    private final TypeConversionFactory typeConversionFactory;
 
-    public SetConversionStrategy(TypeConversionStrategy<?> strategy) {
-        this.valuesStrategy = strategy;
+    public SetConversionStrategy(TypeConversionFactory typeConversionFactory) {
+        this.typeConversionFactory = typeConversionFactory;
     }
 
     @Override
-    public Set<?> convert(String value) {
+    public Set<?> convert(String value, Type type) {
         value = value.replaceAll("\\s", "");
         if (value.equals("[]")) {
             return Set.of();
         }
-        String trimmedValue = value.substring(1, value.length() - 1);
-        String[] elements = trimmedValue.split(",");
 
-        return Arrays.stream(elements)
-                .map(valuesStrategy::convert)
-                .collect(Collectors.toSet());
+        if (type instanceof ParameterizedType parameterizedType) {
+            final var subType = extractSubType(parameterizedType);
+            final var valuesStrategy = typeConversionFactory.getStrategy(extractRawType(subType));
+
+            return extractList(value).stream()
+                    .map(e -> valuesStrategy.convert(e, subType))
+                    .collect(Collectors.toSet());
+        } else {
+            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
+        }
     }
 }

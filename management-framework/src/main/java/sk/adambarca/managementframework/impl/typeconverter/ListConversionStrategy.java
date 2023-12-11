@@ -1,27 +1,33 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-import java.util.Arrays;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.List;
 
 class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
 
-    private final TypeConversionStrategy<?> valuesStrategy;
+    private final TypeConversionFactory typeConversionFactory;
 
-    public ListConversionStrategy(TypeConversionStrategy<?> strategy) {
-        this.valuesStrategy = strategy;
+    public ListConversionStrategy(TypeConversionFactory typeConversionFactory) {
+        this.typeConversionFactory = typeConversionFactory;
     }
 
     @Override
-    public List<?> convert(String value) {
+    public List<?> convert(String value, Type type) {
         value = value.replaceAll("\\s", "");
         if (value.equals("[]")) {
             return List.of();
         }
-        String trimmedValue = value.substring(1, value.length() - 1);
-        String[] elements = trimmedValue.split(",");
 
-        return Arrays.stream(elements)
-                .map(valuesStrategy::convert)
-                .toList();
+        if (type instanceof ParameterizedType parameterizedType) {
+            final var subType = extractSubType(parameterizedType);
+            final var valuesStrategy = typeConversionFactory.getStrategy(extractRawType(subType));
+
+            return extractList(value).stream()
+                    .map(e -> valuesStrategy.convert(e, subType))
+                    .toList();
+        } else {
+            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
+        }
     }
 }

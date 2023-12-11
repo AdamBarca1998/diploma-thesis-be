@@ -191,6 +191,24 @@ class PropertyTests extends AbstractTests {
                 assertEquals(200, response.statusCode());
                 assertEquals(0, result);
             }
+
+            @Test
+            void testNestedLists() throws URISyntaxException, IOException, InterruptedException {
+                final Map<String, Object> params = Map.ofEntries(
+                        Map.entry("numbers", "[[1, 2], [-1, 5]]")
+                );
+                final var request = HttpRequest.newBuilder()
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumNestedLists"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+                        .build();
+
+                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                final var result = Double.parseDouble(response.body());
+
+                assertEquals(200, response.statusCode());
+                assertEquals(7, result);
+            }
         }
 
         @Nested

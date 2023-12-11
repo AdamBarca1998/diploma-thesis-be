@@ -62,6 +62,13 @@ public final class CalculatorMResource {
                 .sum();
     }
 
+    public double sumNestedLists(List<List<Integer>> numbers) {
+        return numbers.stream()
+                .flatMap(List::stream)
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
+
     public double sumSets(Set<Optional<Integer>> a, Set<Integer> b) {
         return a.stream().mapToInt(e -> e.orElse(0))
                 .sum() + b.stream().mapToInt(e -> e).sum();

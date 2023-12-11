@@ -68,9 +68,9 @@ public final class ManagementService {
                 throw new NotOptionalPropertyException(STR."Property '\{parameter.getName()}' can't have null value!");
             }
 
-            final var conversionStrategy = typeConversionFactory.getStrategy(parameter.getParameterizedType());
+            final var conversionStrategy = typeConversionFactory.getStrategy(parameter.getType());
 
-            userParameters.add(conversionStrategy.convert(value == null ? null : value.toString()));
+            userParameters.add(conversionStrategy.convert(value == null ? null : value.toString(), parameter.getParameterizedType()));
         });
 
         return userParameters;

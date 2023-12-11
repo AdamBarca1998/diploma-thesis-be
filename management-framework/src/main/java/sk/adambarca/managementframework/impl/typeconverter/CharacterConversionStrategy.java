@@ -1,11 +1,11 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-import static java.lang.StringTemplate.STR;
+import java.lang.reflect.Type;
 
 class CharacterConversionStrategy implements TypeConversionStrategy<Character> {
 
     @Override
-    public Character convert(String value) {
+    public Character convert(String value, Type type) {
         if (value.length() > 1) {
             throw new IllegalArgumentException(STR."Argument \{value} must be character!");
         }

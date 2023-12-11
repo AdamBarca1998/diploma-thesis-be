@@ -1,23 +1,31 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Optional;
 
 class OptionalConversionStrategy implements TypeConversionStrategy<Optional<?>> {
 
-    private final TypeConversionStrategy<?> valueStrategy;
+    private final TypeConversionFactory typeConversionFactory;
 
-    public OptionalConversionStrategy(TypeConversionStrategy<?> strategy) {
-        this.valueStrategy = strategy;
+    public OptionalConversionStrategy(TypeConversionFactory typeConversionFactory) {
+        this.typeConversionFactory = typeConversionFactory;
     }
 
     @Override
-    public Optional<Object> convert(String value) {
+    public Optional<Object> convert(String value, Type type) {
         if (value == null || value.equals("null")) {
             return Optional.empty();
         }
 
-        var convertedValue = valueStrategy.convert(value);
+        if (type instanceof ParameterizedType parameterizedType) {
+            final var subType = extractSubType(parameterizedType);
+            final var valueStrategy = typeConversionFactory.getStrategy(subType);
+            final var convertedValue = valueStrategy.convert(value, subType);
 
-        return Optional.ofNullable(convertedValue);
+            return Optional.ofNullable(convertedValue);
+        } else {
+            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
+        }
     }
 }
