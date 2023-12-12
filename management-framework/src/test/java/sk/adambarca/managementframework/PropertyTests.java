@@ -272,5 +272,49 @@ class PropertyTests extends AbstractTests {
                 assertEquals(0, result);
             }
         }
+
+        @Nested
+        class MapTest {
+            @Test
+            void testMapType() throws URISyntaxException, IOException, InterruptedException {
+                final var params = objectMapper.createObjectNode();
+                final var map = objectMapper.createObjectNode();
+                map.set("a", objectMapper.createArrayNode().add(1));
+                map.set("b", objectMapper.createArrayNode().add(1).add(2));
+                map.set("empty", objectMapper.createArrayNode());
+                params.set("map", map);
+
+
+                final var request = HttpRequest.newBuilder()
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumMap"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+                        .build();
+
+                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                final var result = Double.parseDouble(response.body());
+
+                assertEquals(200, response.statusCode());
+                assertEquals(4, result);
+            }
+
+            @Test
+            void testEmptyMap() throws URISyntaxException, IOException, InterruptedException {
+                final var params = objectMapper.createObjectNode();
+                params.set("map", objectMapper.createObjectNode());
+
+                final var request = HttpRequest.newBuilder()
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumMap"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+                        .build();
+
+                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                final var result = Double.parseDouble(response.body());
+
+                assertEquals(200, response.statusCode());
+                assertEquals(0, result);
+            }
+        }
     }
 }
