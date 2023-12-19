@@ -6,7 +6,7 @@ public record Property(
         String name,
         String description,
         String type,
-        String value,
+        Object value,
         List<String> validations
 ) {
 }

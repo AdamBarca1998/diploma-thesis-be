@@ -10,8 +10,6 @@ import java.util.Set;
 @MResource
 public final class CalculatorMResource {
 
-    public Double result = 0.1;
-
     public double sumAllPrimitives(
             byte _byte,
             short _short,

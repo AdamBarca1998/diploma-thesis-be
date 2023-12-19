@@ -23,7 +23,7 @@ final class AnnotationsScannerComponent {
             new ConfigurationBuilder()
                     .forPackage("")
     );
-    private final List<Object> classesList = reflections.get(Scanners.TypesAnnotated.with(MResource.class).asClass()).stream()
+    private final List<Object> objects = reflections.get(Scanners.TypesAnnotated.with(MResource.class).asClass()).stream()
             .map(it -> {
                 try {
                     return Class.forName(it.getName()).getConstructor().newInstance();
@@ -34,25 +34,27 @@ final class AnnotationsScannerComponent {
             })
             .filter(it -> !(it instanceof String))
             .toList();
-    private final List<Resource> resourceList = classesList.stream()
-            .map(resourceMapper::mapToResource)
-            .filter(Objects::nonNull)
-            .toList();
 
     AnnotationsScannerComponent() {
-        resourceList.forEach(it -> LOGGER.info("Created Resource: \n" + it));
+        objects.forEach(it -> LOGGER.info("Created Resource: \n" + it.getClass().getSimpleName()));
     }
 
     List<Resource> getResourceList() {
-        return resourceList;
+        return objects.stream()
+                .map(resourceMapper::mapToResource)
+                .filter(Objects::nonNull)
+                .toList();
     }
 
     Optional<Resource> findResourceByType(String type) {
-        return resourceList.stream().filter(r -> r.type().equals(type)).findFirst();
+        return objects.stream()
+                .filter(c -> c.getClass().getSimpleName().equals(type))
+                .findFirst()
+                .map(resourceMapper::mapToResource);
     }
 
     Optional<Object> getClassByClassType(String classType) {
-        return classesList.stream()
+        return objects.stream()
                 .filter(resource -> resource.getClass().getSimpleName().equals(classType))
                 .findFirst();
     }

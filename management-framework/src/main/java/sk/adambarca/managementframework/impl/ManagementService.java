@@ -33,7 +33,7 @@ public final class ManagementService {
         return annotationsScanner.findResourceByType(type);
     }
 
-    Optional<Object> callFunction(String classType, String functionName, Map<String, Object> params)
+    Optional<Object> callFunction(String classType, String functionName, Optional<Map<String, Object>> params)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
         final Object clazz = annotationsScanner.getClassByClassType(classType)
@@ -46,24 +46,25 @@ public final class ManagementService {
         return Optional.ofNullable(invokeMethodWithParams(clazz, method, params));
     }
 
-    private Object invokeMethodWithParams(Object clazz, Method method, Map<String, Object> params) throws InvocationTargetException, IllegalAccessException {
+    private Object invokeMethodWithParams(Object clazz, Method method, Optional<Map<String, Object>> params) throws InvocationTargetException, IllegalAccessException {
         final var parameters = method.getParameters();
         final var requiredCount = Arrays.stream(parameters)
                 .filter(this::isNotOptional)
                 .count();
+        final var paramsSize = params.map(Map::size).orElse(0);
 
-        if (requiredCount > params.size()) {
+        if (requiredCount > paramsSize) {
             throw new NotCorrectNumberOfPropertiesException(
-                    STR."Method '\{method.getName()}' has \{requiredCount} required properties, not \{params.size()}"
+                    STR."Method '\{method.getName()}' has \{requiredCount} required properties, not \{paramsSize}"
             );
         }
 
         return method.invoke(clazz, convertParams(parameters, params).toArray());
     }
 
-    private List<Object> convertParams(Parameter[] parameters, Map<String, Object> params) {
+    private List<Object> convertParams(Parameter[] parameters, Optional<Map<String, Object>> params) {
         final List<Object> userParameters = new ArrayList<>();
-        final JsonNode jsonNode = new ObjectMapper().valueToTree(params);
+        final JsonNode jsonNode = new ObjectMapper().valueToTree(params.orElse(null));
 
         Arrays.stream(parameters).forEach(parameter -> {
             final var value = jsonNode.get(parameter.getName());

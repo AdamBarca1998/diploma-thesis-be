@@ -42,7 +42,7 @@ class PropertyTests extends AbstractTests {
     @Nested
     class TypeTest {
         @Test
-        void testPrimitiveTypes() throws URISyntaxException, IOException, InterruptedException {
+        void primitiveTypes() throws URISyntaxException, IOException, InterruptedException {
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
                     .header("Content-Type", "application/json")
@@ -57,7 +57,7 @@ class PropertyTests extends AbstractTests {
         }
 
         @Test
-        void testPrimitiveWrapperTypes() throws URISyntaxException, IOException, InterruptedException {
+        void primitiveWrapperTypes() throws URISyntaxException, IOException, InterruptedException {
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitiveWrappers"))
                     .header("Content-Type", "application/json")
@@ -75,7 +75,7 @@ class PropertyTests extends AbstractTests {
     @Nested
     class OptionalTest {
         @Test
-        void testAllArgsOptional() throws URISyntaxException, IOException, InterruptedException {
+        void allArgsOptional() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("a", 0.1),
                     Map.entry("b", 1),
@@ -96,7 +96,7 @@ class PropertyTests extends AbstractTests {
         }
 
         @Test
-        void testPartArgsOptional() throws URISyntaxException, IOException, InterruptedException {
+        void partArgsOptional() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("c", 0.2)
             );
@@ -115,7 +115,7 @@ class PropertyTests extends AbstractTests {
         }
 
         @Test
-        void testNotValidOptionalCount() throws URISyntaxException, IOException, InterruptedException {
+        void notValidOptionalCount() throws URISyntaxException, IOException, InterruptedException {
             Map<String, Object> params = new HashMap<>(primitiveParams);
             params.remove("_double");
 
@@ -132,7 +132,7 @@ class PropertyTests extends AbstractTests {
         }
 
         @Test
-        void testNotValidOptionalValue() throws URISyntaxException, IOException, InterruptedException {
+        void notValidOptionalValue() throws URISyntaxException, IOException, InterruptedException {
             final var propertyName = "_double";
             Map<String, Object> params = new HashMap<>(primitiveParams);
             params.remove(propertyName);
@@ -157,7 +157,7 @@ class PropertyTests extends AbstractTests {
         @Nested
         class ListTest {
             @Test
-            void testListType() throws URISyntaxException, IOException, InterruptedException {
+            void listType() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 final var numbersArray = objectMapper.createArrayNode()
                         .add(1)
@@ -179,7 +179,7 @@ class PropertyTests extends AbstractTests {
             }
 
             @Test
-            void testEmptyList() throws URISyntaxException, IOException, InterruptedException {
+            void emptyList() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 params.set("numbers", objectMapper.createArrayNode());
 
@@ -197,7 +197,7 @@ class PropertyTests extends AbstractTests {
             }
 
             @Test
-            void testNestedLists() throws URISyntaxException, IOException, InterruptedException {
+            void nestedLists() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 final var numbersArray = objectMapper.createArrayNode()
                         .add(objectMapper.createArrayNode()
@@ -227,7 +227,7 @@ class PropertyTests extends AbstractTests {
         @Nested
         class SetTest {
             @Test
-            void testSetType() throws URISyntaxException, IOException, InterruptedException {
+            void setType() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 final var a = objectMapper.createArrayNode()
                         .add(1)
@@ -254,7 +254,7 @@ class PropertyTests extends AbstractTests {
             }
 
             @Test
-            void testEmptySet() throws URISyntaxException, IOException, InterruptedException {
+            void emptySet() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 params.set("a", objectMapper.createArrayNode());
                 params.set("b", objectMapper.createArrayNode());
@@ -276,7 +276,7 @@ class PropertyTests extends AbstractTests {
         @Nested
         class MapTest {
             @Test
-            void testMapType() throws URISyntaxException, IOException, InterruptedException {
+            void mapType() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 final var map = objectMapper.createObjectNode();
                 map.set("a", objectMapper.createArrayNode().add(1));
@@ -299,7 +299,7 @@ class PropertyTests extends AbstractTests {
             }
 
             @Test
-            void testMapTypeInteger() throws URISyntaxException, IOException, InterruptedException {
+            void mapTypeInteger() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 final var map = objectMapper.createObjectNode();
                 map.set("1", objectMapper.createArrayNode().add(1));
@@ -322,7 +322,7 @@ class PropertyTests extends AbstractTests {
             }
 
             @Test
-            void testEmptyMap() throws URISyntaxException, IOException, InterruptedException {
+            void emptyMap() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 params.set("map", objectMapper.createObjectNode());
 

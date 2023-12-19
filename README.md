@@ -1,6 +1,28 @@
 # Management Framework
 
-## Property
+## Resource
+Resource is a class with annotation ```@MResource```.
+
+```java
+@MResource(
+        name = "Calculator ABC",
+        description = "Calculator description",
+        icon = "Calculator icon"
+)
+public final class Calculator {
+    // ...
+}
+```
+
+### Attributes
+* name - default class simple type ```class.getSimpleName()```
+* description - default empty string ```""```
+* icon - default empty string ```""```
+
+## Property (Field)
+sadsad
+
+## Property (Argument)
 Properties are arguments in methods. Return type in the method **is not property**.
 The Framework supports nested types, so you can have a list into a list.
 

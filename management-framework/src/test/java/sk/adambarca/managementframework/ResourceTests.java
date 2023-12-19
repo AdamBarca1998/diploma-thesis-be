@@ -53,6 +53,6 @@ class ResourceTests extends AbstractTests {
         final Resource resource = objectMapper.readValue(response.body(), new TypeReference<>() {});
 
         assertEquals(200, response.statusCode());
-        assertNotEquals(CalculatorMResource.class.getName(), resource.type());
+        assertEquals(CalculatorMResource.class.getSimpleName(), resource.type());
     }
 }
