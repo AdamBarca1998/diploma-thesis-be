@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.lang.reflect.Type;
 
-class FloatConversionStrategy implements TypeConversionStrategy<Float> {
+final class FloatConversionStrategy implements TypeConversionStrategy<Float> {
 
     @Override
     public Float convert(JsonNode json, Type type) {

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
+final class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
 
     private final TypeConversionFactory typeConversionFactory;
 

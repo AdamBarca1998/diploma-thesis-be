@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.lang.reflect.Type;
 
-class CharacterConversionStrategy implements TypeConversionStrategy<Character> {
+final class CharacterConversionStrategy implements TypeConversionStrategy<Character> {
 
     @Override
     public Character convert(JsonNode json, Type type) {

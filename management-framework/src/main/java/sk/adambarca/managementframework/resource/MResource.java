@@ -8,4 +8,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MResource {
+
+    String name() default "";
+    String description() default "";
+    String icon() default "";
 }

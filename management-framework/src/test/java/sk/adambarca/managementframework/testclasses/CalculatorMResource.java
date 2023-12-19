@@ -81,4 +81,11 @@ public final class CalculatorMResource {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
+    public double sumMapInteger(Map<Integer, List<Integer>> map) {
+        return map.values().stream()
+                .map(list -> list.stream().mapToInt(Integer::intValue).sum())
+                .mapToInt(Integer::intValue)
+                .sum();
+    }
 }

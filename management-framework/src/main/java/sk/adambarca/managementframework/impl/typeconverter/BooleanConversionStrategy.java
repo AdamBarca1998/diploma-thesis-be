@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.lang.reflect.Type;
 
-class BooleanConversionStrategy implements TypeConversionStrategy<Boolean> {
+final class BooleanConversionStrategy implements TypeConversionStrategy<Boolean> {
 
     @Override
     public Boolean convert(JsonNode json, Type type) {

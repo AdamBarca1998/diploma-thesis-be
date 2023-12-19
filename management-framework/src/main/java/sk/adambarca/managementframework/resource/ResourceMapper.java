@@ -7,6 +7,7 @@ import sk.adambarca.managementframework.property.PropertyMapper;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -27,6 +28,19 @@ public class ResourceMapper {
             LOGGER.severe("Class '" + mResource.getClass().getName() + "' has duplicity method names!");
             return null;
         }
+        // build
+        final var resourceBuilder = new Resource.Builder();
+        resourceBuilder.type(clazz.getSimpleName());
+
+        Arrays.stream(clazz.getAnnotations())
+                .forEach(annotation -> {
+                    if (annotation instanceof MResource ann) {
+                        resourceBuilder.name(ann.name().isEmpty() ? clazz.getSimpleName() : ann.name());
+                        resourceBuilder.description(ann.description());
+                        resourceBuilder.icon(ann.icon());
+                    }
+                })
+        ;
 
         final var fields = ReflectionUtils.getAllFields(clazz, publicPredicate).stream()
                 .map(propertyMapper::mapToProperty)
@@ -35,14 +49,11 @@ public class ResourceMapper {
                 .map(functionMapper::mapToFunction)
                 .toList();
 
-        return new Resource(
-                "",
-                "",
-                mResource.getClass().getSimpleName(),
-                fields,
-                functions,
-                List.of()
-        );
+        resourceBuilder.properties(fields);
+        resourceBuilder.functions(functions);
+        resourceBuilder.validations(List.of());
+
+        return resourceBuilder.build();
     }
 
     private boolean isDuplicityMethods(Set<Method> methods) {

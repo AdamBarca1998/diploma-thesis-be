@@ -1,6 +1,6 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-class TypeCantBeExtractedException extends RuntimeException {
+final class TypeCantBeExtractedException extends RuntimeException {
 
     TypeCantBeExtractedException(String errorMessage) {
         super(errorMessage);

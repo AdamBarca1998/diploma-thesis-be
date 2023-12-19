@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.lang.reflect.Type;
 
-class ByteConversionStrategy implements TypeConversionStrategy<Byte> {
+final class ByteConversionStrategy implements TypeConversionStrategy<Byte> {
 
     @Override
     public Byte convert(JsonNode json, Type type) {

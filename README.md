@@ -49,6 +49,16 @@ public class CalculatorMResource {
 ### data structures:
 * List
 * Set - syntax is same than **List**
+* Map - syntax for **Map\<String, List\<Integer\>\> someMapName**
+```json 
+{
+    "someMapName": {
+        "key1": [1],
+        "key2": [1, 2],
+        "key3": []
+    }
+}
+```
 
 ### optional
 If you want to create optional arguments, you have to wrap the argument in the **class Optional**.

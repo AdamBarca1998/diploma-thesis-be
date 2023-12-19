@@ -299,6 +299,29 @@ class PropertyTests extends AbstractTests {
             }
 
             @Test
+            void testMapTypeInteger() throws URISyntaxException, IOException, InterruptedException {
+                final var params = objectMapper.createObjectNode();
+                final var map = objectMapper.createObjectNode();
+                map.set("1", objectMapper.createArrayNode().add(1));
+                map.set("2", objectMapper.createArrayNode().add(1).add(2));
+                map.set("3", objectMapper.createArrayNode());
+                params.set("map", map);
+
+
+                final var request = HttpRequest.newBuilder()
+                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumMapInteger"))
+                        .header("Content-Type", "application/json")
+                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+                        .build();
+
+                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                final var result = Double.parseDouble(response.body());
+
+                assertEquals(200, response.statusCode());
+                assertEquals(4, result);
+            }
+
+            @Test
             void testEmptyMap() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 params.set("map", objectMapper.createObjectNode());

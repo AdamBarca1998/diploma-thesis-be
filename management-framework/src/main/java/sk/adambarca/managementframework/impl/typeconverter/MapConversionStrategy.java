@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-class MapConversionStrategy implements TypeConversionStrategy<Map<?, ?>> {
+final class MapConversionStrategy implements TypeConversionStrategy<Map<?, ?>> {
 
     private final TypeConversionFactory typeConversionFactory;
 

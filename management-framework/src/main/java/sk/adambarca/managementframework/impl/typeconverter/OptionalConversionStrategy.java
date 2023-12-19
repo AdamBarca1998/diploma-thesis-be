@@ -6,7 +6,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Optional;
 
-class OptionalConversionStrategy implements TypeConversionStrategy<Optional<?>> {
+final class OptionalConversionStrategy implements TypeConversionStrategy<Optional<?>> {
 
     private final TypeConversionFactory typeConversionFactory;
 

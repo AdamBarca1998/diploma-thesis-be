@@ -1,6 +1,6 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-class ConversionStrategyNotFoundException extends RuntimeException {
+final class ConversionStrategyNotFoundException extends RuntimeException {
 
     ConversionStrategyNotFoundException(String errorMessage) {
         super(errorMessage);

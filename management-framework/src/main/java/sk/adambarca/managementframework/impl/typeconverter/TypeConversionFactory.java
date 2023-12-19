@@ -7,9 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class TypeConversionFactory {
-
-    private static final String JAVA_UTIL = "java.util.";
+public final class TypeConversionFactory {
 
     private final Map<String, TypeConversionStrategy<?>> conversionMap = new HashMap<>();
 
