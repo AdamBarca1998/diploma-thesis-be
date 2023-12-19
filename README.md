@@ -20,7 +20,53 @@ public final class Calculator {
 * icon - default empty string ```""```
 
 ## Property (Field)
-sadsad
+Properties are fields in classes. Syntax for getter and setter is Java syntax **set[Name] get[Name]**.
+
+They are divided into three types:
+### Hide
+Hide property doesn't have any getter or setter.
+
+```java
+@MResource
+public class MemoryMResource {
+
+    private String secretKey = "abcd";
+}
+```
+
+### Disable
+Disable property doesn't have any setter.
+
+```java
+@MResource
+public class MemoryMResource {
+
+    private String id = 0;
+
+    public int getId() {
+        return id;
+    }
+}
+```
+
+### Enable
+Enable property **has to** have one getter and setter.
+
+```java
+@MResource
+public class MemoryMResource {
+
+    private Double value = null;
+    
+    public Double getValue() {
+      return value;
+    }
+    
+    public void setValue(Double value) {
+      this.value = value;
+    }
+}
+```
 
 ## Property (Argument)
 Properties are arguments in methods. Return type in the method **is not property**.
@@ -29,7 +75,6 @@ The Framework supports nested types, so you can have a list into a list.
 ### Data types
 Data types that the framework allows used in properties.
 
-Example:
 ```java
 @MResource
 public class CalculatorMResource {
@@ -71,7 +116,7 @@ public class CalculatorMResource {
 ### data structures:
 * List
 * Set - syntax is same than **List**
-* Map - syntax for **Map\<String, List\<Integer\>\> someMapName**
+* Map - syntax for ```Map<String, List<Integer>> someMapName```
 ```json 
 {
     "someMapName": {
