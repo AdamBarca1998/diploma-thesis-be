@@ -1,6 +1,6 @@
 package sk.adambarca.managementframework.impl;
 
-class NotOptionalPropertyException extends RuntimeException {
+final class NotOptionalPropertyException extends RuntimeException {
 
     NotOptionalPropertyException(String errorMessage) {
         super(errorMessage);

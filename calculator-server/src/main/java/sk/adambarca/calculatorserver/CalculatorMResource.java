@@ -3,29 +3,44 @@ package sk.adambarca.calculatorserver;
 import sk.adambarca.managementframework.resource.MResource;
 
 import java.util.List;
-import java.util.Map;
 
-@MResource(
-        name = "Calculator",
-        description = "Calculator description",
-        icon = "Calculator icon"
-)
+@MResource
 public final class CalculatorMResource {
 
-    private Double memory = null;
+    private ArgumentsObj argumentsObj = new ArgumentsObj(
+            1.0,
+            List.of(
+                    new ArgumentsObj(2.0, List.of()),
+                    new ArgumentsObj(3.0, List.of())
+            )
+    );
 
-    public double sumMap(Map<String, List<Integer>> map) {
-        return map.values().stream()
-                .map(list -> list.stream().mapToInt(Integer::intValue).sum())
-                .mapToInt(Integer::intValue)
-                .sum();
+
+    private double sumMap(ArgumentsObj args) {
+        double sum = 0;
+
+        if (args != null) {
+            sum += args.value();
+
+            if (args.list() != null) {
+                for (ArgumentsObj nestedObj : args.list()) {
+                    sum += sumMap(nestedObj);
+                }
+            }
+        }
+
+        return sum;
     }
 
-    public Double getMemory() {
-        return memory;
+    public double sumMem() {
+        return sumMap(argumentsObj);
     }
 
-    public void setMemory(Double memory) {
-        this.memory = memory;
+    public void setArgumentsObj(ArgumentsObj argumentsObj) {
+        this.argumentsObj = argumentsObj;
+    }
+
+    public ArgumentsObj getArgumentsObj() {
+        return this.argumentsObj;
     }
 }

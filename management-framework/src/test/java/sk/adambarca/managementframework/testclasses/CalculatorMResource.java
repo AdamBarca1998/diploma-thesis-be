@@ -86,4 +86,20 @@ public final class CalculatorMResource {
                 .mapToInt(Integer::intValue)
                 .sum();
     }
+
+    public double sumArgumentMProperty(ArgumentMProperty args) {
+        double sum = 0;
+
+        if (args != null) {
+            sum += args.value();
+
+            if (args.list() != null) {
+                for (var nestedObj : args.list()) {
+                    sum += sumArgumentMProperty(nestedObj);
+                }
+            }
+        }
+
+        return sum;
+    }
 }

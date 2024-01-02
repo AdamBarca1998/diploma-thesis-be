@@ -68,8 +68,8 @@ public class MemoryMResource {
 }
 ```
 
-## Property (Argument)
-Properties are arguments in methods. Return type in the method **is not property**.
+## Property (Parameter)
+Properties are parameters in methods. Return type in the method **is not property**.
 The Framework supports nested types, so you can have a list into a list.
 
 ### Data types
@@ -90,7 +90,7 @@ public class CalculatorMResource {
 ```
 
 
-### supports all Java21 primitive data types:
+### Supports all Java21 primitive data types:
 * byte 
 * short
 * int
@@ -100,7 +100,7 @@ public class CalculatorMResource {
 * char
 * boolean
 
-### supports primitive wrapper classes:
+### Supports primitive wrapper classes:
 * Byte
 * Short
 * Integer
@@ -110,10 +110,10 @@ public class CalculatorMResource {
 * Character
 * Boolean
 
-### support basic classes:
+### Support basic classes:
 * String
 
-### data structures:
+### Data structures:
 * List
 * Set - syntax is same than **List**
 * Map - syntax for ```Map<String, List<Integer>> someMapName```
@@ -127,7 +127,7 @@ public class CalculatorMResource {
 }
 ```
 
-### optional
+### Optional
 If you want to create optional arguments, you have to wrap the argument in the **class Optional**.
 
 Example:
@@ -152,3 +152,45 @@ Errors:
 * NotOptionalProperty
     * Status Code: 406
     * Message: Property '\{parameter.getName()}' can't have null value!
+
+### POJO (Record)
+For create POJO in Java use ```Record```! Classic remapping from JSON to Object.
+
+Example:
+```java
+public record ArgumentMProperty(
+        Double value,
+        List<ArgumentMProperty> list
+) {
+}
+```
+
+```java
+@MResource
+public class CalculatorMResource {
+    
+  public double sumArgumentMProperty(ArgumentMProperty args) {
+    // ..
+  }
+}
+```
+
+Syntax:
+```json
+{
+  "argumentsObj": {
+    "value": 1.0,
+    "list": [
+      {
+        "value": 2.0,
+        "list": []
+      }
+    ]
+  }
+}
+```
+
+Errors:
+* ConversionException
+  * Status Code: 406
+  * Message: Error converting JSON to type '\{type.getTypeName()}' \n \{e.getMessage()}

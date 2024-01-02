@@ -1,6 +1,6 @@
 package sk.adambarca.managementframework.impl;
 
-class NotCorrectNumberOfPropertiesException extends RuntimeException {
+final class NotCorrectNumberOfPropertiesException extends RuntimeException {
 
     NotCorrectNumberOfPropertiesException(String errorMessage) {
         super(errorMessage);

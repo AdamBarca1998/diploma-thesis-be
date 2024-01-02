@@ -35,6 +35,7 @@ public final class TypeConversionFactory {
         register(List.class, new ListConversionStrategy(this));
         register(Set.class, new SetConversionStrategy(this));
         register(Map.class, new MapConversionStrategy(this));
+        register(Record.class, new PojoConversionStrategy());
     }
 
     public void register(Class<?> type, TypeConversionStrategy<?> strategy) {
@@ -43,7 +44,18 @@ public final class TypeConversionFactory {
 
     public TypeConversionStrategy<?> getStrategy(Type type) {
         final var strategy = conversionMap.get(type.getTypeName());
+        final var typeName = type.getTypeName();
+
         if (strategy == null) {
+            try {
+                Class<?> clazz = Class.forName(typeName);
+                if (clazz.isRecord()) {
+                    return conversionMap.get(Record.class.getTypeName());
+                }
+            } catch (ClassNotFoundException e) {
+                throw new ConversionStrategyNotFoundException("Class not found: " + typeName);
+            }
+
             throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
         }
 
