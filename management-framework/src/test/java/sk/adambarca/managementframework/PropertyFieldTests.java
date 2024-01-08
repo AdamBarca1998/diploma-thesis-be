@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import sk.adambarca.managementframework.resource.Resource;
-import sk.adambarca.managementframework.testclasses.MemoryMResource;
+import sk.adambarca.managementframework.supportclasses.MemoryMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import sk.adambarca.managementframework.testclasses.ArgumentMProperty;
-import sk.adambarca.managementframework.testclasses.CalculatorMResource;
+import sk.adambarca.managementframework.supportclasses.Argument;
+import sk.adambarca.managementframework.supportclasses.CalculatorMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -161,10 +161,7 @@ class PropertyTests extends AbstractTests {
             @Test
             void listType() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
-                final var numbersArray = objectMapper.createArrayNode()
-                        .add(1)
-                        .addNull()
-                        .add(2);
+                final var numbersArray = objectMapper.createArrayNode().add(1).addNull().add(2);
                 params.set("numbers", numbersArray);
 
                 final var request = HttpRequest.newBuilder()
@@ -202,14 +199,8 @@ class PropertyTests extends AbstractTests {
             void nestedLists() throws URISyntaxException, IOException, InterruptedException {
                 final var params = objectMapper.createObjectNode();
                 final var numbersArray = objectMapper.createArrayNode()
-                        .add(objectMapper.createArrayNode()
-                                .add(1)
-                                .add(2)
-                        )
-                        .add(objectMapper.createArrayNode()
-                                .add(-1)
-                                .add(5)
-                        );
+                        .add(objectMapper.createArrayNode().add(1).add(2))
+                        .add(objectMapper.createArrayNode().add(-1).add(5));
                 params.set("numbers", numbersArray);
 
                 final var request = HttpRequest.newBuilder()
@@ -348,16 +339,16 @@ class PropertyTests extends AbstractTests {
         @Test
         void sumArgumentMProperty() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("args", new ArgumentMProperty(
+                    Map.entry("args", new Argument(
                             1.0,
                             List.of(
-                                    new ArgumentMProperty(
+                                    new Argument(
                                             2.0,
                                             List.of()
                                     ),
-                                    new ArgumentMProperty(
+                                    new Argument(
                                             3.0,
-                                            List.of(new ArgumentMProperty(
+                                            List.of(new Argument(
                                                     4.0,
                                                     List.of()
                                             ))

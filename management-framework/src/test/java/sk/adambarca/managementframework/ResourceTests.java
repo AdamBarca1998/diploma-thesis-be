@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import sk.adambarca.managementframework.resource.Resource;
-import sk.adambarca.managementframework.testclasses.CalculatorMResource;
+import sk.adambarca.managementframework.supportclasses.CalculatorMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

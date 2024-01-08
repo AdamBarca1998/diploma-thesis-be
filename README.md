@@ -112,6 +112,7 @@ public class CalculatorMResource {
 
 ### Support basic classes:
 * String
+* Enum
 
 ### Data structures:
 * List
@@ -158,9 +159,9 @@ For create POJO in Java use ```Record```! Classic remapping from JSON to Object.
 
 Example:
 ```java
-public record ArgumentMProperty(
+public record Argument(
         Double value,
-        List<ArgumentMProperty> list
+        List<Argument> list
 ) {
 }
 ```
@@ -169,7 +170,7 @@ public record ArgumentMProperty(
 @MResource
 public class CalculatorMResource {
     
-  public double sumArgumentMProperty(ArgumentMProperty args) {
+  public double sumArgumentMProperty(Argument args) {
     // ..
   }
 }
@@ -178,7 +179,7 @@ public class CalculatorMResource {
 Syntax:
 ```json
 {
-  "argumentsObj": {
+  "args": {
     "value": 1.0,
     "list": [
       {

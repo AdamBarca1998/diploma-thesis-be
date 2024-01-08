@@ -1,4 +1,4 @@
-package sk.adambarca.managementframework.testclasses;
+package sk.adambarca.managementframework.supportclasses;
 
 import sk.adambarca.managementframework.resource.MResource;
 
@@ -87,7 +87,7 @@ public final class CalculatorMResource {
                 .sum();
     }
 
-    public double sumArgumentMProperty(ArgumentMProperty args) {
+    public double sumArgumentMProperty(Argument args) {
         double sum = 0;
 
         if (args != null) {
@@ -101,5 +101,13 @@ public final class CalculatorMResource {
         }
 
         return sum;
+    }
+
+    public double sumByEnum(List<Double> numbers, Operator operator) {
+        return switch (operator) {
+            case ADD -> numbers.stream().mapToDouble(Double::doubleValue).sum();
+            case SUB -> numbers.stream().reduce(0.0, (a, b) -> a - b);
+            default -> throw new RuntimeException("Unknown operator " + operator);
+        };
     }
 }

@@ -1,4 +1,4 @@
-package sk.adambarca.managementframework.testclasses;
+package sk.adambarca.managementframework.supportclasses;
 
 import sk.adambarca.managementframework.resource.MResource;
 

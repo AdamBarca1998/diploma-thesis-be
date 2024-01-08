@@ -6,7 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 
-abstract class AbstractTests {
+public abstract class AbstractTests {
 
     private static final String SCHEME = "http";
     private static final String MANAGEMENT_PATH = "/management";

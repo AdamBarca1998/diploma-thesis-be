@@ -36,10 +36,11 @@ public final class TypeConversionFactory {
         register(Set.class, new SetConversionStrategy(this));
         register(Map.class, new MapConversionStrategy(this));
         register(Record.class, new PojoConversionStrategy());
+        register(Enum.class, new EnumConversionStrategy());
     }
 
-    public void register(Class<?> type, TypeConversionStrategy<?> strategy) {
-        conversionMap.put(type.getTypeName(), strategy);
+    public void register(Class<?> clazz, TypeConversionStrategy<?> strategy) {
+        conversionMap.put(clazz.getTypeName(), strategy);
     }
 
     public TypeConversionStrategy<?> getStrategy(Type type) {
@@ -51,6 +52,8 @@ public final class TypeConversionFactory {
                 Class<?> clazz = Class.forName(typeName);
                 if (clazz.isRecord()) {
                     return conversionMap.get(Record.class.getTypeName());
+                } else if (clazz.isEnum()) {
+                    return conversionMap.get(Enum.class.getTypeName());
                 }
             } catch (ClassNotFoundException e) {
                 throw new ConversionStrategyNotFoundException("Class not found: " + typeName);
