@@ -26,4 +26,8 @@ public interface TypeConversionStrategy<T> {
             return type;
         }
     }
+
+    default boolean isWholeNumber(double value) {
+        return value % 1 == 0;
+    }
 }

@@ -8,6 +8,10 @@ final class DoubleConversionStrategy implements TypeConversionStrategy<Double> {
 
     @Override
     public Double convert(JsonNode json, Type type) {
-        return json.asDouble();
+        if (json.isDouble()) {
+            return json.asDouble();
+        }
+
+        throw new NotValidTypeException(STR."The \{json.asText()} is not type Double or double!");
     }
 }

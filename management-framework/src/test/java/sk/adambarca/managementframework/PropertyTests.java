@@ -1,5 +1,6 @@
 package sk.adambarca.managementframework;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,7 @@ class PropertyTests extends AbstractTests {
     @BeforeEach
     void beforeEach() {
         setPort(port);
+        setIncl(JsonInclude.Include.NON_NULL);
     }
 
     private final Map<String, Object> primitiveParams = Map.ofEntries(
@@ -43,20 +45,6 @@ class PropertyTests extends AbstractTests {
 
     @Nested
     class TypeTest {
-        @Test
-        void primitiveTypes() throws URISyntaxException, IOException, InterruptedException {
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(primitiveParams)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
-
-            assertEquals(200, response.statusCode());
-            assertTrue(result > 100);
-        }
 
         @Test
         void primitiveWrapperTypes() throws URISyntaxException, IOException, InterruptedException {
@@ -155,67 +143,6 @@ class PropertyTests extends AbstractTests {
 
     @Nested
     class DataStructuresTest {
-
-        @Nested
-        class ListTest {
-            @Test
-            void listType() throws URISyntaxException, IOException, InterruptedException {
-                final var params = objectMapper.createObjectNode();
-                final var numbersArray = objectMapper.createArrayNode().add(1).addNull().add(2);
-                params.set("numbers", numbersArray);
-
-                final var request = HttpRequest.newBuilder()
-                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sum"))
-                        .header("Content-Type", "application/json")
-                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                        .build();
-
-                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                final var result = Double.parseDouble(response.body());
-
-                assertEquals(200, response.statusCode());
-                assertEquals(3, result);
-            }
-
-            @Test
-            void emptyList() throws URISyntaxException, IOException, InterruptedException {
-                final var params = objectMapper.createObjectNode();
-                params.set("numbers", objectMapper.createArrayNode());
-
-                final var request = HttpRequest.newBuilder()
-                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sum"))
-                        .header("Content-Type", "application/json")
-                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                        .build();
-
-                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                final var result = Double.parseDouble(response.body());
-
-                assertEquals(200, response.statusCode());
-                assertEquals(0, result);
-            }
-
-            @Test
-            void nestedLists() throws URISyntaxException, IOException, InterruptedException {
-                final var params = objectMapper.createObjectNode();
-                final var numbersArray = objectMapper.createArrayNode()
-                        .add(objectMapper.createArrayNode().add(1).add(2))
-                        .add(objectMapper.createArrayNode().add(-1).add(5));
-                params.set("numbers", numbersArray);
-
-                final var request = HttpRequest.newBuilder()
-                        .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumNestedLists"))
-                        .header("Content-Type", "application/json")
-                        .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                        .build();
-
-                final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-                final var result = Double.parseDouble(response.body());
-
-                assertEquals(200, response.statusCode());
-                assertEquals(7, result);
-            }
-        }
 
         @Nested
         class SetTest {

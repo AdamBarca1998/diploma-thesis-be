@@ -1,5 +1,6 @@
 package sk.adambarca.managementframework;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URI;
@@ -15,8 +16,13 @@ public abstract class AbstractTests {
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
-    public void setPort(int portS) {
-        port = portS;
+    public void setIncl(JsonInclude.Include incl) {
+        objectMapper.setSerializationInclusion(incl);
+        objectMapper.nullNode();
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     protected final HttpClient client = HttpClient.newBuilder()

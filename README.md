@@ -90,8 +90,24 @@ public class CalculatorMResource {
 ```
 
 
-### Supports all Java21 primitive data types:
-* byte 
+### Supports all Java21 primitives and their wrappers
+The framework supports all Java 21 primitives and their corresponding wrapper classes.
+
+#### byte and Byte
+Errors:
+* NotValidTypeException
+  * Status Code: 406
+  * Message: "The \{ _value } is not type Byte or byte!"
+* NotValidTypeException
+  * Status Code: 406
+  * Message: "The \{ _value } is out of range for byte!"
+* NotValidTypeException
+  * Status Code: 406
+  * Message: "Using 'null' directly for Byte or byte is not allowed. 
+  If you intend to represent an optional value, it's recommended to use the Optional wrapper. 
+  For example, you can use Optional<Byte>."
+
+
 * short
 * int
 * long

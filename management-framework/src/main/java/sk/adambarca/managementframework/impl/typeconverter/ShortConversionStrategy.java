@@ -8,6 +8,10 @@ final class ShortConversionStrategy implements TypeConversionStrategy<Short> {
 
     @Override
     public Short convert(JsonNode json, Type type) {
-        return json.shortValue();
+        if (json.isShort()) {
+            return json.shortValue();
+        }
+
+        throw new NotValidTypeException(STR."The \{json.asText()} is not type Short or short!");
     }
 }

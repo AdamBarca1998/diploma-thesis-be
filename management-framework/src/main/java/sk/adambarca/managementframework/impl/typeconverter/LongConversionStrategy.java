@@ -8,6 +8,10 @@ final class LongConversionStrategy implements TypeConversionStrategy<Long> {
 
     @Override
     public Long convert(JsonNode json, Type type) {
-        return json.asLong();
+        if (json.isLong()) {
+            return json.asLong();
+        }
+
+        throw new NotValidTypeException(STR."The \{json.asText()} is not type Long or long!");
     }
 }

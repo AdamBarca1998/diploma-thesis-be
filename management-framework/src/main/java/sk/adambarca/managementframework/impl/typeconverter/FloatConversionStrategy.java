@@ -8,6 +8,10 @@ final class FloatConversionStrategy implements TypeConversionStrategy<Float> {
 
     @Override
     public Float convert(JsonNode json, Type type) {
-        return json.floatValue();
+        if (json.isFloat()) {
+            return json.floatValue();
+        }
+
+        throw new NotValidTypeException(STR."The \{json.asText()} is not type Float or float!");
     }
 }
