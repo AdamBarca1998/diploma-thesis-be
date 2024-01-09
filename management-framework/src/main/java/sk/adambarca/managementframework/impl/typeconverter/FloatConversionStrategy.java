@@ -14,4 +14,9 @@ final class FloatConversionStrategy implements TypeConversionStrategy<Float> {
 
         throw new NotValidTypeException(STR."The \{json.asText()} is not type Float or float!");
     }
+
+    @Override
+    public String getTypeName() {
+        return "Float or float";
+    }
 }

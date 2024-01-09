@@ -30,4 +30,9 @@ final class OptionalConversionStrategy implements TypeConversionStrategy<Optiona
             throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
         }
     }
+
+    @Override
+    public String getTypeName() {
+        return "Optional";
+    }
 }

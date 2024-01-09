@@ -297,4 +297,9 @@ class PropertyTests extends AbstractTests {
             assertEquals(10.0, result);
         }
     }
+
+    @Override
+    protected String getTypeName() {
+        return null;
+    }
 }

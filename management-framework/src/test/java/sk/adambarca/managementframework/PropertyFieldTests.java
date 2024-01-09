@@ -31,6 +31,11 @@ public class PropertyFieldTests extends AbstractTests {
         setPort(port);
     }
 
+    @Override
+    protected String getTypeName() {
+        return null;
+    }
+
     @Nested
     class HideTest {
 

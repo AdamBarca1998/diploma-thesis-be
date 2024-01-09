@@ -18,7 +18,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class ByteTests extends AbstractTests {
+class ShortTests extends AbstractTests {
 
     @LocalServerPort
     private int port;
@@ -33,11 +33,11 @@ class ByteTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final byte _byte = 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _byte));
+            final short _short = 1;
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _short));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -46,7 +46,7 @@ class ByteTests extends AbstractTests {
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_byte + 1, result);
+            assertEquals(_short + 1, result);
         }
     }
 
@@ -56,10 +56,10 @@ class ByteTests extends AbstractTests {
         @Test
         void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
             final double _value = 4.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _value));
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -73,10 +73,10 @@ class ByteTests extends AbstractTests {
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", objectMapper.nullNode()));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -90,11 +90,11 @@ class ByteTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = -129; // min is -128
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _value));
+            final var _value = -32769; // min is -32768
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -103,16 +103,16 @@ class ByteTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(_value)), result);
         }
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = 128; // max is 127
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _value));
+            final var _value = 32768; // max is 32767
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -121,12 +121,12 @@ class ByteTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(_value)), result);
         }
     }
 
     @Override
     protected String getTypeName() {
-        return "Byte or byte";
+        return "Short or short";
     }
 }

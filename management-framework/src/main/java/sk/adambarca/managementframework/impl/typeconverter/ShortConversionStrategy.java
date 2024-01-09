@@ -1,17 +1,24 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import java.lang.reflect.Type;
-
-final class ShortConversionStrategy implements TypeConversionStrategy<Short> {
+final class ShortConversionStrategy extends NumericConversionStrategy<Short> {
 
     @Override
-    public Short convert(JsonNode json, Type type) {
-        if (json.isShort()) {
-            return json.shortValue();
-        }
+    protected Short convertToNumeric(double value) {
+        return (short) value;
+    }
 
-        throw new NotValidTypeException(STR."The \{json.asText()} is not type Short or short!");
+    @Override
+    protected double getMinValue() {
+        return Short.MIN_VALUE;
+    }
+
+    @Override
+    protected double getMaxValue() {
+        return Short.MAX_VALUE;
+    }
+
+    @Override
+    public String getTypeName() {
+        return "Short or short";
     }
 }

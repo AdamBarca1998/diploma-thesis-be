@@ -35,7 +35,7 @@ public final class TypeConversionFactory {
         register(List.class, new ListConversionStrategy(this));
         register(Set.class, new SetConversionStrategy(this));
         register(Map.class, new MapConversionStrategy(this));
-        register(Record.class, new PojoConversionStrategy());
+        register(Record.class, new RecordConversionStrategy());
         register(Enum.class, new EnumConversionStrategy());
     }
 

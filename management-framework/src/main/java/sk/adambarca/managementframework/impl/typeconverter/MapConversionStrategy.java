@@ -41,4 +41,9 @@ final class MapConversionStrategy implements TypeConversionStrategy<Map<?, ?>> {
             throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
         }
     }
+
+    @Override
+    public String getTypeName() {
+        return "Map";
+    }
 }

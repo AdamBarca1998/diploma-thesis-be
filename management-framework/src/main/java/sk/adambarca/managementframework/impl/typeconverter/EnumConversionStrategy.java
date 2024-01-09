@@ -18,4 +18,9 @@ final class EnumConversionStrategy implements TypeConversionStrategy<Enum<?>> {
             throw new ConversionException(STR."Error converting JSON to type '\{type.getTypeName()}' \n\{e.getMessage()}");
         }
     }
+
+    @Override
+    public String getTypeName() {
+        return "Enum";
+    }
 }

@@ -27,7 +27,13 @@ public interface TypeConversionStrategy<T> {
         }
     }
 
-    default boolean isWholeNumber(double value) {
-        return value % 1 == 0;
+    default void throwIfNull(JsonNode json) {
+        if (json.isNull()) {
+            throw new NotValidTypeException(STR."Using 'null' directly for \{getTypeName()} is not allowed." +
+                    " If you intend to represent an optional value, it's recommended to use the Optional wrapper." +
+                    " For example, you can use Optional<Byte>.");
+        }
     }
+
+    String getTypeName();
 }

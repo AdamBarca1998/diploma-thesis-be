@@ -55,4 +55,9 @@ class ResourceTests extends AbstractTests {
         assertEquals(200, response.statusCode());
         assertEquals(CalculatorMResource.class.getSimpleName(), resource.type());
     }
+
+    @Override
+    protected String getTypeName() {
+        return null;
+    }
 }

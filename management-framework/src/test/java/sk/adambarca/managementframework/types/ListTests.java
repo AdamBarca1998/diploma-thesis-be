@@ -112,4 +112,9 @@ class ListTests extends AbstractTests {
             assertEquals(7, result);
         }
     }
+
+    @Override
+    protected String getTypeName() {
+        return null;
+    }
 }

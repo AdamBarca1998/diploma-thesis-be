@@ -15,4 +15,9 @@ final class CharacterConversionStrategy implements TypeConversionStrategy<Charac
 
         return value.isEmpty() ? '\u0000' : value.charAt(0);
     }
+
+    @Override
+    public String getTypeName() {
+        return "Character or char";
+    }
 }

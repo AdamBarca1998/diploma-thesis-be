@@ -14,4 +14,9 @@ final class IntegerConversionStrategy implements TypeConversionStrategy<Integer>
 
         throw new NotValidTypeException(STR."The \{json.asText()} is not type Integer or int!");
     }
+
+    @Override
+    public String getTypeName() {
+        return "Integer or int";
+    }
 }

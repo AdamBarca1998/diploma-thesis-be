@@ -34,4 +34,9 @@ final class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
             throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
         }
     }
+
+    @Override
+    public String getTypeName() {
+        return "Set";
+    }
 }

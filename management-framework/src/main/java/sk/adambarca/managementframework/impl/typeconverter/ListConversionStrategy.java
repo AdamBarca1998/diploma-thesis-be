@@ -33,4 +33,9 @@ final class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
             throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
         }
     }
+
+    @Override
+    public String getTypeName() {
+        return "List";
+    }
 }

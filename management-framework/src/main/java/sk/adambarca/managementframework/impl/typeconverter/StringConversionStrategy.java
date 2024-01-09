@@ -10,4 +10,9 @@ final class StringConversionStrategy implements TypeConversionStrategy<String> {
     public String convert(JsonNode json, Type type) {
         return json.asText();
     }
+
+    @Override
+    public String getTypeName() {
+        return "String";
+    }
 }

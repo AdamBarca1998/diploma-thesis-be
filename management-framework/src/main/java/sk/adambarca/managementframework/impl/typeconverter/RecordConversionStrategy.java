@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.lang.reflect.Type;
 
-final class PojoConversionStrategy implements TypeConversionStrategy<Record> {
+final class RecordConversionStrategy implements TypeConversionStrategy<Record> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -17,5 +17,10 @@ final class PojoConversionStrategy implements TypeConversionStrategy<Record> {
         } catch (IOException e) {
             throw new ConversionException(STR."Error converting JSON to type '\{type.getTypeName()}' \n\{e.getMessage()}");
         }
+    }
+
+    @Override
+    public String getTypeName() {
+        return "Record";
     }
 }

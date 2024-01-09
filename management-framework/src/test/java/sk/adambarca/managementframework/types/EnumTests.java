@@ -67,4 +67,9 @@ class EnumTests extends AbstractTests {
         assertEquals(200, response.statusCode());
         assertEquals(3.0, result);
     }
+
+    @Override
+    protected String getTypeName() {
+        return null;
+    }
 }

@@ -34,4 +34,20 @@ public abstract class AbstractTests {
 
         return new URI(SCHEME, null, SERVER, port, path, null, null);
     }
+
+    protected String getNotTypeErrorMsg(String _value) {
+        return STR."The \{_value} is not of type \{getTypeName()}!";
+    }
+
+    protected String getRangeErrorMsg(String _value) {
+        return STR."The \{ _value } is out of range for \{getTypeName()}!";
+    }
+
+    protected String getNullErrorMsg() {
+        return STR."Using 'null' directly for \{getTypeName()} is not allowed." +
+                " If you intend to represent an optional value, it's recommended to use the Optional wrapper." +
+                " For example, you can use Optional<Byte>.";
+    }
+
+    protected abstract String getTypeName();
 }

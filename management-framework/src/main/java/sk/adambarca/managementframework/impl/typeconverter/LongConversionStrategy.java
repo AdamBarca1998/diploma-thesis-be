@@ -14,4 +14,9 @@ final class LongConversionStrategy implements TypeConversionStrategy<Long> {
 
         throw new NotValidTypeException(STR."The \{json.asText()} is not type Long or long!");
     }
+
+    @Override
+    public String getTypeName() {
+        return "Long or long";
+    }
 }

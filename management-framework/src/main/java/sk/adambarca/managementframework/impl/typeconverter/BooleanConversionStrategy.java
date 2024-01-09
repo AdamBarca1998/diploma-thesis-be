@@ -14,4 +14,9 @@ final class BooleanConversionStrategy implements TypeConversionStrategy<Boolean>
 
         throw new NotValidTypeException(STR."The \{json.asText()} is not type Integer or int!");
     }
+
+    @Override
+    public String getTypeName() {
+        return "Boolean or boolean";
+    }
 }

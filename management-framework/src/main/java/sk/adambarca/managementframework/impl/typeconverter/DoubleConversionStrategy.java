@@ -14,4 +14,9 @@ final class DoubleConversionStrategy implements TypeConversionStrategy<Double> {
 
         throw new NotValidTypeException(STR."The \{json.asText()} is not type Double or double!");
     }
+
+    @Override
+    public String getTypeName() {
+        return "Double or double";
+    }
 }
