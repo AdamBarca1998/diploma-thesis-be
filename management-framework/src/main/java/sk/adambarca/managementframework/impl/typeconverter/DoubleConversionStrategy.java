@@ -1,18 +1,22 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.math.BigDecimal;
 
-import java.lang.reflect.Type;
-
-final class DoubleConversionStrategy implements TypeConversionStrategy<Double> {
+final class DoubleConversionStrategy extends NumericConversionStrategy<Double> {
 
     @Override
-    public Double convert(JsonNode json, Type type) {
-        if (json.isDouble()) {
-            return json.asDouble();
-        }
+    protected Double convertToNumeric(double value) {
+        return value;
+    }
 
-        throw new NotValidTypeException(STR."The \{json.asText()} is not type Double or double!");
+    @Override
+    protected BigDecimal getMinValue() {
+        return BigDecimal.valueOf(Double.MIN_VALUE);
+    }
+
+    @Override
+    protected BigDecimal getMaxValue() {
+        return BigDecimal.valueOf(Double.MAX_VALUE);
     }
 
     @Override

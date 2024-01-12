@@ -10,6 +10,7 @@ import sk.adambarca.managementframework.ManagementFrameworkApplication;
 import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -18,7 +19,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class FloatTests extends AbstractTests {
+class DoubleTests extends AbstractTests {
 
     @LocalServerPort
     private int port;
@@ -33,11 +34,11 @@ class FloatTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final float _float = 0.5f;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _float));
+            final double _double = 0.5;
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _double));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -46,16 +47,16 @@ class FloatTests extends AbstractTests {
             final var result = Float.parseFloat(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_float + 1, result);
+            assertEquals(_double + 1, result);
         }
 
         @Test
         void testOnInteger() throws URISyntaxException, IOException, InterruptedException {
             final int _int = 4;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _int));
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _int));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -73,10 +74,10 @@ class FloatTests extends AbstractTests {
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", objectMapper.nullNode()));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -90,11 +91,11 @@ class FloatTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Float.MIN_VALUE - 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _value));
+            final var _value = BigDecimal.valueOf(Double.MIN_VALUE).subtract(BigDecimal.ONE);
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _value));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -103,16 +104,16 @@ class FloatTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg("-1.0") , result); // rounded
         }
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Float.MAX_VALUE + 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _value));
+            final var _value = BigDecimal.valueOf(Double.MAX_VALUE).add(BigDecimal.ONE);
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _value));
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -127,6 +128,6 @@ class FloatTests extends AbstractTests {
 
     @Override
     protected String getTypeName() {
-        return "Float or float";
+        return "Double or double";
     }
 }
