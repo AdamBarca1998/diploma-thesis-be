@@ -13,7 +13,7 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
 
         final var value = json.decimalValue();
 
-        if (!isWholeNumber(value.doubleValue())) {
+        if (!isWholeNumber(type) && !isWholeNumber(value.doubleValue())) {
             throw new NotValidTypeException(STR."The \{json.asText()} is not of type \{getTypeName()}!");
         }
 
@@ -26,6 +26,10 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
 
     protected boolean isWholeNumber(double value) {
         return value % 1 == 0;
+    }
+
+    protected boolean isWholeNumber(Type type) {
+        return type.getTypeName().equals(Float.TYPE.getTypeName()) || type.getTypeName().equals(Double.TYPE.getTypeName());
     }
 
     protected abstract T convertToNumeric(double value);

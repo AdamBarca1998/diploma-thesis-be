@@ -107,7 +107,6 @@ public class CalculatorMResource {
 ```
 
 ### Supports all Java21 primitives and their wrappers
-The framework supports all Java 21 primitives and their corresponding wrapper classes.
 
 - [Primitives](docs/readme/primitives.md)
 

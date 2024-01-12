@@ -203,6 +203,48 @@ Url:
 Body:
 ```json 
 {
-  "_float": 1
+  "_float": 0.5
+}
+```
+----------------------------------
+
+### Double and double
+
+**Errors:**
+
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "The \{ _value } is not type of Double or double!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "The \{ _value } is out of range for Double or double!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "Using 'null' directly for Double or double is not allowed.
+      If you intend to represent an optional value, it's recommended to use the Optional wrapper.
+      For example, you can use Optional\<Double>."
+
+**Example:**
+
+Class:
+```java
+@MResource
+public class PrimitivesMResource {
+
+  public double doubleAddOne(double _double) {
+    return ++_double;
+  }
+}
+```
+
+Url:
+```
+[server]:[port]/management/PrimitivesMResource/doubleAddOne
+```
+
+Body:
+```json 
+{
+  "_double": 0.5
 }
 ```
