@@ -55,8 +55,8 @@ class ByteTests extends AbstractTests {
 
         @Test
         void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
-            final double _value = 4.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _value));
+            final double _double = 4.5;
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _double));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
@@ -68,7 +68,7 @@ class ByteTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(String.valueOf(_value)), result);
+            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
         }
 
         @Test
@@ -90,8 +90,8 @@ class ByteTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Byte.MIN_VALUE - 1; // min is -128
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _value));
+            final var value = Byte.MIN_VALUE - 1; // min is -128
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
@@ -103,13 +103,13 @@ class ByteTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
         }
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Byte.MAX_VALUE + 1; // max is 127
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _value));
+            final var value = Byte.MAX_VALUE + 1; // max is 127
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
@@ -121,7 +121,7 @@ class ByteTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
         }
     }
 

@@ -18,7 +18,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class IntTests extends AbstractTests {
+class BoolTests extends AbstractTests {
 
     @LocalServerPort
     private int port;
@@ -33,20 +33,46 @@ class IntTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final byte _int = 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", _int));
+            final boolean boolPrim = true;
+            final Boolean boolWrap = true;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("boolPrim", boolPrim),
+                    Map.entry("boolWrap", boolWrap)
+            );
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
 
             final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Integer.parseInt(response.body());
+            final var result = Boolean.parseBoolean(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_int + 1, result);
+            assertEquals(boolPrim && boolWrap, result);
+        }
+
+        @Test
+        void testOnZeroAndOne() throws URISyntaxException, IOException, InterruptedException {
+            final int boolPrim = 0;
+            final int boolWrap = 1;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("boolPrim", boolPrim),
+                    Map.entry("boolWrap", boolWrap)
+            );
+
+            final var request = HttpRequest.newBuilder()
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+                    .build();
+
+            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var result = Boolean.parseBoolean(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(false, result);
         }
     }
 
@@ -55,11 +81,14 @@ class IntTests extends AbstractTests {
 
         @Test
         void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
-            final double _int = 4.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", _int));
+            final double _double = 0.5;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("boolPrim", _double),
+                    Map.entry("boolWrap", true)
+            );
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -68,15 +97,18 @@ class IntTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(String.valueOf(_int)), result);
+            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
         }
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("boolPrim", objectMapper.nullNode()),
+                    Map.entry("boolWrap", true)
+            );
 
             final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
                     .build();
@@ -87,46 +119,10 @@ class IntTests extends AbstractTests {
             assertEquals(406, response.statusCode());
             assertEquals(getNullErrorMsg() , result);
         }
-
-        @Test
-        void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var value = Integer.MIN_VALUE - 1L; // min is -2^31
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", value));
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = response.body();
-
-            assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
-        }
-
-        @Test
-        void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var value = Integer.MAX_VALUE + 1L; // 2^31-1
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", value));
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = response.body();
-
-            assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
-        }
     }
 
     @Override
     protected String getTypeName() {
-        return "Integer or int";
+        return "Boolean or boolean";
     }
 }

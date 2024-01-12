@@ -90,8 +90,8 @@ class FloatTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Float.MIN_VALUE - 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _value));
+            final var value = Float.MIN_VALUE - 1;
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
@@ -103,13 +103,13 @@ class FloatTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
         }
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Float.MAX_VALUE + 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _value));
+            final var value = Float.MAX_VALUE + 1;
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
@@ -121,7 +121,7 @@ class FloatTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
         }
     }
 

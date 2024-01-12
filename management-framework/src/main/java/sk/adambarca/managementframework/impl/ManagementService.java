@@ -33,7 +33,7 @@ public final class ManagementService {
         return annotationsScanner.findResourceByType(type);
     }
 
-    Optional<Object> callFunction(String classType, String functionName, Optional<Map<String, Object>> params)
+    Object callFunction(String classType, String functionName, Optional<Map<String, Object>> params)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
         final Object clazz = annotationsScanner.getClassByClassType(classType)
@@ -43,7 +43,7 @@ public final class ManagementService {
                 .findFirst()
                 .orElseThrow(() -> new NoSuchMethodException("Method '" + functionName + "' not found!"));
 
-        return Optional.ofNullable(invokeMethodWithParams(clazz, method, params));
+        return invokeMethodWithParams(clazz, method, params);
     }
 
     private Object invokeMethodWithParams(Object clazz, Method method, Optional<Map<String, Object>> params) throws InvocationTargetException, IllegalAccessException {

@@ -91,8 +91,8 @@ class DoubleTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = BigDecimal.valueOf(Double.MIN_VALUE).subtract(BigDecimal.ONE);
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _value));
+            final var value = BigDecimal.valueOf(Double.MIN_VALUE).subtract(BigDecimal.ONE);
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
@@ -109,8 +109,8 @@ class DoubleTests extends AbstractTests {
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = BigDecimal.valueOf(Double.MAX_VALUE).add(BigDecimal.ONE);
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _value));
+            final var value = BigDecimal.valueOf(Double.MAX_VALUE).add(BigDecimal.ONE);
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
@@ -122,7 +122,7 @@ class DoubleTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
         }
     }
 

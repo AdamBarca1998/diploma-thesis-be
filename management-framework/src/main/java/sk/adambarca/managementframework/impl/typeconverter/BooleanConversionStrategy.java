@@ -8,11 +8,27 @@ final class BooleanConversionStrategy implements TypeConversionStrategy<Boolean>
 
     @Override
     public Boolean convert(JsonNode json, Type type) {
-        if (json.isBoolean()) {
-            return json.asBoolean();
+        throwIfNull(json);
+
+        if (!json.isBoolean() && !json.isInt()) {
+            throwNotType(json);
         }
 
-        throw new NotValidTypeException(STR."The \{json.asText()} is not type Integer or int!");
+        if (json.isInt()) {
+            final var number = json.asInt();
+
+            if (number == 0) {
+                return false;
+            }
+
+            if (number == 1) {
+                return true;
+            }
+
+            throwNotType(json);
+        }
+
+        return json.asBoolean();
     }
 
     @Override

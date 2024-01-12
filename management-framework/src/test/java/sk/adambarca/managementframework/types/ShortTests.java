@@ -55,8 +55,8 @@ class ShortTests extends AbstractTests {
 
         @Test
         void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
-            final double _value = 4.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
+            final double value = 4.5;
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
@@ -68,7 +68,7 @@ class ShortTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(String.valueOf(_value)), result);
+            assertEquals(getNotTypeErrorMsg(String.valueOf(value)), result);
         }
 
         @Test
@@ -90,8 +90,8 @@ class ShortTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Short.MIN_VALUE - 1; // min is -32768
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
+            final var value = Short.MIN_VALUE - 1; // min is -32768
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
@@ -103,13 +103,13 @@ class ShortTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)), result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)), result);
         }
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = Short.MAX_VALUE + 1; // max is 32767
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
+            final var value = Short.MAX_VALUE + 1; // max is 32767
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_short", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "shortAddOne"))
@@ -121,7 +121,7 @@ class ShortTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)), result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)), result);
         }
     }
 

@@ -14,11 +14,11 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
         final var value = json.decimalValue();
 
         if (!isWholeNumber(type) && !isWholeNumber(value.doubleValue())) {
-            throw new NotValidTypeException(STR."The \{json.asText()} is not of type \{getTypeName()}!");
+            throwNotType(json);
         }
 
         if (value.compareTo(getMinValue()) < 0 || value.compareTo(getMaxValue()) > 0) {
-            throw new NotValidTypeException(STR."The \{json.asText()} is out of range for \{getTypeName()}!");
+            throwOutRange(json);
         }
 
         return convertToNumeric(value.doubleValue());

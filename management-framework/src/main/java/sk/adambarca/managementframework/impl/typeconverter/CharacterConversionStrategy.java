@@ -8,12 +8,20 @@ final class CharacterConversionStrategy implements TypeConversionStrategy<Charac
 
     @Override
     public Character convert(JsonNode json, Type type) {
-        var value = json.asText();
-        if (value.length() > 1) {
-            throw new IllegalArgumentException(STR."Argument \{value} must be character!");
+        throwIfNull(json);
+
+        final var string = json.asText();
+        final var number = json.asInt();
+
+        if (number < Character.MIN_VALUE || number > Character.MAX_VALUE) {
+            throwOutRange(json);
         }
 
-        return value.isEmpty() ? '\u0000' : value.charAt(0);
+        if (string.length() > 1) {
+            throwNotType(json);
+        }
+
+        return string.isEmpty() ? '\u0000' : string.charAt(0);
     }
 
     @Override

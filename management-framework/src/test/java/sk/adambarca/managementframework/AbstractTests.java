@@ -35,12 +35,12 @@ public abstract class AbstractTests {
         return new URI(SCHEME, null, SERVER, port, path, null, null);
     }
 
-    protected String getNotTypeErrorMsg(String _value) {
-        return STR."The \{_value} is not of type \{getTypeName()}!";
+    protected String getNotTypeErrorMsg(String value) {
+        return STR."The \{value} is not of type \{getTypeName()}!";
     }
 
-    protected String getRangeErrorMsg(String _value) {
-        return STR."The \{ _value } is out of range for \{getTypeName()}!";
+    protected String getRangeErrorMsg(String value) {
+        return STR."The \{ value } is out of range for \{getTypeName()}!";
     }
 
     protected String getNullErrorMsg() {

@@ -91,8 +91,8 @@ class LongTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = BigInteger.valueOf(Long.MIN_VALUE).subtract(BigInteger.ONE); // min is -2^63
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", _value));
+            final var value = BigInteger.valueOf(Long.MIN_VALUE).subtract(BigInteger.ONE); // min is -2^63
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "longAddOne"))
@@ -104,13 +104,13 @@ class LongTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
         }
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE); // 2^63-1
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", _value));
+            final var value = BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE); // 2^63-1
+            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", value));
 
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(PrimitivesMResource.class.getSimpleName(), "longAddOne"))
@@ -122,7 +122,7 @@ class LongTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg(String.valueOf(_value)) , result);
+            assertEquals(getRangeErrorMsg(String.valueOf(value)) , result);
         }
     }
 

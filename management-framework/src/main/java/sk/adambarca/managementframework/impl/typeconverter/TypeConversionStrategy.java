@@ -35,5 +35,13 @@ public interface TypeConversionStrategy<T> {
         }
     }
 
+    default void throwOutRange(JsonNode json) {
+        throw new NotValidTypeException(STR."The \{json.asText()} is out of range for \{getTypeName()}!");
+    }
+
+    default void throwNotType(JsonNode json) {
+        throw new NotValidTypeException(STR."The \{json.asText()} is not of type \{getTypeName()}!");
+    }
+
     String getTypeName();
 }

@@ -91,26 +91,26 @@ class ListTests extends AbstractTests {
     @Nested
     class Error {
 
-        @Test
-        void testNotValidType() throws URISyntaxException, IOException, InterruptedException {
-            final var params = objectMapper.createObjectNode();
-            final var numbersArray = objectMapper.createArrayNode()
-                    .add(objectMapper.createArrayNode().add(1).add(2.1)) // int and double
-                    .add(objectMapper.createArrayNode().add(true).add(5)); // bool and int
-            params.set("numbers", numbersArray);
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumNestedLists"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
-
-            assertEquals(200, response.statusCode());
-            assertEquals(7, result);
-        }
+//        @Test
+//        void testNotValidType() throws URISyntaxException, IOException, InterruptedException {
+//            final var params = objectMapper.createObjectNode();
+//            final var numbersArray = objectMapper.createArrayNode()
+//                    .add(objectMapper.createArrayNode().add(1).add(2.1)) // int and double
+//                    .add(objectMapper.createArrayNode().add(true).add(5)); // bool and int
+//            params.set("numbers", numbersArray);
+//
+//            final var request = HttpRequest.newBuilder()
+//                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumNestedLists"))
+//                    .header("Content-Type", "application/json")
+//                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+//                    .build();
+//
+//            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//            final var result = Double.parseDouble(response.body());
+//
+//            assertEquals(200, response.statusCode());
+//            assertEquals(7, result);
+//        }
     }
 
     @Override

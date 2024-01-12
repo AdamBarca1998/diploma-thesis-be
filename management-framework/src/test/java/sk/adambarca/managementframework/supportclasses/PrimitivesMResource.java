@@ -5,27 +5,35 @@ import sk.adambarca.managementframework.resource.MResource;
 @MResource
 public class PrimitivesMResource {
 
-    public byte byteAddOne(byte _byte) {
-        return ++_byte;
+    public byte byteAdd(byte bytePrim, Byte byteWrap) {
+        return (byte) (bytePrim + byteWrap);
     }
 
-    public short shortAddOne(short _short) {
-        return ++_short;
+    public short shortAdd(short shortPrim, Short shortWrap) {
+        return (short) (shortPrim + shortWrap);
     }
 
-    public int intAddOne(int _int) {
-        return ++_int;
+    public int intAdd(int intPrim, Integer intWrap) {
+        return intPrim + intWrap;
     }
 
-    public long longAddOne(long _long) {
-        return ++_long;
+    public long longAdd(long longPrim, Long longWrap) {
+        return longPrim + longWrap;
     }
 
-    public float floatAddOne(float _float) {
-        return ++_float;
+    public float floatAdd(float floatPrim, Float floatWrap) {
+        return floatPrim + floatWrap;
     }
 
-    public double doubleAddOne(double _double) {
-        return ++_double;
+    public double doubleAdd(double doublePrim, Double doubleWrap) {
+        return doublePrim + doubleWrap;
+    }
+
+    public String charConcat(char charPrim, Character charWrap) {
+        return STR."\{charPrim}\{charWrap}";
+    }
+
+    public boolean boolAnd(boolean boolPrim, Boolean boolWrap) {
+        return boolPrim && boolWrap;
     }
 }
