@@ -90,7 +90,7 @@ class ShortTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = -32769; // min is -32768
+            final var _value = Short.MIN_VALUE - 1; // min is -32768
             final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
 
             final var request = HttpRequest.newBuilder()
@@ -108,7 +108,7 @@ class ShortTests extends AbstractTests {
 
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
-            final var _value = 32768; // max is 32767
+            final var _value = Short.MAX_VALUE + 1; // max is 32767
             final Map<String, Object> params = Map.ofEntries(Map.entry("_short", _value));
 
             final var request = HttpRequest.newBuilder()

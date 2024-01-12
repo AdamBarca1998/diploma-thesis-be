@@ -3,6 +3,7 @@ package sk.adambarca.managementframework.impl.typeconverter;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 
 abstract class NumericConversionStrategy<T extends Number> implements TypeConversionStrategy<T> {
 
@@ -10,17 +11,17 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
     public T convert(JsonNode json, Type type) {
         throwIfNull(json);
 
-        final double value = json.numberValue().doubleValue();
+        final var value = json.decimalValue();
 
-        if (!isWholeNumber(value)) {
+        if (!isWholeNumber(value.doubleValue())) {
             throw new NotValidTypeException(STR."The \{json.asText()} is not of type \{getTypeName()}!");
         }
 
-        if (value < getMinValue() || value > getMaxValue()) {
+        if (value.compareTo(getMinValue()) < 0 || value.compareTo(getMaxValue()) > 0) {
             throw new NotValidTypeException(STR."The \{json.asText()} is out of range for \{getTypeName()}!");
         }
 
-        return convertToNumeric(value);
+        return convertToNumeric(value.doubleValue());
     }
 
     protected boolean isWholeNumber(double value) {
@@ -29,7 +30,7 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
 
     protected abstract T convertToNumeric(double value);
 
-    protected abstract double getMinValue();
+    protected abstract BigDecimal getMinValue();
 
-    protected abstract double getMaxValue();
+    protected abstract BigDecimal getMaxValue();
 }

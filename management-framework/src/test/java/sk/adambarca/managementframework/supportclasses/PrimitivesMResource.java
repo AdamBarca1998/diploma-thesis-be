@@ -12,4 +12,12 @@ public class PrimitivesMResource {
     public short shortAddOne(short _short) {
         return ++_short;
     }
+
+    public int intAddOne(int _int) {
+        return ++_int;
+    }
+
+    public long longAddOne(long _long) {
+        return ++_long;
+    }
 }

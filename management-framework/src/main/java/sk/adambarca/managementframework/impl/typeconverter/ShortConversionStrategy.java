@@ -1,5 +1,7 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import java.math.BigDecimal;
+
 final class ShortConversionStrategy extends NumericConversionStrategy<Short> {
 
     @Override
@@ -8,13 +10,13 @@ final class ShortConversionStrategy extends NumericConversionStrategy<Short> {
     }
 
     @Override
-    protected double getMinValue() {
-        return Short.MIN_VALUE;
+    protected BigDecimal getMinValue() {
+        return BigDecimal.valueOf(Short.MIN_VALUE);
     }
 
     @Override
-    protected double getMaxValue() {
-        return Short.MAX_VALUE;
+    protected BigDecimal getMaxValue() {
+        return BigDecimal.valueOf(Short.MAX_VALUE);
     }
 
     @Override

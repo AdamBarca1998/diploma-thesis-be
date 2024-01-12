@@ -1,5 +1,7 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
+import java.math.BigDecimal;
+
 final class ByteConversionStrategy extends NumericConversionStrategy<Byte> {
 
     @Override
@@ -8,13 +10,13 @@ final class ByteConversionStrategy extends NumericConversionStrategy<Byte> {
     }
 
     @Override
-    protected double getMinValue() {
-        return Byte.MIN_VALUE;
+    protected BigDecimal getMinValue() {
+        return BigDecimal.valueOf(Byte.MIN_VALUE);
     }
 
     @Override
-    protected double getMaxValue() {
-        return Byte.MAX_VALUE;
+    protected BigDecimal getMaxValue() {
+        return BigDecimal.valueOf(Byte.MAX_VALUE);
     }
 
     @Override

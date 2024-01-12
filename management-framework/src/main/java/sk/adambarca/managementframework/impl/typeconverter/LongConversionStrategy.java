@@ -1,18 +1,22 @@
 package sk.adambarca.managementframework.impl.typeconverter;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import java.math.BigDecimal;
 
-import java.lang.reflect.Type;
-
-final class LongConversionStrategy implements TypeConversionStrategy<Long> {
+final class LongConversionStrategy extends NumericConversionStrategy<Long> {
 
     @Override
-    public Long convert(JsonNode json, Type type) {
-        if (json.isLong()) {
-            return json.asLong();
-        }
+    protected Long convertToNumeric(double value) {
+        return (long) value;
+    }
 
-        throw new NotValidTypeException(STR."The \{json.asText()} is not type Long or long!");
+    @Override
+    protected BigDecimal getMinValue() {
+        return BigDecimal.valueOf(Long.MIN_VALUE);
+    }
+
+    @Override
+    protected BigDecimal getMaxValue() {
+        return BigDecimal.valueOf(Long.MAX_VALUE);
     }
 
     @Override

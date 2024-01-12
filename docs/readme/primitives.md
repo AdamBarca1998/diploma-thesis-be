@@ -1,14 +1,10 @@
-### Supports all Java21 primitives and their wrappers
-The framework supports all Java 21 primitives and their corresponding wrapper classes.
-
-------------------------------------------------
-
-### byte and Byte
+### Byte & byte
 
 **Errors:**
+
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ _value } is not type Byte or byte!"
+    * Message: "The \{ _value } is not of type Byte or byte!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "The \{ _value } is out of range for byte!"
@@ -16,7 +12,7 @@ The framework supports all Java 21 primitives and their corresponding wrapper cl
     * Status Code: 406
     * Message: "Using 'null' directly for Byte or byte is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional<Byte>."
+      For example, you can use Optional\<Byte>."
 
 **Example:**
 
@@ -44,12 +40,13 @@ Body:
 ```
 ----------------------------------
 
-### short and Short
+### Short and short
 
 **Errors:**
+
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ _value } is not type Short or short!"
+    * Message: "The \{ _value } is not of type Short or short!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "The \{ _value } is out of range for Short or short!"
@@ -57,7 +54,7 @@ Body:
     * Status Code: 406
     * Message: "Using 'null' directly for Short or short is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional<Byte>."
+      For example, you can use Optional\<Short>."
 
 **Example:**
 
@@ -85,20 +82,21 @@ Body:
 ```
 ----------------------------------
 
-### int and Integer //TODO:ASDsadsadsada
+### Integer and int
 
 **Errors:**
+
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ _value } is not type Short or short!"
+    * Message: "The \{ _value } is not type of Integer or int!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ _value } is out of range for Short or short!"
+    * Message: "The \{ _value } is out of range for Integer or int!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Short or short is not allowed.
+    * Message: "Using 'null' directly for Integer or int is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional<Byte>."
+      For example, you can use Optional\<Integer>."
 
 **Example:**
 
@@ -107,37 +105,104 @@ Class:
 @MResource
 public class PrimitivesMResource {
 
-  public short intAddOne(int _short) {
-    return ++_short;
+  public int intAddOne(int _int) {
+    return ++_int;
   }
 }
 ```
 
 Url:
 ```
-[server]:[port]/management/PrimitivesMResource/shortAddOne
+[server]:[port]/management/PrimitivesMResource/intAddOne
 ```
 
 Body:
 ```json 
 {
-  "_short": 1
+  "_int": 1
 }
 ```
 ----------------------------------
 
-* long
-* float
-* double
-* char
-* boolean
+### Long and long
 
-### Supports primitive wrapper classes:
-* Byte
-* Short
-* Integer
-* Long
-* Float
-* Double
-* Character
-* Boolean
+**Errors:**
+
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "The \{ _value } is not type of Long or long!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "The \{ _value } is out of range for Long or long!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "Using 'null' directly for Long or long is not allowed.
+      If you intend to represent an optional value, it's recommended to use the Optional wrapper.
+      For example, you can use Optional\<Long>."
+
+**Example:**
+
+Class:
+```java
+@MResource
+public class PrimitivesMResource {
+
+  public long longAddOne(long _long) {
+    return ++_long;
+  }
+}
+```
+
+Url:
+```
+[server]:[port]/management/PrimitivesMResource/longAddOne
+```
+
+Body:
+```json 
+{
+  "_long": 1
+}
+```
+----------------------------------
+
+### Float and float
+
+**Errors:**
+
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "The \{ _value } is not type of Float or float!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "The \{ _value } is out of range for Float or float!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "Using 'null' directly for Float or float is not allowed.
+      If you intend to represent an optional value, it's recommended to use the Optional wrapper.
+      For example, you can use Optional\<Float>."
+
+**Example:**
+
+Class:
+```java
+@MResource
+public class PrimitivesMResource {
+
+  public long floatAddOne(long _float) {
+    return ++_float;
+  }
+}
+```
+
+Url:
+```
+[server]:[port]/management/PrimitivesMResource/floatAddOne
+```
+
+Body:
+```json 
+{
+  "_float": 1
+}
+```
