@@ -27,7 +27,7 @@ public interface TypeConversionStrategy<T> {
         }
     }
 
-    default void throwIfNull(JsonNode json) {
+    default void throwIfNull(JsonNode json) throws NotValidTypeException {
         if (json.isNull()) {
             throw new NotValidTypeException(STR."Using 'null' directly for \{getTypeName()} is not allowed." +
                     " If you intend to represent an optional value, it's recommended to use the Optional wrapper." +
@@ -35,12 +35,12 @@ public interface TypeConversionStrategy<T> {
         }
     }
 
-    default void throwOutRange(JsonNode json) {
-        throw new NotValidTypeException(STR."The \{json.asText()} is out of range for \{getTypeName()}!");
+    default NotValidTypeException getOutRangeException(JsonNode json) {
+        return new NotValidTypeException(STR."The \{json.asText()} is out of range for \{getTypeName()}!");
     }
 
-    default void throwNotType(JsonNode json) {
-        throw new NotValidTypeException(STR."The \{json.asText()} is not of type \{getTypeName()}!");
+    default NotValidTypeException getNotTypeException(JsonNode json) {
+        return new NotValidTypeException(STR."The \{json.asText()} is not of type \{getTypeName()}!");
     }
 
     String getTypeName();

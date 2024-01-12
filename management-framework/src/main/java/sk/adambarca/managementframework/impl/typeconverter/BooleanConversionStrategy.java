@@ -11,7 +11,7 @@ final class BooleanConversionStrategy implements TypeConversionStrategy<Boolean>
         throwIfNull(json);
 
         if (!json.isBoolean() && !json.isInt()) {
-            throwNotType(json);
+            throw getNotTypeException(json);
         }
 
         if (json.isInt()) {
@@ -25,7 +25,7 @@ final class BooleanConversionStrategy implements TypeConversionStrategy<Boolean>
                 return true;
             }
 
-            throwNotType(json);
+            throw getNotTypeException(json);
         }
 
         return json.asBoolean();

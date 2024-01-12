@@ -8,6 +8,12 @@ final class StringConversionStrategy implements TypeConversionStrategy<String> {
 
     @Override
     public String convert(JsonNode json, Type type) {
+        throwIfNull(json);
+
+        if (!json.isTextual()) {
+            throw getNotTypeException(json);
+        }
+
         return json.asText();
     }
 

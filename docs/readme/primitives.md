@@ -7,7 +7,7 @@
     * Message: "The \{ value } is not of type Byte or byte!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for byte!"
+    * Message: "The \{ value } is out of range for Byte or byte!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Byte or byte is not allowed.

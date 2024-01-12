@@ -120,8 +120,13 @@ public class CalculatorMResource {
 * Boolean & boolean
 
 ### Support basic classes:
+
+- [Basic classes](docs/readme/basic-classes.md)
+
 * String
 * Enum
+* Optional
+* Record
 
 ### Data structures:
 * List
@@ -136,71 +141,3 @@ public class CalculatorMResource {
     }
 }
 ```
-
-### Optional
-If you want to create optional arguments, you have to wrap the argument in the **class Optional**.
-
-Example:
-```java
-@MResource
-public class CalculatorMResource {
-
-    public double sumAll(
-            Optional<Double> optionalVariable, 
-            Double notOptiovalVariable
-    ) {
-        return optionalVariable.orElse(0.0) + notOptiovalVariable;
-    }
-}
-```
-
-Errors:
-* NotCorrectNumberOfProperties
-  * Status Code: 406
-  * Message: Method '\{method.getName()}' has \{requiredCount} required properties, not \{params.size()}
-
-* NotOptionalProperty
-    * Status Code: 406
-    * Message: Property '\{parameter.getName()}' can't have null value!
-
-### POJO (Record)
-For create POJO in Java use ```Record```! Classic remapping from JSON to Object.
-
-Example:
-```java
-public record Argument(
-        Double value,
-        List<Argument> list
-) {
-}
-```
-
-```java
-@MResource
-public class CalculatorMResource {
-    
-  public double sumArgumentMProperty(Argument args) {
-    // ..
-  }
-}
-```
-
-Syntax:
-```json
-{
-  "args": {
-    "value": 1.0,
-    "list": [
-      {
-        "value": 2.0,
-        "list": []
-      }
-    ]
-  }
-}
-```
-
-Errors:
-* ConversionException
-  * Status Code: 406
-  * Message: Error converting JSON to type '\{type.getTypeName()}' \n \{e.getMessage()}

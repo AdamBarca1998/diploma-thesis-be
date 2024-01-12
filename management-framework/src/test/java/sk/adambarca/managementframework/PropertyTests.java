@@ -44,25 +44,6 @@ class PropertyTests extends AbstractTests {
     );
 
     @Nested
-    class TypeTest {
-
-        @Test
-        void primitiveWrapperTypes() throws URISyntaxException, IOException, InterruptedException {
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitiveWrappers"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(primitiveParams)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
-
-            assertEquals(200, response.statusCode());
-            assertTrue(result > 100);
-        }
-    }
-
-    @Nested
     class OptionalTest {
         @Test
         void allArgsOptional() throws URISyntaxException, IOException, InterruptedException {

@@ -13,10 +13,13 @@ final class EnumConversionStrategy implements TypeConversionStrategy<Enum<?>> {
     @Override
     public Enum<?> convert(JsonNode json, Type type) {
         try {
-            return objectMapper.treeToValue(json, (Class<Enum>) type);
-        } catch (IOException e) {
-            throw new ConversionException(STR."Error converting JSON to type '\{type.getTypeName()}' \n\{e.getMessage()}");
+            if (!json.isInt()) {
+                return objectMapper.treeToValue(json, (Class<Enum>) type);
+            }
+        } catch (IOException _) {
         }
+
+        throw getNotTypeException(json);
     }
 
     @Override

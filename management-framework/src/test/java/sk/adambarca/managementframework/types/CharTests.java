@@ -97,6 +97,28 @@ class CharTests extends AbstractTests {
             assertEquals(200, response.statusCode());
             assertEquals(STR."\{special}\{charWrap}", result);
         }
+
+        @Test
+        void testOnEmpty() throws URISyntaxException, IOException, InterruptedException {
+            final char empty = '\u0000';
+            final Character charWrap = 'B';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", empty),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var request = HttpRequest.newBuilder()
+                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+                    .build();
+
+            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{empty}\{charWrap}", result);
+        }
     }
 
     @Nested

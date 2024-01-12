@@ -14,11 +14,11 @@ final class CharacterConversionStrategy implements TypeConversionStrategy<Charac
         final var number = json.asInt();
 
         if (number < Character.MIN_VALUE || number > Character.MAX_VALUE) {
-            throwOutRange(json);
+            throw getOutRangeException(json);
         }
 
         if (string.length() > 1) {
-            throwNotType(json);
+            throw getNotTypeException(json);
         }
 
         return string.isEmpty() ? '\u0000' : string.charAt(0);
