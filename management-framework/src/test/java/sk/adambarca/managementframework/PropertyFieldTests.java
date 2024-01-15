@@ -105,20 +105,10 @@ public class PropertyFieldTests extends AbstractTests {
                     .uri(getUri(MemoryMResource.class.getSimpleName()))
                     .GET()
                     .build();
-            final var requestSet = HttpRequest.newBuilder()
-                    .uri(getUri(MemoryMResource.class.getSimpleName(), "setValue"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-            final var requestGet = HttpRequest.newBuilder()
-                    .uri(getUri(MemoryMResource.class.getSimpleName(), "getValue"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(""))
-                    .build();
 
             final var oldResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var responseSet = client.send(requestSet, HttpResponse.BodyHandlers.ofString());
-            final var responseGet = client.send(requestGet, HttpResponse.BodyHandlers.ofString());
+            final var responseSet = callFunction(MemoryMResource.class, "setValue", params);
+            final var responseGet = callFunction(MemoryMResource.class, "getValue", Map.ofEntries());
             final var newResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
             final Resource oldResource = objectMapper.readValue(oldResponse.body(), new TypeReference<>() {});
             final var oldValue = oldResource.properties().stream()
