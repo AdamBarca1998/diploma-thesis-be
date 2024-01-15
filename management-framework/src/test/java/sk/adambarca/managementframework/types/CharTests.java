@@ -12,8 +12,6 @@ import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -41,13 +39,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -63,13 +55,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -85,13 +71,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -107,13 +87,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -132,13 +106,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -152,13 +120,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -173,13 +135,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -194,13 +150,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "charConcat"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

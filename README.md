@@ -129,15 +129,9 @@ public class CalculatorMResource {
 * Record
 
 ### Data structures:
+
+- [Data structures](docs/readme/data-structures.md)
+
 * List
-* Set - syntax is same than **List**
-* Map - syntax for ```Map<String, List<Integer>> someMapName```
-```json 
-{
-    "someMapName": {
-        "key1": [1],
-        "key2": [1, 2],
-        "key3": []
-    }
-}
-```
+* Set
+* Map

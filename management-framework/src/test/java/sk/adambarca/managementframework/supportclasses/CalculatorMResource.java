@@ -68,22 +68,6 @@ public final class CalculatorMResource {
                 .sum();
     }
 
-    public double sumArgumentMProperty(Argument args) {
-        double sum = 0;
-
-        if (args != null) {
-            sum += args.value();
-
-            if (args.list() != null) {
-                for (var nestedObj : args.list()) {
-                    sum += sumArgumentMProperty(nestedObj);
-                }
-            }
-        }
-
-        return sum;
-    }
-
     public double sumByEnum(List<Double> numbers, Operator operator) {
         return switch (operator) {
             case ADD -> numbers.stream().mapToDouble(Double::doubleValue).sum();

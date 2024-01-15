@@ -11,8 +11,6 @@ import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,20 +31,34 @@ class ByteTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final byte _byte = 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _byte));
+            final byte bytePrim = 0;
+            final byte byteWrap = 1;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", bytePrim),
+                    Map.entry("byteWrap", byteWrap)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_byte + 1, result);
+            assertEquals(bytePrim + byteWrap, result);
+        }
+
+        @Test
+        void testOnIntegerPart() throws URISyntaxException, IOException, InterruptedException {
+            final double _double = 1.0;
+            final byte byteWrap = 2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", _double),
+                    Map.entry("byteWrap", byteWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(_double + byteWrap, result);
         }
     }
 
@@ -54,17 +66,14 @@ class ByteTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
+        void testOnDecimalPart() throws URISyntaxException, IOException, InterruptedException {
             final double _double = 4.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", _double));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", _double),
+                    Map.entry("byteWrap", 0)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -73,15 +82,12 @@ class ByteTests extends AbstractTests {
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", objectMapper.nullNode()),
+                    Map.entry("byteWrap", 0)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -91,15 +97,12 @@ class ByteTests extends AbstractTests {
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = Byte.MIN_VALUE - 1; // min is -128
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", value),
+                    Map.entry("byteWrap", 0)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -109,15 +112,12 @@ class ByteTests extends AbstractTests {
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = Byte.MAX_VALUE + 1; // max is 127
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_byte", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", value),
+                    Map.entry("byteWrap", 0)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "byteAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

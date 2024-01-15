@@ -11,8 +11,6 @@ import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,20 +31,34 @@ class IntTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final byte _int = 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", _int));
+            final int intPrim = 1;
+            final int intWrap = 2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", intPrim),
+                    Map.entry("intWrap", intWrap)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_int + 1, result);
+            assertEquals(intPrim + intWrap, result);
+        }
+
+        @Test
+        void testOnIntegerPart() throws URISyntaxException, IOException, InterruptedException {
+            final double _double = 1.0;
+            final int intWrap = 2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", _double),
+                    Map.entry("intWrap", intWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(_double + intWrap, result);
         }
     }
 
@@ -54,34 +66,28 @@ class IntTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
-            final double _int = 4.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", _int));
+        void testOnDecimalPart() throws URISyntaxException, IOException, InterruptedException {
+            final double _double = 1.5;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", _double),
+                    Map.entry("intWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(String.valueOf(_int)), result);
+            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
         }
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", objectMapper.nullNode()),
+                    Map.entry("intWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -91,15 +97,12 @@ class IntTests extends AbstractTests {
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = Integer.MIN_VALUE - 1L; // min is -2^31
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", value),
+                    Map.entry("intWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -109,15 +112,12 @@ class IntTests extends AbstractTests {
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = Integer.MAX_VALUE + 1L; // 2^31-1
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_int", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", value),
+                    Map.entry("intWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "intAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

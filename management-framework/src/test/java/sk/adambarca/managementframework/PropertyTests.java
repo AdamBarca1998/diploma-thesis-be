@@ -1,19 +1,16 @@
 package sk.adambarca.managementframework;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import sk.adambarca.managementframework.supportclasses.Argument;
 import sk.adambarca.managementframework.supportclasses.CalculatorMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -27,7 +24,6 @@ class PropertyTests extends AbstractTests {
     @BeforeEach
     void beforeEach() {
         setPort(port);
-        setIncl(JsonInclude.Include.NON_NULL);
     }
 
     private final Map<String, Object> primitiveParams = Map.ofEntries(
@@ -158,43 +154,6 @@ class PropertyTests extends AbstractTests {
                 assertEquals(200, response.statusCode());
                 assertEquals(0, result);
             }
-        }
-    }
-
-    @Nested
-    class PojoTest {
-        @Test
-        void sumArgumentMProperty() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("args", new Argument(
-                            1.0,
-                            List.of(
-                                    new Argument(
-                                            2.0,
-                                            List.of()
-                                    ),
-                                    new Argument(
-                                            3.0,
-                                            List.of(new Argument(
-                                                    4.0,
-                                                    List.of()
-                                            ))
-                                    )
-                            )
-                    ))
-            );
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumArgumentMProperty"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
-
-            assertEquals(200, response.statusCode());
-            assertEquals(10.0, result);
         }
     }
 

@@ -136,45 +136,58 @@ Return:
 * NotOptionalProperty
     * Status Code: 406
     * Message: Property '\{parameter.getName()}' can't have null value!
+----------------------------------
 
 ### Record (POJO)
-For create POJO in Java use ```Record```! Classic remapping from JSON to Object.
+To create POJOs in Java, use ```Record```! It offers a classic way to map JSON to objects.
 
 **Example:**
 ```java
-public record Argument(
-        Double value,
-        List<Argument> list
+public record Person(
+        String name,
+        int age,
+        Optional<Person> child
 ) {
 }
-```
 
-```java
 @MResource
-public class CalculatorMResource {
-    
-  public double sumArgumentMProperty(Argument args) {
-    // ..
+public class BasicClassesMResource {
+
+  public int sumAges(Person person) {
+    return person.age() + (person.child().isPresent() ? sumAges(person.child().get()) : 0);
   }
 }
 ```
 
-Syntax:
-```json
+Url:
+```
+[server]:[port]/management/BasicClassesMResource/sumAges
+```
+
+Body:
+```json 
 {
-  "args": {
-    "value": 1.0,
-    "list": [
-      {
-        "value": 2.0,
-        "list": []
-      }
-    ]
+  "person": {
+    "name": "Adam",
+    "age": 20,
+    "child": {
+      "name": "John",
+      "age": 5,
+      "child": null
+    }
   }
 }
+```
+
+Return:
+```
+25
 ```
 
 **Errors:**
+* ConversionException
+  * Status Code: 406
+  * Message: Error converting JSON to type '\{type.getTypeName()}' \n The Property \{field.getName()} has error: \{e}}
 * ConversionException
     * Status Code: 406
     * Message: Error converting JSON to type '\{type.getTypeName()}' \n \{e.getMessage()}

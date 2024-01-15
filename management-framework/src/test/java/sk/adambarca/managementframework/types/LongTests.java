@@ -12,8 +12,6 @@ import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,20 +32,34 @@ class LongTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final byte _long = 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", _long));
+            final long longPrim = 1;
+            final long longWrap = 2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("longPrim", longPrim),
+                    Map.entry("longWrap", longWrap)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "longAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "longAdd", params);
             final var result = Long.parseLong(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_long + 1, result);
+            assertEquals(longPrim + longWrap, result);
+        }
+
+        @Test
+        void testOnIntegerPart() throws URISyntaxException, IOException, InterruptedException {
+            final double _double = 1.0;
+            final long longWrap = 2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("longPrim", _double),
+                    Map.entry("longWrap", longWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "longAdd", params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(_double + longWrap, result);
         }
     }
 
@@ -55,34 +67,28 @@ class LongTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
-            final double _long = 4.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", _long));
+        void testOnDecimalPart() throws URISyntaxException, IOException, InterruptedException {
+            final double _double = 1.5;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("longPrim", _double),
+                    Map.entry("longWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "longAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "longAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(String.valueOf(_long)), result);
+            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
         }
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("longPrim", objectMapper.nullNode()),
+                    Map.entry("longWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "longAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "longAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -92,15 +98,12 @@ class LongTests extends AbstractTests {
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = BigInteger.valueOf(Long.MIN_VALUE).subtract(BigInteger.ONE); // min is -2^63
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("longPrim", value),
+                    Map.entry("longWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "longAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "longAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -110,15 +113,12 @@ class LongTests extends AbstractTests {
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE); // 2^63-1
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_long", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("longPrim", value),
+                    Map.entry("longWrap", 2)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "longAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "longAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

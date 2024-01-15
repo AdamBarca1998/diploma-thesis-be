@@ -11,8 +11,6 @@ import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -40,13 +38,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", boolWrap)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
             final var result = Boolean.parseBoolean(response.body());
 
             assertEquals(200, response.statusCode());
@@ -62,13 +54,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", boolWrap)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
             final var result = Boolean.parseBoolean(response.body());
 
             assertEquals(200, response.statusCode());
@@ -87,13 +73,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", true)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -107,13 +87,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", true)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "boolAnd"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

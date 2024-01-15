@@ -12,8 +12,6 @@ import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,38 +32,34 @@ class DoubleTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final double _double = 0.5;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _double));
+            final double doublePrim = 0.5;
+            final double doubleWrap = 1.0;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
             final var result = Float.parseFloat(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_double + 1, result);
+            assertEquals(doublePrim + doubleWrap, result);
         }
 
         @Test
         void testOnInteger() throws URISyntaxException, IOException, InterruptedException {
-            final int _int = 4;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", _int));
+            final double doublePrim = 0.5;
+            final int doubleWrap = 10;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
             final var result = Float.parseFloat(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_int + 1, result);
+            assertEquals(doublePrim + doubleWrap, result);
         }
     }
 
@@ -74,15 +68,12 @@ class DoubleTests extends AbstractTests {
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", 0.5),
+                    Map.entry("doubleWrap", objectMapper.nullNode())
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -92,15 +83,12 @@ class DoubleTests extends AbstractTests {
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = BigDecimal.valueOf(Double.MIN_VALUE).subtract(BigDecimal.ONE);
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", value),
+                    Map.entry("doubleWrap", 1)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -110,15 +98,12 @@ class DoubleTests extends AbstractTests {
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = BigDecimal.valueOf(Double.MAX_VALUE).add(BigDecimal.ONE);
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_double", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", value),
+                    Map.entry("doubleWrap", 1)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "doubleAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

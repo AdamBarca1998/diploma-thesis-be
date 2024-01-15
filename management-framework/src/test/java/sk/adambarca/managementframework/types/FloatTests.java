@@ -11,8 +11,6 @@ import sk.adambarca.managementframework.supportclasses.PrimitivesMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,38 +31,34 @@ class FloatTests extends AbstractTests {
     class Success {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final float _float = 0.5f;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _float));
+            final float floatPrim = 0.5f;
+            final float floatWrap = 1.0f;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("floatPrim", floatPrim),
+                    Map.entry("floatWrap", floatWrap)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "floatAdd", params);
             final var result = Float.parseFloat(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_float + 1, result);
+            assertEquals(floatPrim + floatWrap, result);
         }
 
         @Test
         void testOnInteger() throws URISyntaxException, IOException, InterruptedException {
-            final int _int = 4;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", _int));
+            final float floatPrim = 0.5f;
+            final int _int = 9;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("floatPrim", floatPrim),
+                    Map.entry("floatWrap", _int)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "floatAdd", params);
             final var result = Float.parseFloat(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(_int + 1, result);
+            assertEquals(floatPrim + _int, result);
         }
     }
 
@@ -73,15 +67,12 @@ class FloatTests extends AbstractTests {
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", objectMapper.nullNode()));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("floatPrim", objectMapper.nullNode()),
+                    Map.entry("floatWrap", 0.5f)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "floatAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -91,15 +82,12 @@ class FloatTests extends AbstractTests {
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = Float.MIN_VALUE - 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("floatPrim", value),
+                    Map.entry("floatWrap", 0.5f)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "floatAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -109,15 +97,12 @@ class FloatTests extends AbstractTests {
         @Test
         void testOverflow() throws URISyntaxException, IOException, InterruptedException {
             final var value = Float.MAX_VALUE + 1;
-            final Map<String, Object> params = Map.ofEntries(Map.entry("_float", value));
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("floatPrim", value),
+                    Map.entry("floatWrap", 0.5f)
+            );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(PrimitivesMResource.class.getSimpleName(), "floatAddOne"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(PrimitivesMResource.class, "floatAdd", params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

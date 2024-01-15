@@ -1,7 +1,7 @@
 package sk.adambarca.managementframework;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 
 import java.io.IOException;
 import java.net.URI;
@@ -20,9 +20,8 @@ public abstract class AbstractTests {
 
     protected final ObjectMapper objectMapper = new ObjectMapper();
 
-    public void setIncl(JsonInclude.Include incl) {
-        objectMapper.setSerializationInclusion(incl);
-        objectMapper.nullNode();
+    public AbstractTests() {
+        objectMapper.registerModule(new Jdk8Module());
     }
 
     public void setPort(int port) {

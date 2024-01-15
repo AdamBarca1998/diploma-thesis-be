@@ -28,7 +28,7 @@ public interface TypeConversionStrategy<T> {
     }
 
     default void throwIfNull(JsonNode json) throws NotValidTypeException {
-        if (json.isNull()) {
+        if (json == null || json.isNull()) {
             throw new NotValidTypeException(STR."Using 'null' directly for \{getTypeName()} is not allowed." +
                     " If you intend to represent an optional value, it's recommended to use the Optional wrapper." +
                     " For example, you can use Optional<Byte>.");
