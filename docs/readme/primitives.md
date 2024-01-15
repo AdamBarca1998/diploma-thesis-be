@@ -1,19 +1,5 @@
 ### Byte & byte
 
-**Errors:**
-
-* NotValidTypeException
-    * Status Code: 406
-    * Message: "The \{ value } is not of type Byte or byte!"
-* NotValidTypeException
-    * Status Code: 406
-    * Message: "The \{ value } is out of range for Byte or byte!"
-* NotValidTypeException
-    * Status Code: 406
-    * Message: "Using 'null' directly for Byte or byte is not allowed.
-      If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Byte>."
-
 **Example:**
 
 Class:
@@ -44,23 +30,23 @@ Return:
 ```
 1
 ```
-----------------------------------
-
-### Short and short
 
 **Errors:**
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not of type Short or short!"
+    * Message: "The \{ value } is not of type Byte or byte!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Short or short!"
+    * Message: "The \{ value } is out of range for Byte or byte!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Short or short is not allowed.
+    * Message: "Using 'null' directly for Byte or byte is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Short>."
+      For example, you can use Optional\<Byte>."
+----------------------------------
+
+### Short and short
 
 **Example:**
 
@@ -92,23 +78,23 @@ Return:
 ```
 1
 ```
-----------------------------------
-
-### Integer and int
 
 **Errors:**
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Integer or int!"
+    * Message: "The \{ value } is not of type Short or short!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Integer or int!"
+    * Message: "The \{ value } is out of range for Short or short!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Integer or int is not allowed.
+    * Message: "Using 'null' directly for Short or short is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Integer>."
+      For example, you can use Optional\<Short>."
+----------------------------------
+
+### Integer and int
 
 **Example:**
 
@@ -140,23 +126,23 @@ Return:
 ```
 1
 ```
-----------------------------------
-
-### Long and long
 
 **Errors:**
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Long or long!"
+    * Message: "The \{ value } is not type of Integer or int!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Long or long!"
+    * Message: "The \{ value } is out of range for Integer or int!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Long or long is not allowed.
+    * Message: "Using 'null' directly for Integer or int is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Long>."
+      For example, you can use Optional\<Integer>."
+----------------------------------
+
+### Long and long
 
 **Example:**
 
@@ -188,23 +174,23 @@ Return:
 ```
 1
 ```
-----------------------------------
-
-### Float and float
 
 **Errors:**
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Float or float!"
+    * Message: "The \{ value } is not type of Long or long!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Float or float!"
+    * Message: "The \{ value } is out of range for Long or long!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Float or float is not allowed.
+    * Message: "Using 'null' directly for Long or long is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Float>."
+      For example, you can use Optional\<Long>."
+----------------------------------
+
+### Float and float
 
 **Example:**
 
@@ -236,23 +222,23 @@ Return:
 ```
 1.5
 ```
-----------------------------------
-
-### Double and double
 
 **Errors:**
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Double or double!"
+    * Message: "The \{ value } is not type of Float or float!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Double or double!"
+    * Message: "The \{ value } is out of range for Float or float!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Double or double is not allowed.
+    * Message: "Using 'null' directly for Float or float is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Double>."
+      For example, you can use Optional\<Float>."
+----------------------------------
+
+### Double and double
 
 **Example:**
 
@@ -284,23 +270,23 @@ Return:
 ```
 1.5
 ```
-----------------------------------
-
-### Character and char
 
 **Errors:**
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Character or char!"
+    * Message: "The \{ value } is not type of Double or double!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Character or char!"
+    * Message: "The \{ value } is out of range for Double or double!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Character or char is not allowed.
+    * Message: "Using 'null' directly for Double or double is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Character>."
+      For example, you can use Optional\<Double>."
+----------------------------------
+
+### Character and char
 
 **Example:**
 
@@ -332,20 +318,23 @@ Return:
 ```
 AB
 ```
-----------------------------------
-
-### Boolean and boolean
 
 **Errors:**
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Boolean or boolean!"
+    * Message: "The \{ value } is not type of Character or char!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Boolean or boolean is not allowed.
+    * Message: "The \{ value } is out of range for Character or char!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "Using 'null' directly for Character or char is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<Boolean>."
+      For example, you can use Optional\<Character>."
+----------------------------------
+
+### Boolean and boolean
 
 **Example:**
 
@@ -377,3 +366,14 @@ Return:
 ```
 false
 ```
+
+**Errors:**
+
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "The \{ value } is not type of Boolean or boolean!"
+* NotValidTypeException
+    * Status Code: 406
+    * Message: "Using 'null' directly for Boolean or boolean is not allowed.
+      If you intend to represent an optional value, it's recommended to use the Optional wrapper.
+      For example, you can use Optional\<Boolean>."

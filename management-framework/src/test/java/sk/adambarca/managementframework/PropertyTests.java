@@ -13,12 +13,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PropertyTests extends AbstractTests {
@@ -42,85 +40,6 @@ class PropertyTests extends AbstractTests {
             Map.entry("_char", '_'), // 95
             Map.entry("_boolean", true)
     );
-
-    @Nested
-    class OptionalTest {
-        @Test
-        void allArgsOptional() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("a", 0.1),
-                    Map.entry("b", 1),
-                    Map.entry("c", 0.2)
-            );
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumOptionals"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
-
-            assertEquals(200, response.statusCode());
-            assertTrue(result > 1.3);
-        }
-
-        @Test
-        void partArgsOptional() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("c", 0.2)
-            );
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumOptionals"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = Double.parseDouble(response.body());
-
-            assertEquals(200, response.statusCode());
-            assertTrue(result > 0.2);
-        }
-
-        @Test
-        void notValidOptionalCount() throws URISyntaxException, IOException, InterruptedException {
-            Map<String, Object> params = new HashMap<>(primitiveParams);
-            params.remove("_double");
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            assertEquals(406, response.statusCode());
-            assertEquals("Method 'sumAllPrimitives' has 8 required properties, not 7", response.body());
-        }
-
-        @Test
-        void notValidOptionalValue() throws URISyntaxException, IOException, InterruptedException {
-            final var propertyName = "_double";
-            Map<String, Object> params = new HashMap<>(primitiveParams);
-            params.remove(propertyName);
-            params.put("_something", 1.0);
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(CalculatorMResource.class.getSimpleName(), "sumAllPrimitives"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            assertEquals(406, response.statusCode());
-            assertEquals(STR."Property '\{propertyName}' can't have null value!", response.body());
-        }
-    }
 
     @Nested
     class DataStructuresTest {

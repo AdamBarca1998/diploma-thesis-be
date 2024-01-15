@@ -55,7 +55,7 @@ public final class ManagementService {
 
         if (requiredCount > paramsSize) {
             throw new NotCorrectNumberOfPropertiesException(
-                    STR."Method '\{method.getName()}' has \{requiredCount} required properties, not \{paramsSize}"
+                    STR."Method '\{method.getName()}' has \{requiredCount} required properties, not \{paramsSize}!"
             );
         }
 

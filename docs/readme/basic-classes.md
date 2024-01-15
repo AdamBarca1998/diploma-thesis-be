@@ -1,16 +1,5 @@
 ### String
 
-**Errors:**
-
-* NotValidTypeException
-    * Status Code: 406
-    * Message: "The \{ value } is not of type String!"
-* NotValidTypeException
-    * Status Code: 406
-    * Message: "Using 'null' directly for String is not allowed.
-      If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-      For example, you can use Optional\<String>."
-
 **Example:**
 
 Class:
@@ -40,21 +29,21 @@ Return:
 ```
 Hello World!
 ```
-----------------------------------
-
-### Enum
-Enums do not allow the direct use of their integer representation.
 
 **Errors:**
 
 * NotValidTypeException
   * Status Code: 406
-  * Message: "The \{ value } is not of type Enum!"
+  * Message: "The \{ value } is not of type String!"
 * NotValidTypeException
   * Status Code: 406
-  * Message: "Using 'null' directly for Enum is not allowed.
+  * Message: "Using 'null' directly for String is not allowed.
     If you intend to represent an optional value, it's recommended to use the Optional wrapper.
-    For example, you can use Optional\<Enum>."
+    For example, you can use Optional\<String>."
+----------------------------------
+
+### Enum
+Enums do not allow the direct use of their integer representation.
 
 **Example:**
 
@@ -95,23 +84,48 @@ Return:
 ```
 1.0
 ```
+
+**Errors:**
+
+* NotValidTypeException
+  * Status Code: 406
+  * Message: "The \{ value } is not of type Enum!"
+* NotValidTypeException
+  * Status Code: 406
+  * Message: "Using 'null' directly for Enum is not allowed.
+    If you intend to represent an optional value, it's recommended to use the Optional wrapper.
+    For example, you can use Optional\<Enum>."
 ----------------------------------
 
-### Optional //TODO
-If you want to create optional arguments, you have to wrap the argument in the **class Optional**.
+### Optional
+If you intend to have optional arguments, you can achieve this by wrapping the argument in the **Optional** class.
 
 **Example:**
 ```java
 @MResource
-public class CalculatorMResource {
+public class BasicClassesMResource {
 
-    public double sumAll(
-            Optional<Double> optionalVariable, 
-            Double notOptionalVariable
-    ) {
-        return optionalVariable.orElse(0.0) + notOptiovalVariable;
-    }
+  public double sumOptional(double num1, Optional<Double> num2) {
+    return num1 + num2.orElse(0.0);
+  }
 }
+```
+
+Url:
+```
+[server]:[port]/management/BasicClassesMResource/sumOptional
+```
+
+Body:
+```json 
+{
+  "num1": 0.5
+}
+```
+
+Return:
+```
+0.5
 ```
 
 **Errors:**

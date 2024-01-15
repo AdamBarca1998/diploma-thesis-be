@@ -3,9 +3,13 @@ package sk.adambarca.managementframework;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Map;
 
 public abstract class AbstractTests {
 
@@ -50,4 +54,16 @@ public abstract class AbstractTests {
     }
 
     protected abstract String getTypeName();
+
+    protected HttpResponse<String> callFunction(Class clazz, String method, Map<String, Object> params)
+            throws IOException, InterruptedException, URISyntaxException
+    {
+        final var request = HttpRequest.newBuilder()
+                .uri(getUri(clazz.getSimpleName(), method))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
+                .build();
+
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
 }
