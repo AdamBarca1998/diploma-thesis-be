@@ -11,17 +11,21 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
     public T convert(JsonNode json, Type type) {
         throwIfNull(json);
 
-        if (isWholeType(type) && json.isFloatingPointNumber()) {
+        final var value = json.decimalValue();
+
+        if (isWholeType(type) && !isWholeNumber(value.doubleValue())) {
             throw getNotTypeException(json);
         }
-
-        final var value = json.decimalValue();
 
         if (value.compareTo(getMinValue()) < 0 || value.compareTo(getMaxValue()) > 0) {
             throw getOutRangeException(json);
         }
 
         return convertToNumeric(value.doubleValue());
+    }
+
+    protected boolean isWholeNumber(double value) {
+        return value % 1 == 0;
     }
 
     protected boolean isWholeType(Type type) {
