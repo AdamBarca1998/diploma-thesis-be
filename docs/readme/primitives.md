@@ -35,10 +35,10 @@ Return:
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not of type Byte or byte!"
+    * Message: "The value '\{ value }' is not of type Byte or byte!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Byte or byte!"
+    * Message: "The value '\{ value }' is out of range for Byte or byte!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Byte or byte is not allowed.
@@ -83,10 +83,10 @@ Return:
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not of type Short or short!"
+    * Message: "The value '\{ value }' is not of type Short or short!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Short or short!"
+    * Message: "The value '\{ value }' is out of range for Short or short!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Short or short is not allowed.
@@ -131,10 +131,10 @@ Return:
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Integer or int!"
+    * Message: "The value '\{ value }' is not type of Integer or int!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Integer or int!"
+    * Message: "The value '\{ value }' is out of range for Integer or int!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Integer or int is not allowed.
@@ -179,10 +179,10 @@ Return:
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Long or long!"
+    * Message: "The value '\{ value }' is not type of Long or long!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Long or long!"
+    * Message: "The value '\{ value }' is out of range for Long or long!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Long or long is not allowed.
@@ -227,10 +227,10 @@ Return:
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Float or float!"
+    * Message: "The value '\{ value }' is not type of Float or float!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Float or float!"
+    * Message: "The value '\{ value }' is out of range for Float or float!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Float or float is not allowed.
@@ -275,10 +275,10 @@ Return:
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Double or double!"
+    * Message: "The value '\{ value }' is not type of Double or double!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Double or double!"
+    * Message: "The value '\{ value }' is out of range for Double or double!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Double or double is not allowed.
@@ -323,10 +323,10 @@ AB
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Character or char!"
+    * Message: "The value '\{ value }' is not type of Character or char!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is out of range for Character or char!"
+    * Message: "The value '\{ value }' is out of range for Character or char!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Character or char is not allowed.
@@ -371,7 +371,7 @@ false
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The \{ value } is not type of Boolean or boolean!"
+    * Message: "The value '\{ value }' is not type of Boolean or boolean!"
 * NotValidTypeException
     * Status Code: 406
     * Message: "Using 'null' directly for Boolean or boolean is not allowed.

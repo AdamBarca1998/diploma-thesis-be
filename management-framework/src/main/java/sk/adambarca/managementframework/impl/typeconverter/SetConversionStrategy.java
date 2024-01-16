@@ -21,6 +21,8 @@ final class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
 
     @Override
     public Set<?> convert(JsonNode json, Type type) {
+        throwIfNull(json);
+
         if (type instanceof ParameterizedType parameterizedType && json.isArray()) {
             final var subType = extractSubType(parameterizedType);
             final var valuesStrategy = typeConversionFactory.getStrategy(extractCurrentType(subType));
@@ -31,7 +33,7 @@ final class SetConversionStrategy implements TypeConversionStrategy<Set<?>> {
             return stream.map(e -> valuesStrategy.convert(e, subType))
                     .collect(Collectors.toSet());
         } else {
-            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
+            throw getNotTypeException(json);
         }
     }
 

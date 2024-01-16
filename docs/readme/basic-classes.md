@@ -34,7 +34,7 @@ Hello World!
 
 * NotValidTypeException
   * Status Code: 406
-  * Message: "The \{ value } is not of type String!"
+  * Message: "The value '\{ value }' is not of type String!"
 * NotValidTypeException
   * Status Code: 406
   * Message: "Using 'null' directly for String is not allowed.
@@ -89,7 +89,7 @@ Return:
 
 * NotValidTypeException
   * Status Code: 406
-  * Message: "The \{ value } is not of type Enum!"
+  * Message: "The value '\{ value }' is not of type Enum!"
 * NotValidTypeException
   * Status Code: 406
   * Message: "Using 'null' directly for Enum is not allowed.

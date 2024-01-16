@@ -20,6 +20,8 @@ final class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
 
     @Override
     public List<?> convert(JsonNode json, Type type) {
+        throwIfNull(json);
+
         if (type instanceof ParameterizedType parameterizedType && json.isArray()) {
             final var subType = extractSubType(parameterizedType);
             final var valuesStrategy = typeConversionFactory.getStrategy(extractCurrentType(subType));
@@ -30,7 +32,7 @@ final class ListConversionStrategy implements TypeConversionStrategy<List<?>> {
             return stream.map(e -> valuesStrategy.convert(e, subType))
                     .toList();
         } else {
-            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
+            throw getNotTypeException(json);
         }
     }
 

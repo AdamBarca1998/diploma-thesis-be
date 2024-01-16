@@ -6,20 +6,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Arrays;
-import java.util.Map;
 
 final class RecordConversionStrategy implements TypeConversionStrategy<Record> {
-
-    public final static Map<Class<?>, Class<?>> typesMap = Map.ofEntries(
-            Map.entry(Byte.class, byte.class),
-            Map.entry(Short.class, short.class),
-            Map.entry(Integer.class, int.class),
-            Map.entry(Long.class, long.class),
-            Map.entry(Float.class, float.class),
-            Map.entry(Double.class, double.class),
-            Map.entry(Character.class, char.class),
-            Map.entry(Boolean.class, boolean.class)
-    );
 
     private final TypeConversionFactory typeConversionFactory;
 

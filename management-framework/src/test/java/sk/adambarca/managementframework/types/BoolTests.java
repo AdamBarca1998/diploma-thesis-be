@@ -14,6 +14,8 @@ import java.net.URISyntaxException;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BoolTests extends AbstractTests {
@@ -32,7 +34,7 @@ class BoolTests extends AbstractTests {
         @Test
         void testValidity() throws URISyntaxException, IOException, InterruptedException {
             final boolean boolPrim = true;
-            final Boolean boolWrap = true;
+            final boolean boolWrap = true;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("boolPrim", boolPrim),
                     Map.entry("boolWrap", boolWrap)
@@ -42,7 +44,7 @@ class BoolTests extends AbstractTests {
             final var result = Boolean.parseBoolean(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(boolPrim && boolWrap, result);
+            assertTrue(result);
         }
 
         @Test
@@ -58,7 +60,7 @@ class BoolTests extends AbstractTests {
             final var result = Boolean.parseBoolean(response.body());
 
             assertEquals(200, response.statusCode());
-            assertEquals(false, result);
+            assertFalse(result);
         }
     }
 

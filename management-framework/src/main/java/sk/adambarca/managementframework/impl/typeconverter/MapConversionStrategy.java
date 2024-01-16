@@ -22,7 +22,9 @@ final class MapConversionStrategy implements TypeConversionStrategy<Map<?, ?>> {
 
     @Override
     public Map<?, ?> convert(JsonNode json, Type type) {
-        if (type instanceof ParameterizedType parameterizedType) {
+        throwIfNull(json);
+
+        if (type instanceof ParameterizedType parameterizedType && json.isObject()) {
             final var keyType = parameterizedType.getActualTypeArguments()[0];
             final var valueType = parameterizedType.getActualTypeArguments()[1];
             final var keyStrategy = typeConversionFactory.getStrategy(extractCurrentType(keyType));
@@ -46,7 +48,7 @@ final class MapConversionStrategy implements TypeConversionStrategy<Map<?, ?>> {
 
             return resultMap;
         } else {
-            throw new ConversionStrategyNotFoundException(STR."Strategy for type '\{type}' not found!");
+            throw getNotTypeException(json);
         }
     }
 

@@ -39,11 +39,11 @@ public abstract class AbstractTests {
     }
 
     protected String getNotTypeErrorMsg(String value) {
-        return STR."The \{value} is not of type \{getTypeName()}!";
+        return STR."The value '\{value}' is not of type \{getTypeName()}!";
     }
 
     protected String getRangeErrorMsg(String value) {
-        return STR."The \{ value } is out of range for \{getTypeName()}!";
+        return STR."The value '\{ value }' is out of range for \{getTypeName()}!";
     }
 
     protected String getNullErrorMsg() {
