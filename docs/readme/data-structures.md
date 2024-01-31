@@ -131,9 +131,9 @@ Return:
 
 * NotValidTypeException
     * Status Code: 406
-    * Message: "The value '\{ value }' is not of type Set!"
+    * Message: "The value '\{ value }' is not of type Map!"
 * NotValidTypeException
     * Status Code: 406
-    * Message: "Using 'null' directly for Set is not allowed.
+    * Message: "Using 'null' directly for Map is not allowed.
       If you intend to represent an optional value, it's recommended to use the Optional wrapper.
       For example, you can use Optional\<List>."
