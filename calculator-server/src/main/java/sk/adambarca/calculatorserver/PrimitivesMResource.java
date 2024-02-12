@@ -4,7 +4,11 @@ import sk.adambarca.managementframework.resource.MResource;
 
 import static java.lang.StringTemplate.STR;
 
-@MResource
+@MResource(
+        name = "Primitives",
+        description = "Primitives description",
+        icon = "fa-solid fa-paper-plane"
+)
 public class PrimitivesMResource {
 
     public byte byteAdd(byte bytePrim, Byte byteWrap) {

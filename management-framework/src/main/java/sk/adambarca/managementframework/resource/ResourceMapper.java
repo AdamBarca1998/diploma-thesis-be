@@ -11,11 +11,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class ResourceMapper {
 
@@ -27,7 +28,9 @@ public class ResourceMapper {
     public Resource mapToResource(Object mObject) {
         final var clazz = mObject.getClass();
         final var publicPredicate = ReflectionUtilsPredicates.withModifier(Modifier.PUBLIC);
-        final var methods = ReflectionUtils.getAllMethods(clazz, publicPredicate);
+        final var methods = ReflectionUtils.getAllMethods(clazz, publicPredicate).stream()
+                .sorted(Comparator.comparing(Method::getName))
+                .collect(Collectors.toList());
 
         if (isDuplicityMethods(methods)) {
             LOGGER.severe("Class '" + mObject.getClass().getName() + "' has duplicity method names!");
@@ -56,7 +59,7 @@ public class ResourceMapper {
         return resourceBuilder.build();
     }
 
-    private boolean isDuplicityMethods(Set<Method> methods) {
+    private boolean isDuplicityMethods(List<Method> methods) {
         final var noDuplicityCount = methods.stream()
                 .map(Method::getName)
                 .distinct()
@@ -74,7 +77,7 @@ public class ResourceMapper {
                 .toList();
     }
 
-    private List<Function> getFunctions(List<Property> properties, Set<Method> methods) {
+    private List<Function> getFunctions(List<Property> properties, List<Method> methods) {
         return methods.stream()
                 .filter(method -> isNotSetterOrGetter(properties, method))
                 .map(functionMapper::mapToFunction)

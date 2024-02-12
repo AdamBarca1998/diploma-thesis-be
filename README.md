@@ -16,7 +16,7 @@ Resource is a class with annotation ```@MResource```.
 @MResource(
         name = "Calculator ABC",
         description = "Calculator description",
-        icon = "Calculator icon"
+        icon = "fa-solid fa-paper-plane"
 )
 public final class Calculator {
     // ...
@@ -27,7 +27,7 @@ public final class Calculator {
 
 * name - default class simple type ```class.getSimpleName()```
 * description - default empty string ```""```
-* icon - default empty string ```""```
+* icon - from library FontAwesome https://fontawesome.com/. Default empty string ```""```
 
 ## Property (Field)
 
