@@ -81,7 +81,7 @@ class FloatTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var value = Float.MIN_VALUE - 1;
+            final var value = -Float.MAX_VALUE - 1;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("floatPrim", value),
                     Map.entry("floatWrap", 0.5f)

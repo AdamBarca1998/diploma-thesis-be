@@ -82,7 +82,7 @@ class DoubleTests extends AbstractTests {
 
         @Test
         void testUnderflow() throws URISyntaxException, IOException, InterruptedException {
-            final var value = BigDecimal.valueOf(Double.MIN_VALUE).subtract(BigDecimal.ONE);
+            final var value = BigDecimal.valueOf(-Double.MAX_VALUE).subtract(BigDecimal.ONE);
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("doublePrim", value),
                     Map.entry("doubleWrap", 1)
@@ -92,7 +92,7 @@ class DoubleTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getRangeErrorMsg("-1.0") , result); // rounded
+            assertEquals(getRangeErrorMsg(value.toString()) , result); // rounded
         }
 
         @Test
