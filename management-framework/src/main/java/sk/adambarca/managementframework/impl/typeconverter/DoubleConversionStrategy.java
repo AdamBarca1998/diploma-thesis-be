@@ -11,7 +11,7 @@ final class DoubleConversionStrategy extends NumericConversionStrategy<Double> {
 
     @Override
     protected BigDecimal getMinValue() {
-        return BigDecimal.valueOf(Double.MIN_VALUE);
+        return BigDecimal.valueOf(-Double.MAX_VALUE);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import sk.adambarca.managementframework.impl.typeconverter.TypeConversionFactory;
+import sk.adambarca.managementframework.property.PropertyMapper;
 import sk.adambarca.managementframework.resource.Resource;
 
 import java.lang.reflect.InvocationTargetException;
@@ -20,6 +21,7 @@ public final class ManagementService {
 
     private final TypeConversionFactory typeConversionFactory = new TypeConversionFactory();
     private final AnnotationsScannerComponent annotationsScanner;
+    private final PropertyMapper propertyMapper = new PropertyMapper();
 
     ManagementService(AnnotationsScannerComponent annotationsScanner) {
         this.annotationsScanner = annotationsScanner;
@@ -31,6 +33,17 @@ public final class ManagementService {
 
     Optional<Resource> findResourceByType(String type) {
         return annotationsScanner.findResourceByType(type);
+    }
+
+    Info getInfoByType(String type) throws ClassNotFoundException {
+        Class<?> clazz = Class.forName(type);
+
+        Object[] enumConstants = clazz.getEnumConstants();
+        List<String> enumValues = enumConstants == null ? List.of() : Arrays.stream(enumConstants)
+                .map(Object::toString)
+                .toList();
+
+        return new Info(type, propertyMapper.mapToProperties(clazz), enumValues);
     }
 
     Object callFunction(String classType, String functionName, Optional<Map<String, Object>> params)

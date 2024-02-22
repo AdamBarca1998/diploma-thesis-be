@@ -29,8 +29,7 @@ public class PropertyMapper {
                     "",
                     field.getType().getSimpleName(),
                     value,
-                    validations,
-                    mapToProperties(field.getType())
+                    validations
             );
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             // hide
@@ -42,27 +41,23 @@ public class PropertyMapper {
         return new Property(
                 field.getName(),
                 "",
-                field.getType().getTypeName(),
+                field.getGenericType().getTypeName(),
                 null,
-                List.of(),
                 List.of()
         );
     }
 
     public Property mapToProperty(Parameter param) {
-        final var clazz = param.getType();
-
         return new Property(
                 param.getName(),
                 "",
                 param.getParameterizedType().getTypeName(),
                 null,
-                List.of(),
-                mapToProperties(clazz)
+                List.of()
         );
     }
 
-    private List<Property> mapToProperties(Class<?> clazz) {
+    public List<Property> mapToProperties(Class<?> clazz) {
         if (clazz.isRecord()) {
             return Arrays.stream(clazz.getDeclaredFields())
                     .map(this::mapToProperty)

@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class ResourceMapper {
 
@@ -30,7 +29,7 @@ public class ResourceMapper {
         final var publicPredicate = ReflectionUtilsPredicates.withModifier(Modifier.PUBLIC);
         final var methods = ReflectionUtils.getAllMethods(clazz, publicPredicate).stream()
                 .sorted(Comparator.comparing(Method::getName))
-                .collect(Collectors.toList());
+                .toList();
 
         if (isDuplicityMethods(methods)) {
             LOGGER.severe("Class '" + mObject.getClass().getName() + "' has duplicity method names!");

@@ -36,6 +36,15 @@ final class ManagementController {
         return managementService.findResourceByType(type);
     }
 
+    @GetMapping("/{type}/info")
+    ResponseEntity<Object> getInfoByType(@PathVariable String type) {
+        try {
+            return ResponseEntity.ok(managementService.getInfoByType(type));
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
     @PostMapping("/{classType}/{functionName}")
     ResponseEntity<Object> callFunction(
             @PathVariable String classType,

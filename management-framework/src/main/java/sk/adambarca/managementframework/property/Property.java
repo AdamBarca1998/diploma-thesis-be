@@ -7,7 +7,6 @@ public record Property(
         String description,
         String type,
         Object value,
-        List<String> validations,
-        List<Property> properties
+        List<String> validations
 ) {
 }

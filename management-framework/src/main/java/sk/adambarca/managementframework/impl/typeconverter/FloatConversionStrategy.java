@@ -11,7 +11,7 @@ final class FloatConversionStrategy extends NumericConversionStrategy<Float> {
 
     @Override
     protected BigDecimal getMinValue() {
-        return BigDecimal.valueOf(Float.MIN_VALUE);
+        return BigDecimal.valueOf(-Float.MAX_VALUE);
     }
 
     @Override
