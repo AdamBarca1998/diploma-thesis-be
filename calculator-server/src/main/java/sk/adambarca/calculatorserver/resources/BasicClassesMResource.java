@@ -1,4 +1,4 @@
-package sk.adambarca.calculatorserver;
+package sk.adambarca.calculatorserver.resources;
 
 import sk.adambarca.managementframework.resource.MResource;
 

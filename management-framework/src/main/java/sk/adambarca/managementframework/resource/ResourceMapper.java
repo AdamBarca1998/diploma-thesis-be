@@ -39,21 +39,25 @@ public class ResourceMapper {
         final var resourceBuilder = new Resource.Builder();
         final var properties = getProperties(mObject);
 
-        resourceBuilder.type(clazz.getSimpleName());
-        resourceBuilder.properties(properties);
+        resourceBuilder
+                .type(clazz.getSimpleName())
+                .properties(properties);
 
         Arrays.stream(clazz.getAnnotations())
                 .forEach(annotation -> {
                     if (annotation instanceof MResource ann) {
-                        resourceBuilder.name(ann.name().isEmpty() ? clazz.getSimpleName() : ann.name());
-                        resourceBuilder.description(ann.description());
-                        resourceBuilder.icon(ann.icon());
+                        resourceBuilder
+                                .name(ann.name().isEmpty() ? clazz.getSimpleName() : ann.name())
+                                .description(ann.description())
+                                .icon(ann.icon())
+                                .periodTimeMs(ann.periodTimeMs());
                     }
                 })
         ;
 
-        resourceBuilder.functions(getFunctions(properties, methods));
-        resourceBuilder.validations(List.of());
+        resourceBuilder
+                .functions(getFunctions(properties, methods))
+                .validations(List.of());
 
         return resourceBuilder.build();
     }

@@ -20,4 +20,5 @@ public @interface MResource {
      * @see https://fontawesome.com/
      */
     String icon() default "";
+    int periodTimeMs() default 600000; // 10min
 }

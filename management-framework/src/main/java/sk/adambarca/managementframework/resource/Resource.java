@@ -9,6 +9,7 @@ public record Resource(
         String name,
         String description,
         String icon,
+        int periodTimeMs,
         String type,
         List<Property> properties,
         List<Function> functions,
@@ -20,6 +21,7 @@ public record Resource(
         private String name;
         private String description;
         private String icon;
+        private int periodTimeMs;
         private String type;
         private List<Property> properties;
         private List<Function> functions;
@@ -37,6 +39,11 @@ public record Resource(
 
         public Builder icon(String icon) {
             this.icon = icon;
+            return this;
+        }
+
+        public Builder periodTimeMs(int periodTimeMs) {
+            this.periodTimeMs = periodTimeMs;
             return this;
         }
 
@@ -61,7 +68,7 @@ public record Resource(
         }
 
         public Resource build() {
-            return new Resource(name, description, icon, type, properties, functions, validations);
+            return new Resource(name, description, icon, periodTimeMs, type, properties, functions, validations);
         }
     }
 }

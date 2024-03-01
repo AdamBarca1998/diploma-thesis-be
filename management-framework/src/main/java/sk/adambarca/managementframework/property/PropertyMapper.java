@@ -27,7 +27,7 @@ public class PropertyMapper {
             return new Property(
                     fieldName,
                     "",
-                    field.getType().getSimpleName(),
+                    field.getType().getTypeName(),
                     value,
                     validations
             );
