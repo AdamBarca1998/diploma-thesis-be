@@ -11,17 +11,21 @@ final class CharacterConversionStrategy implements TypeConversionStrategy<Charac
         throwIfNull(json);
 
         final var string = json.asText();
-        final var number = json.asInt();
+        final var number = json.asDouble();
 
         if (number < Character.MIN_VALUE || number > Character.MAX_VALUE) {
             throw getOutRangeException(json);
         }
 
-        if (string.length() > 1) {
+        if ((json.numberType() == null && string.length() > 1) || !isWholeNumber(number)) {
             throw getNotTypeException(json);
         }
 
-        return string.isEmpty() ? '\u0000' : string.charAt(0);
+        if (json.numberType() == null) {
+            return string.isEmpty() ? '\u0000' : string.charAt(0);
+        } else {
+            return (char) number;
+        }
     }
 
     @Override

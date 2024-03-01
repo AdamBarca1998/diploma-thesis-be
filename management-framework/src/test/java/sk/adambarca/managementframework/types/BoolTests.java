@@ -68,7 +68,7 @@ class BoolTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
             final double _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("boolPrim", _double),

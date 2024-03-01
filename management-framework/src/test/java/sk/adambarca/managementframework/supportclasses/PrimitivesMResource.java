@@ -5,8 +5,8 @@ import sk.adambarca.managementframework.resource.MResource;
 @MResource
 public class PrimitivesMResource {
 
-    public byte byteAdd(byte bytePrim, Byte byteWrap) {
-        return (byte) (bytePrim + byteWrap);
+    public int byteAdd(byte bytePrim, Byte byteWrap) {
+        return bytePrim + byteWrap;
     }
 
     public short shortAdd(short shortPrim, Short shortWrap) {

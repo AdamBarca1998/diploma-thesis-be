@@ -30,9 +30,25 @@ class ByteTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testPositive() throws URISyntaxException, IOException, InterruptedException {
             final byte bytePrim = 0;
             final byte byteWrap = 1;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", bytePrim),
+                    Map.entry("byteWrap", byteWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(bytePrim + byteWrap, result);
+        }
+
+        @Test
+        void testNegative() throws URISyntaxException, IOException, InterruptedException {
+            final byte bytePrim = -10;
+            final byte byteWrap = -25;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("bytePrim", bytePrim),
                     Map.entry("byteWrap", byteWrap)
@@ -60,10 +76,74 @@ class ByteTests extends AbstractTests {
             assertEquals(200, response.statusCode());
             assertEquals(_double + byteWrap, result);
         }
+
+        @Test
+        void testMin() throws URISyntaxException, IOException, InterruptedException {
+            final var bytePrim = Byte.MIN_VALUE; // min is -128
+            final byte byteWrap = 1;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", bytePrim),
+                    Map.entry("byteWrap", byteWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(bytePrim + byteWrap , result);
+        }
+
+        @Test
+        void testMax() throws URISyntaxException, IOException, InterruptedException {
+            final var bytePrim = Byte.MAX_VALUE; // max is 127
+            final byte byteWrap = 1;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", bytePrim),
+                    Map.entry("byteWrap", byteWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(bytePrim + byteWrap, result);
+        }
+
+        @Test
+        void testZero() throws URISyntaxException, IOException, InterruptedException {
+            final var bytePrim = 0;
+            final byte byteWrap = 0;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", bytePrim),
+                    Map.entry("byteWrap", byteWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(bytePrim + byteWrap, result);
+        }
     }
 
     @Nested
     class Error {
+
+        @Test
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+            final boolean bytePrim = true;
+            final byte byteWrap = 1;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("bytePrim", bytePrim),
+                    Map.entry("byteWrap", byteWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(String.valueOf(bytePrim)), result);
+        }
 
         @Test
         void testOnDecimalPart() throws URISyntaxException, IOException, InterruptedException {

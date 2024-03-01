@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @MResource(
-        periodTimeMs = 5000
+        periodTimeMs = 5000000
 )
 public class MemoryMResource {
 
@@ -46,7 +46,7 @@ public class MemoryMResource {
                     dateTime = LocalDateTime.now().toString();
                     memoryChart = createPieChart();
 
-                    Thread.sleep(1000);
+                    Thread.sleep(1000000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -59,7 +59,7 @@ public class MemoryMResource {
         final var free = Double.valueOf(Runtime.getRuntime().freeMemory());
 
         final var dataSet = new DataSet(
-                STR."Memory Chart \{LocalDateTime.now()}",
+                STR."Memory Chart}",
                 List.of(total, free), List.of("rgb(255, 99, 132)", "rgb(54, 162, 235)"),
                 4
         );

@@ -11,6 +11,10 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
     public T convert(JsonNode json, Type type) {
         throwIfNull(json);
 
+        if (json.numberType() == null) {
+            throw getNotTypeException(json);
+        }
+
         final var value = json.decimalValue();
 
         if (isWholeType(type) && !isWholeNumber(value.doubleValue())) {
@@ -22,10 +26,6 @@ abstract class NumericConversionStrategy<T extends Number> implements TypeConver
         }
 
         return convertToNumeric(value.doubleValue());
-    }
-
-    protected boolean isWholeNumber(double value) {
-        return value % 1 == 0;
     }
 
     protected boolean isWholeType(Type type) {

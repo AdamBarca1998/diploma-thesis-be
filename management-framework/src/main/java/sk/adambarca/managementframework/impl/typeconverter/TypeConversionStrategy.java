@@ -43,5 +43,9 @@ public interface TypeConversionStrategy<T> {
         return new NotValidTypeException(STR."The value '\{json.asText()}' is not of type \{getTypeName()}!");
     }
 
+    default boolean isWholeNumber(double value) {
+        return value % 1 == 0;
+    }
+
     String getTypeName();
 }

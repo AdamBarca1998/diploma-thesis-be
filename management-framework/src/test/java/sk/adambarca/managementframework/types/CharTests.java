@@ -47,9 +47,9 @@ class CharTests extends AbstractTests {
         }
 
         @Test
-        void testOnInteger() throws URISyntaxException, IOException, InterruptedException {
+        void testOnIntegerPart() throws URISyntaxException, IOException, InterruptedException {
             final char charPrim = 'A';
-            final Character charWrap = 66; // 'B'
+            final double charWrap = 66.0; // 'B'
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("charPrim", charPrim),
                     Map.entry("charWrap", charWrap)
@@ -59,7 +59,23 @@ class CharTests extends AbstractTests {
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
-            assertEquals(STR."\{charPrim}\{charWrap}", result);
+            assertEquals(STR."\{charPrim}\{(char) charWrap}", result);
+        }
+
+        @Test
+        void testOnInteger() throws URISyntaxException, IOException, InterruptedException {
+            final char charPrim = 'A';
+            final int charWrap = 66; // 'B'
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", charPrim),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{charPrim}\{(char) charWrap}", result);
         }
 
         @Test
@@ -93,13 +109,76 @@ class CharTests extends AbstractTests {
             assertEquals(200, response.statusCode());
             assertEquals(STR."\{empty}\{charWrap}", result);
         }
+
+        @Test
+        void testMin() throws URISyntaxException, IOException, InterruptedException {
+            final var min = Character.MIN_VALUE;
+            final Character charWrap = 'B';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", min),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{min}\{charWrap}", result);
+        }
+
+        @Test
+        void testMax() throws URISyntaxException, IOException, InterruptedException {
+            final var max = Character.MAX_VALUE;
+            final Character charWrap = 'B';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", max),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{max}\{charWrap}", result);
+        }
+
+        @Test
+        void testZero() throws URISyntaxException, IOException, InterruptedException {
+            final var zero = 0;
+            final Character charWrap = 'B';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", zero),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{Character.MIN_VALUE}\{charWrap}", result);
+        }
     }
 
     @Nested
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+            final String _s = "ABC";
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", _s),
+                    Map.entry("charWrap", 'B')
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(_s), result);
+        }
+
+        @Test
+        void testOnDecimalPart() throws URISyntaxException, IOException, InterruptedException {
             final double _double = 4.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("charPrim", _double),
