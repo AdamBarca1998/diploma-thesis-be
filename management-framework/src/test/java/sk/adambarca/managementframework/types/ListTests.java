@@ -20,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ListTests extends AbstractTests {
 
+    private static final String ADD_ZERO = "addZero";
+    private static final String SUM_NESTED_LISTS = "sumNestedLists";
+    
     @LocalServerPort
     private int port;
 
@@ -37,7 +40,7 @@ class ListTests extends AbstractTests {
                     Map.entry("numbers", numbersArray)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "addZero", params);
+            final var response = callFunction(DataStructuresMResource.class, ADD_ZERO, params);
             final var result = objectMapper.readValue(response.body(), new TypeReference<List<Double>>(){});
 
             assertEquals(200, response.statusCode());
@@ -50,7 +53,7 @@ class ListTests extends AbstractTests {
                     Map.entry("numbers",  objectMapper.createArrayNode())
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "addZero", params);
+            final var response = callFunction(DataStructuresMResource.class, ADD_ZERO, params);
             final var result = objectMapper.readValue(response.body(), new TypeReference<List<Double>>(){});
 
             assertEquals(200, response.statusCode());
@@ -61,13 +64,12 @@ class ListTests extends AbstractTests {
         void testNestedLists() throws URISyntaxException, IOException, InterruptedException {
             final var numbersArray = objectMapper.createArrayNode()
                     .add(objectMapper.createArrayNode().add(1).add(2))
-                    .add(objectMapper.createArrayNode().add(-1).add(5))
-                    ;
+                    .add(objectMapper.createArrayNode().add(-1).add(5));
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("nestedList",  numbersArray)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "sumNestedLists", params);
+            final var response = callFunction(DataStructuresMResource.class, SUM_NESTED_LISTS, params);
             final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
@@ -79,13 +81,13 @@ class ListTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
             final var _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("numbers",  _double)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "addZero", params);
+            final var response = callFunction(DataStructuresMResource.class, ADD_ZERO, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -99,7 +101,7 @@ class ListTests extends AbstractTests {
                     Map.entry("numbers", numbersArray)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "addZero", params);
+            final var response = callFunction(DataStructuresMResource.class, ADD_ZERO, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -110,7 +112,7 @@ class ListTests extends AbstractTests {
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries(Map.entry("numbers", objectMapper.nullNode()));
 
-            final var response = callFunction(DataStructuresMResource.class, "addZero", params);
+            final var response = callFunction(DataStructuresMResource.class, ADD_ZERO, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -128,7 +130,7 @@ class ListTests extends AbstractTests {
                     Map.entry("nestedList",  numbersArray)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "sumNestedLists", params);
+            final var response = callFunction(DataStructuresMResource.class, SUM_NESTED_LISTS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

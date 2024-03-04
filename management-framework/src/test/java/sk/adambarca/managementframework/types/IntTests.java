@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class IntTests extends AbstractTests {
 
+    private static final String METHOD = "intAdd";
+    
     @LocalServerPort
     private int port;
 
@@ -30,7 +32,7 @@ class IntTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testPositive() throws URISyntaxException, IOException, InterruptedException {
             final int intPrim = 1;
             final int intWrap = 2;
             final Map<String, Object> params = Map.ofEntries(
@@ -38,7 +40,23 @@ class IntTests extends AbstractTests {
                     Map.entry("intWrap", intWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(intPrim + intWrap, result);
+        }
+
+        @Test
+        void testNegative() throws URISyntaxException, IOException, InterruptedException {
+            final int intPrim = -1;
+            final int intWrap = -542;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", intPrim),
+                    Map.entry("intWrap", intWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -54,16 +72,80 @@ class IntTests extends AbstractTests {
                     Map.entry("intWrap", intWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
             assertEquals(_double + intWrap, result);
         }
+
+        @Test
+        void testMin() throws URISyntaxException, IOException, InterruptedException {
+            final int intPrim = Integer.MIN_VALUE;
+            final int intWrap = 1;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", intPrim),
+                    Map.entry("intWrap", intWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(intPrim + intWrap , result);
+        }
+
+        @Test
+        void testMax() throws URISyntaxException, IOException, InterruptedException {
+            final int intPrim = Integer.MAX_VALUE;
+            final int intWrap = -542;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", intPrim),
+                    Map.entry("intWrap", intWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(intPrim + intWrap, result);
+        }
+
+        @Test
+        void testZero() throws URISyntaxException, IOException, InterruptedException {
+            final int intPrim = 0;
+            final int intWrap = -542;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", intPrim),
+                    Map.entry("intWrap", intWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Integer.parseInt(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(intPrim + intWrap, result);
+        }
     }
 
     @Nested
     class Error {
+
+        @Test
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+            final char intPrim = '0';
+            final int intWrap = -542;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("intPrim", intPrim),
+                    Map.entry("intWrap", intWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(String.valueOf(intPrim)), result);
+        }
 
         @Test
         void testOnDecimalPart() throws URISyntaxException, IOException, InterruptedException {
@@ -73,12 +155,14 @@ class IntTests extends AbstractTests {
                     Map.entry("intWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
             assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
         }
+
+
 
         @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
@@ -87,7 +171,7 @@ class IntTests extends AbstractTests {
                     Map.entry("intWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -102,7 +186,7 @@ class IntTests extends AbstractTests {
                     Map.entry("intWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -117,7 +201,7 @@ class IntTests extends AbstractTests {
                     Map.entry("intWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "intAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
