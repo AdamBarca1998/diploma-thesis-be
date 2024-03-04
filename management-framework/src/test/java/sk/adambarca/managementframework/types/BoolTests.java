@@ -20,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class BoolTests extends AbstractTests {
 
+    private static final String METHOD = "boolAnd";
+
     @LocalServerPort
     private int port;
 
@@ -40,7 +42,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", boolWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Boolean.parseBoolean(response.body());
 
             assertEquals(200, response.statusCode());
@@ -56,7 +58,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", boolWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Boolean.parseBoolean(response.body());
 
             assertEquals(200, response.statusCode());
@@ -75,7 +77,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", true)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -89,7 +91,7 @@ class BoolTests extends AbstractTests {
                     Map.entry("boolWrap", true)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "boolAnd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

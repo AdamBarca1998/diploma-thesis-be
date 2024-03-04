@@ -12,14 +12,14 @@ import sk.adambarca.managementframework.supportclasses.Operator;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class EnumTests extends AbstractTests {
+
+    private static final String METHOD = "addOneByEnum";
 
     @LocalServerPort
     private int port;
@@ -41,13 +41,7 @@ class EnumTests extends AbstractTests {
                     Map.entry("operator", operator)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "addOneByEnum"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);;
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -59,28 +53,6 @@ class EnumTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
-            final int number = 0;
-            final double _double = 1.5;
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("number", number),
-                    Map.entry("operator", _double)
-            );
-
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "addOneByEnum"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            final var result = response.body();
-
-            assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
-        }
-
-        @Test
         void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
             final int number = 0;
             final String invalid = "XYZ";
@@ -89,17 +61,42 @@ class EnumTests extends AbstractTests {
                     Map.entry("operator", invalid)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "addOneByEnum"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);;
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
             assertEquals(getNotTypeErrorMsg(invalid), result);
+        }
+
+        @Test
+        void testOnNull() throws URISyntaxException, IOException, InterruptedException {
+            final int number = 0;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("number", number),
+                    Map.entry("operator", objectMapper.nullNode())
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);;
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNullErrorMsg() , result);
+        }
+
+        @Test
+        void testOnWrongType() throws URISyntaxException, IOException, InterruptedException {
+            final int number = 0;
+            final double _double = 1.5;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("number", number),
+                    Map.entry("operator", _double)
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
         }
 
         @Test
@@ -111,13 +108,7 @@ class EnumTests extends AbstractTests {
                     Map.entry("operator", operator)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "addOneByEnum"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

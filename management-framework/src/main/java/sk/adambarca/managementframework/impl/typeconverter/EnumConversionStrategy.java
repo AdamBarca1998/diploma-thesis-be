@@ -12,6 +12,8 @@ final class EnumConversionStrategy implements TypeConversionStrategy<Enum<?>> {
 
     @Override
     public Enum<?> convert(JsonNode json, Type type) {
+        throwIfNull(json);
+
         try {
             if (!json.isInt()) {
                 return objectMapper.treeToValue(json, (Class<Enum>) type);

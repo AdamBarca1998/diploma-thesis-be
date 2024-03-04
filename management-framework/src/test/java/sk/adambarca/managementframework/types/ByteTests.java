@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ByteTests extends AbstractTests {
 
+    private static final String METHOD = "byteAdd";
+
     @LocalServerPort
     private int port;
 
@@ -38,7 +40,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", byteWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -54,7 +56,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", byteWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -70,7 +72,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", byteWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -86,7 +88,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", byteWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -102,7 +104,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", byteWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -118,7 +120,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", byteWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = Integer.parseInt(response.body());
 
             assertEquals(200, response.statusCode());
@@ -138,7 +140,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", byteWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -153,7 +155,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", 0)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -167,7 +169,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", 0)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -182,7 +184,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", 0)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -197,7 +199,7 @@ class ByteTests extends AbstractTests {
                     Map.entry("byteWrap", 0)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "byteAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

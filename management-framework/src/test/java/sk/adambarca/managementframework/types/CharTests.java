@@ -19,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CharTests extends AbstractTests {
 
+    private static final String METHOD = "charConcat";
+
     @LocalServerPort
     private int port;
 
@@ -39,7 +41,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -55,7 +57,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -71,7 +73,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -87,7 +89,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -103,7 +105,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -119,7 +121,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -135,7 +137,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -151,7 +153,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", charWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -170,7 +172,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -185,7 +187,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -199,7 +201,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -214,7 +216,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -229,7 +231,7 @@ class CharTests extends AbstractTests {
                     Map.entry("charWrap", 'B')
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "charConcat", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

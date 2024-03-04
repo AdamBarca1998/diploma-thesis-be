@@ -11,12 +11,12 @@ final class FloatConversionStrategy extends NumericConversionStrategy<Float> {
 
     @Override
     protected BigDecimal getMinValue() {
-        return BigDecimal.valueOf(-Float.MAX_VALUE);
+        return new BigDecimal(Float.toString(-Float.MAX_VALUE));
     }
 
     @Override
     protected BigDecimal getMaxValue() {
-        return BigDecimal.valueOf(Float.MAX_VALUE);
+        return new BigDecimal(Float.toString(Float.MAX_VALUE));
     }
 
     @Override

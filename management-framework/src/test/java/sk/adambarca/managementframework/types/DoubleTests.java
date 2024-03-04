@@ -19,6 +19,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class DoubleTests extends AbstractTests {
 
+    private static final String METHOD = "doubleAdd";
+
     @LocalServerPort
     private int port;
 
@@ -31,16 +33,32 @@ class DoubleTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
-            final double doublePrim = 0.5;
-            final double doubleWrap = 1.0;
+        void testPositive() throws URISyntaxException, IOException, InterruptedException {
+            final double doublePrim = 0.453235;
+            final double doubleWrap = 1.015578;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("doublePrim", doublePrim),
                     Map.entry("doubleWrap", doubleWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
-            final var result = Float.parseFloat(response.body());
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Double.parseDouble(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(doublePrim + doubleWrap, result);
+        }
+
+        @Test
+        void testNegative() throws URISyntaxException, IOException, InterruptedException {
+            final double doublePrim = -0.4592;
+            final double doubleWrap = -1.74546;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
             assertEquals(doublePrim + doubleWrap, result);
@@ -55,8 +73,56 @@ class DoubleTests extends AbstractTests {
                     Map.entry("doubleWrap", doubleWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
-            final var result = Float.parseFloat(response.body());
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Double.parseDouble(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(doublePrim + doubleWrap, result);
+        }
+
+        @Test
+        void testMin() throws URISyntaxException, IOException, InterruptedException {
+            final double doublePrim = 1.5;
+            final double doubleWrap = -Double.MAX_VALUE;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Double.parseDouble(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(doublePrim + doubleWrap, result);
+        }
+
+        @Test
+        void testMax() throws URISyntaxException, IOException, InterruptedException {
+            final double doublePrim = -1.5;
+            final double doubleWrap = Double.MAX_VALUE;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Double.parseDouble(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(doublePrim + doubleWrap, result);
+        }
+
+        @Test
+        void testZero() throws URISyntaxException, IOException, InterruptedException {
+            final double doublePrim = 9.65;
+            final double doubleWrap = 0;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
             assertEquals(doublePrim + doubleWrap, result);
@@ -67,13 +133,29 @@ class DoubleTests extends AbstractTests {
     class Error {
 
         @Test
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+            final double doublePrim = 9.65;
+            final char doubleWrap = 'A';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(String.valueOf(doubleWrap)), result);
+        }
+
+        @Test
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("doublePrim", 0.5),
                     Map.entry("doubleWrap", objectMapper.nullNode())
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -88,7 +170,7 @@ class DoubleTests extends AbstractTests {
                     Map.entry("doubleWrap", 1)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -103,7 +185,7 @@ class DoubleTests extends AbstractTests {
                     Map.entry("doubleWrap", 1)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "doubleAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
