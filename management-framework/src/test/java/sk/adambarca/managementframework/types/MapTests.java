@@ -21,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MapTests extends AbstractTests {
 
+    private static final String GET_KEYS = "getKeys";
+    private static final String GET_VALUES_FROM_NESTED_MAP = "getValuesFromNestedMap";
+
     @LocalServerPort
     private int port;
 
@@ -42,7 +45,7 @@ class MapTests extends AbstractTests {
                     Map.entry("map", map)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getKeys", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_KEYS, params);
             final var result = objectMapper.readValue(response.body(), new TypeReference<Set<String>>(){});
 
             assertEquals(200, response.statusCode());
@@ -55,7 +58,7 @@ class MapTests extends AbstractTests {
                     Map.entry("map", Map.of())
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getKeys", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_KEYS, params);
             final var result = objectMapper.readValue(response.body(), new TypeReference<List<String>>(){});
 
             assertEquals(200, response.statusCode());
@@ -63,7 +66,7 @@ class MapTests extends AbstractTests {
         }
 
         @Test
-        void testNestedLists() throws URISyntaxException, IOException, InterruptedException {
+        void testNestedMaps() throws URISyntaxException, IOException, InterruptedException {
             final var _value = "ValueString";
             final var nestedMap = Map.ofEntries(
                     Map.entry("key1", Map.ofEntries(Map.entry(1, _value)))
@@ -72,7 +75,7 @@ class MapTests extends AbstractTests {
                     Map.entry("nestedMap",  nestedMap)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getValuesFromNestedMap", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_VALUES_FROM_NESTED_MAP, params);
             final var result = objectMapper.readValue(response.body(), new TypeReference<List<String>>(){});
 
             assertEquals(200, response.statusCode());
@@ -84,13 +87,13 @@ class MapTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
             final var _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("map", _double)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getKeys", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_KEYS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -104,7 +107,7 @@ class MapTests extends AbstractTests {
                     Map.entry("map", map)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getKeys", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_KEYS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -117,7 +120,7 @@ class MapTests extends AbstractTests {
                     Map.entry("map", objectMapper.nullNode())
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getKeys", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_KEYS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -136,7 +139,7 @@ class MapTests extends AbstractTests {
                     Map.entry("map", map)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getKeys", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_KEYS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

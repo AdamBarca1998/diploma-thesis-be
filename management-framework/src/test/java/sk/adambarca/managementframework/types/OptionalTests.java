@@ -18,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class OptionalTests extends AbstractTests {
 
+    private static final String SUM_OPTIONAL = "sumOptional";
+    private static final String GET_LENGTH = "getLength";
+
     @LocalServerPort
     private int port;
 
@@ -29,18 +32,32 @@ class OptionalTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testNullValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testOnNull() throws URISyntaxException, IOException, InterruptedException {
             final var num1 = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("num1", num1),
                     Map.entry("num2", objectMapper.nullNode())
             );
 
-            final var response = callFunction(BasicClassesMResource.class, "sumOptional", params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
             final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
             assertEquals(num1, result);
+        }
+
+        @Test
+        void testNullValidity() throws URISyntaxException, IOException, InterruptedException {
+            final var list = objectMapper.createArrayNode().add(1).add(2).addNull();
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("list", list)
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, GET_LENGTH, params);
+            final var result = Double.parseDouble(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(2, result);
         }
 
         @Test
@@ -52,7 +69,7 @@ class OptionalTests extends AbstractTests {
                     Map.entry("num2", num2)
             );
 
-            final var response = callFunction(BasicClassesMResource.class, "sumOptional", params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
             final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
@@ -66,7 +83,7 @@ class OptionalTests extends AbstractTests {
                     Map.entry("num1", num1)
             );
 
-            final var response = callFunction(BasicClassesMResource.class, "sumOptional", params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
             final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
@@ -80,7 +97,7 @@ class OptionalTests extends AbstractTests {
         void testInvalidityOptionalCount() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries();
 
-            final var response = callFunction(BasicClassesMResource.class, "sumOptional", params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -93,7 +110,7 @@ class OptionalTests extends AbstractTests {
                     Map.entry("numXYZ", 0.5)
             );
 
-            final var response = callFunction(BasicClassesMResource.class, "sumOptional", params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

@@ -2,6 +2,7 @@ package sk.adambarca.managementframework.supportclasses;
 
 import sk.adambarca.managementframework.resource.MResource;
 
+import java.util.List;
 import java.util.Optional;
 
 @MResource
@@ -21,6 +22,10 @@ public class BasicClassesMResource {
 
     public double sumOptional(double num1, Optional<Double> num2) {
         return num1 + num2.orElse(0.0);
+    }
+
+    public long getLength(List<Optional<Double>> list) {
+        return list.stream().filter(Optional::isPresent).count();
     }
 
     public int sumAges(Person person) {
