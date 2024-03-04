@@ -18,6 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ShortTests extends AbstractTests {
 
+    private static final String METHOD = "shortAdd";
+    
     @LocalServerPort
     private int port;
 
@@ -30,7 +32,7 @@ class ShortTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testPositive() throws URISyntaxException, IOException, InterruptedException {
             final short shortPrim = 1;
             final short shortWrap = 2;
             final Map<String, Object> params = Map.ofEntries(
@@ -38,8 +40,24 @@ class ShortTests extends AbstractTests {
                     Map.entry("shortWrap", shortWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "shortAdd", params);
-            final var result = Integer.parseInt(response.body());
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Short.parseShort(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(shortPrim + shortWrap, result);
+        }
+
+        @Test
+        void testNegative() throws URISyntaxException, IOException, InterruptedException {
+            final short shortPrim = -59;
+            final short shortWrap = -2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("shortPrim", shortPrim),
+                    Map.entry("shortWrap", shortWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Short.parseShort(response.body());
 
             assertEquals(200, response.statusCode());
             assertEquals(shortPrim + shortWrap, result);
@@ -54,16 +72,80 @@ class ShortTests extends AbstractTests {
                     Map.entry("shortWrap", shortWrap)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "shortAdd", params);
-            final var result = Integer.parseInt(response.body());
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Short.parseShort(response.body());
 
             assertEquals(200, response.statusCode());
             assertEquals(_double + shortWrap, result);
+        }
+
+        @Test
+        void testMin() throws URISyntaxException, IOException, InterruptedException {
+            final short shortPrim = Short.MIN_VALUE;
+            final short shortWrap = 2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("shortPrim", shortPrim),
+                    Map.entry("shortWrap", shortWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Short.parseShort(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(shortPrim + shortWrap , result);
+        }
+
+        @Test
+        void testMax() throws URISyntaxException, IOException, InterruptedException {
+            final short shortPrim = Short.MAX_VALUE;
+            final short shortWrap = -2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("shortPrim", shortPrim),
+                    Map.entry("shortWrap", shortWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Short.parseShort(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(shortPrim + shortWrap, result);
+        }
+
+        @Test
+        void testZero() throws URISyntaxException, IOException, InterruptedException {
+            final short shortPrim = 0;
+            final short shortWrap = -2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("shortPrim", shortPrim),
+                    Map.entry("shortWrap", shortWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Short.parseShort(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(shortPrim + shortWrap, result);
         }
     }
 
     @Nested
     class Error {
+
+        @Test
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+            final boolean shortPrim = false;
+            final short shortWrap = -2;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("shortPrim", shortPrim),
+                    Map.entry("shortWrap", shortWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(String.valueOf(shortPrim)), result);
+        }
 
         @Test
         void testOnDecimalPart() throws URISyntaxException, IOException, InterruptedException {
@@ -73,7 +155,7 @@ class ShortTests extends AbstractTests {
                     Map.entry("shortWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "shortAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -87,7 +169,7 @@ class ShortTests extends AbstractTests {
                     Map.entry("shortWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "shortAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -102,7 +184,7 @@ class ShortTests extends AbstractTests {
                     Map.entry("shortWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "shortAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -117,7 +199,7 @@ class ShortTests extends AbstractTests {
                     Map.entry("shortWrap", 2)
             );
 
-            final var response = callFunction(PrimitivesMResource.class, "shortAdd", params);
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

@@ -11,14 +11,14 @@ import sk.adambarca.managementframework.supportclasses.BasicClassesMResource;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class StringTests extends AbstractTests {
+
+    private static final String METHOD = "sayHello";
 
     @LocalServerPort
     private int port;
@@ -38,13 +38,7 @@ class StringTests extends AbstractTests {
                     Map.entry("s", s)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "sayHello"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -58,13 +52,7 @@ class StringTests extends AbstractTests {
                     Map.entry("s", empty)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "sayHello"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(200, response.statusCode());
@@ -76,19 +64,13 @@ class StringTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
             final double _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("s", _double)
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "sayHello"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -101,13 +83,7 @@ class StringTests extends AbstractTests {
                     Map.entry("s", objectMapper.nullNode())
             );
 
-            final var request = HttpRequest.newBuilder()
-                    .uri(getUri(BasicClassesMResource.class.getSimpleName(), "sayHello"))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(params)))
-                    .build();
-
-            final var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());

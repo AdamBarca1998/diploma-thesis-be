@@ -19,6 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SetTests extends AbstractTests {
 
+    private static final String SUM_SETS = "sumSets";
+    private static final String GET_COUNT_SETS = "getCountSets";
+
     @LocalServerPort
     private int port;
 
@@ -38,7 +41,7 @@ class SetTests extends AbstractTests {
                     Map.entry("bSet", bSet)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "sumSets", params);
+            final var response = callFunction(DataStructuresMResource.class, SUM_SETS, params);
             final var result = Integer.valueOf(response.body());
 
             assertEquals(200, response.statusCode());
@@ -53,7 +56,7 @@ class SetTests extends AbstractTests {
                     Map.entry("bSet", Set.of())
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "sumSets", params);
+            final var response = callFunction(DataStructuresMResource.class, SUM_SETS, params);
             final var result = Integer.valueOf(response.body());
 
             assertEquals(200, response.statusCode());
@@ -67,7 +70,7 @@ class SetTests extends AbstractTests {
                     Map.entry("nestedSet",  nestedSet)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getCountSets", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_COUNT_SETS, params);
             final var result = Long.parseLong(response.body());
 
             assertEquals(200, response.statusCode());
@@ -79,13 +82,13 @@ class SetTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnDouble() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
             final var _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("nestedSet",  _double)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getCountSets", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_COUNT_SETS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -101,7 +104,7 @@ class SetTests extends AbstractTests {
                     Map.entry("bSet", bSet)
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "sumSets", params);
+            final var response = callFunction(DataStructuresMResource.class, SUM_SETS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -114,7 +117,7 @@ class SetTests extends AbstractTests {
                     Map.entry("nestedSet",  objectMapper.nullNode())
             );
 
-            final var response = callFunction(DataStructuresMResource.class, "getCountSets", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_COUNT_SETS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -129,7 +132,7 @@ class SetTests extends AbstractTests {
             );
 
 
-            final var response = callFunction(DataStructuresMResource.class, "getCountSets", params);
+            final var response = callFunction(DataStructuresMResource.class, GET_COUNT_SETS, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
