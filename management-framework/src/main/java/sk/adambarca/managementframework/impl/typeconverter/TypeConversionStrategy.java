@@ -15,7 +15,7 @@ public interface TypeConversionStrategy<T> {
         if (typeArguments.length > 0) {
             return typeArguments[0];
         } else {
-            throw new TypeCantBeExtractedException("Type '" + parameterizedType + "' can't be extracted!");
+            return parameterizedType;
         }
     }
 

@@ -14,7 +14,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -86,6 +88,17 @@ class ApiTests extends AbstractTests {
 
             assertEquals(200, response.statusCode());
             assertEquals("null", response.body());
+        }
+
+        @Test
+        void testUnsupportedType() throws URISyntaxException, IOException, InterruptedException {
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("calendar", Calendar.getInstance())
+            );
+
+            final var response = callFunction(CalculatorMResource.class, "isSupportType", params);;
+
+            assertEquals(406, response.statusCode());
         }
     }
 
