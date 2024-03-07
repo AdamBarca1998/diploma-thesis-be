@@ -135,3 +135,27 @@ public class CalculatorMResource {
 * List
 * Set
 * Map
+
+## Tests:
+
+Test's tables for framework:
+
+--------------------------------------
+
+### Numeric types
+
+| Test                                | Double         | Float          | Short  | Byte          | Int           | Long          | Char         |
+|-------------------------------------|----------------|----------------|--------|---------------|---------------|---------------|--------------|
+| Positive & Negative (Validity Type) | ✔              | ✔              | ✔      | ✔             | ✔             | ✔             | ✔            |
+| Integer                             | ✔              | ✔              | Validity Type      | Validity Type             | Validity Type             | Validity Type             | ✔            |
+| Integer Part                        | ✔              | ✔              | ✔      | ✔             | ✔             | ✔             | ✔            |
+| Min                                 | ✔              | ✔              | ✔      | ✔             | ✔             | ✔             | ✔            |
+| Max                                 | ✔              | ✔              | ✔      | ✔             | ✔             | ✔             | ✔            |
+| 0                                   | ✔              | ✔              | ✔      | ✔             | ✔             | ✔             | ✔            |
+| Decimal Part                        | Validity Type  | Validity Type  | ❌      | ❌             | ❌            | ❌             | ❌            |
+| Invalidity Type                     | ❌             | ❌              | ❌      | ❌             | ❌            | ❌             | ❌            |
+| On Null                             | ❌             | ❌              | ❌      | ❌             | ❌            | ❌             | ❌            |
+| Overflow                            | ❌             | ❌              | ❌      | ❌             | ❌            | ❌             | ❌            |
+| Underflow                           | ❌             | ❌              | ❌      | ❌             | ❌            | ❌             | ❌            |
+| Empty                               |                |                |        |               |               |               | ✔            |
+| Special                             |                |                |        |               |               |               | ✔            |

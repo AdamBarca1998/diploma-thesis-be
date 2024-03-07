@@ -81,6 +81,22 @@ class DoubleTests extends AbstractTests {
         }
 
         @Test
+        void testOnIntegerPart() throws URISyntaxException, IOException, InterruptedException {
+            final double doublePrim = 0.5;
+            final double doubleWrap = 10.0;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("doublePrim", doublePrim),
+                    Map.entry("doubleWrap", doubleWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Double.parseDouble(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(doublePrim + doubleWrap, result);
+        }
+
+        @Test
         void testMin() throws URISyntaxException, IOException, InterruptedException {
             final double doublePrim = 1.5;
             final double doubleWrap = -Double.MAX_VALUE;

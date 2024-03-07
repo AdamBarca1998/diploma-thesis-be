@@ -82,6 +82,22 @@ class FloatTests extends AbstractTests {
         }
 
         @Test
+        void testOnIntegerPart() throws URISyntaxException, IOException, InterruptedException {
+            final float floatPrim = 0.5f;
+            final float floatWrap = 9.0f;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("floatPrim", floatPrim),
+                    Map.entry("floatWrap", floatWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = Float.parseFloat(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(floatPrim + floatWrap, result);
+        }
+
+        @Test
         void testMin() throws URISyntaxException, IOException, InterruptedException {
             final float floatPrim = -Float.MAX_VALUE;
             final float floatWrap = 1.5958f;
