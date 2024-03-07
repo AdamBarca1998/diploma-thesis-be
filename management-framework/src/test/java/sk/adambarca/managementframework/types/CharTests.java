@@ -33,7 +33,7 @@ class CharTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final char charPrim = 'A';
             final Character charWrap = 'B';
             final Map<String, Object> params = Map.ofEntries(
@@ -165,7 +165,7 @@ class CharTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final String _s = "ABC";
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("charPrim", _s),

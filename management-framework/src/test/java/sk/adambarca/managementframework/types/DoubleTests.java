@@ -133,7 +133,7 @@ class DoubleTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final double doublePrim = 9.65;
             final char doubleWrap = 'A';
             final Map<String, Object> params = Map.ofEntries(

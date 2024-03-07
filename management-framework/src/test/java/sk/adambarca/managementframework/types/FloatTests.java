@@ -134,7 +134,7 @@ class FloatTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final double floatPrim = 9.65;
             final Operator floatWrap = Operator.SUB;
             final Map<String, Object> params = Map.ofEntries(

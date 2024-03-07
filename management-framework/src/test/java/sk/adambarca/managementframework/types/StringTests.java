@@ -32,7 +32,7 @@ class StringTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final String s = "World";
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("s", s)
@@ -64,7 +64,7 @@ class StringTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final double _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("s", _double)

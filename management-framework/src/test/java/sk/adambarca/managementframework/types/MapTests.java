@@ -35,7 +35,7 @@ class MapTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final var map = Map.ofEntries(
                     Map.entry("key1", 1),
                     Map.entry("key2", 2),
@@ -87,7 +87,7 @@ class MapTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final var _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("map", _double)

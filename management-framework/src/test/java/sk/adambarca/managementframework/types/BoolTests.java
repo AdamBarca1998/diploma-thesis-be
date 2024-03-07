@@ -34,7 +34,7 @@ class BoolTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final boolean boolPrim = true;
             final boolean boolWrap = true;
             final Map<String, Object> params = Map.ofEntries(
@@ -70,7 +70,7 @@ class BoolTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final double _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("boolPrim", _double),

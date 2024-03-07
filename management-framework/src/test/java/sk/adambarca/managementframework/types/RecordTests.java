@@ -34,7 +34,7 @@ class RecordTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final var age = 20;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("person", new Person("Adam", age, null))
@@ -89,7 +89,7 @@ class RecordTests extends AbstractTests {
         }
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final var person = objectMapper.createObjectNode(); // missing age
             person.set("name", new TextNode("Adam"));
 

@@ -34,7 +34,7 @@ class ListTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final var numbersArray = objectMapper.createArrayNode().add(1).add(2);
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("numbers", numbersArray)
@@ -81,7 +81,7 @@ class ListTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final var _double = 0.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("numbers",  _double)

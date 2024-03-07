@@ -132,7 +132,7 @@ class ShortTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final boolean shortPrim = false;
             final short shortWrap = -2;
             final Map<String, Object> params = Map.ofEntries(

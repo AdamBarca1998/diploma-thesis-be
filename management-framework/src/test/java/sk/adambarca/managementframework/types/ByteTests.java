@@ -132,7 +132,7 @@ class ByteTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final boolean bytePrim = true;
             final byte byteWrap = 1;
             final Map<String, Object> params = Map.ofEntries(

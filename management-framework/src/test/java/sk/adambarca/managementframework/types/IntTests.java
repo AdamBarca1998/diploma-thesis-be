@@ -132,7 +132,7 @@ class IntTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final char intPrim = '0';
             final int intWrap = -542;
             final Map<String, Object> params = Map.ofEntries(

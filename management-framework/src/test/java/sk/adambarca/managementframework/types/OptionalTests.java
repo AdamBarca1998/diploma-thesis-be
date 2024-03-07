@@ -94,7 +94,7 @@ class OptionalTests extends AbstractTests {
     @Nested
     class Error {
         @Test
-        void testInvalidityOptionalCount() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityTypeOptionalCount() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries();
 
             final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);

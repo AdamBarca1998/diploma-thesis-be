@@ -134,7 +134,7 @@ class LongTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final List<Long> longPrim = List.of();
             final long longWrap = 248;
             final Map<String, Object> params = Map.ofEntries(

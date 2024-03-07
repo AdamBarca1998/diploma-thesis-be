@@ -33,7 +33,7 @@ class EnumTests extends AbstractTests {
     @Nested
     class Success {
         @Test
-        void testValidity() throws URISyntaxException, IOException, InterruptedException {
+        void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final int number = 0;
             final Operator operator = Operator.ADD;
             final Map<String, Object> params = Map.ofEntries(
@@ -53,7 +53,7 @@ class EnumTests extends AbstractTests {
     class Error {
 
         @Test
-        void testInvalidity() throws URISyntaxException, IOException, InterruptedException {
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final int number = 0;
             final String invalid = "XYZ";
             final Map<String, Object> params = Map.ofEntries(
