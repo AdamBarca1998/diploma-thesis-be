@@ -31,20 +31,6 @@ class OptionalTests extends AbstractTests {
 
     @Nested
     class Success {
-        @Test
-        void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final var num1 = 0.5;
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("num1", num1),
-                    Map.entry("num2", objectMapper.nullNode())
-            );
-
-            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
-            final var result = Double.parseDouble(response.body());
-
-            assertEquals(200, response.statusCode());
-            assertEquals(num1, result);
-        }
 
         @Test
         void testNullValidity() throws URISyntaxException, IOException, InterruptedException {
@@ -75,6 +61,20 @@ class OptionalTests extends AbstractTests {
             assertEquals(200, response.statusCode());
             assertEquals(num1 + num2, result);
         }
+        @Test
+        void testOnNull() throws URISyntaxException, IOException, InterruptedException {
+            final var num1 = 0.5;
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("num1", num1),
+                    Map.entry("num2", objectMapper.nullNode())
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
+            final var result = Double.parseDouble(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertEquals(num1, result);
+        }
 
         @Test
         void testAbsentValidity() throws URISyntaxException, IOException, InterruptedException {
@@ -93,6 +93,23 @@ class OptionalTests extends AbstractTests {
 
     @Nested
     class Error {
+
+        @Test
+        void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
+            final var num1 = 0.5;
+            final var num2 = "ABC";
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("num1", num1),
+                    Map.entry("num2", num2)
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, SUM_OPTIONAL, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(num2), result);
+        }
+
         @Test
         void testInvalidityTypeOptionalCount() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries();
@@ -120,6 +137,6 @@ class OptionalTests extends AbstractTests {
 
     @Override
     protected String getTypeName() {
-        return "Enum";
+        return "Double or double";
     }
 }

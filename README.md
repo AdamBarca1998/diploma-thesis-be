@@ -165,7 +165,7 @@ Test's tables for framework:
 | Test            | List | Map  | Set  | Record        |
 |-----------------|------|------|------|---------------|
 | Validity Type   | ✔    | ✔    | ✔    | ✔             |
-| Empty           | ✔    | ✔    | ✔    | ✔ ❌ (2 types) |
+| Empty           | ✔    | ✔    | ✔    | ✔ ❌ (2x) |
 | Nested          | ✔    | ✔    | ✔    | ✔             |
 | Invalidity Type | ❌    | ❌    | ❌    | ❌             |
 | Null Validity   | ❌    | ❌    | ❌    | ❌             |
@@ -173,3 +173,17 @@ Test's tables for framework:
 | Different Types | ❌    | ❌    | ❌    | ❌             |
 
 ### Other types
+
+| Test                 | Optional         | Enum          | Bool         | String       |
+|----------------------|------------------|---------------|--------------|--------------|
+| Validity Type        | ✔ (null & value) | ✔             | ✔            | ✔            |
+| On Null              | ✔                | ❌             | ❌            | ❌            |
+| Absent Validity      | ✔                |               |              |              |
+| Zero And One         |                  |               | ✔            |              |
+| Empty                |                  |               |              | ✔            |
+| Special              |                  |               |              | ✔            |
+| Invalidity Type      | ❌                | ❌             | ❌            | ❌            |
+| Optional Count       | ❌                |               |              |              |
+| Different Param Name | ❌                |               |              |              |
+| No Exist             |                  | ❌             |              |              |
+| Integer              |                  | ❌             |              |              |

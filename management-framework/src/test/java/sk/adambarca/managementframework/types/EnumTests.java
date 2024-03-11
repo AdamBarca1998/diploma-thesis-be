@@ -55,17 +55,17 @@ class EnumTests extends AbstractTests {
         @Test
         void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final int number = 0;
-            final String invalid = "XYZ";
+            final double _double = 1.5;
             final Map<String, Object> params = Map.ofEntries(
                     Map.entry("number", number),
-                    Map.entry("operator", invalid)
+                    Map.entry("operator", _double)
             );
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);;
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(invalid), result);
+            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
         }
 
         @Test
@@ -84,22 +84,6 @@ class EnumTests extends AbstractTests {
         }
 
         @Test
-        void testOnWrongType() throws URISyntaxException, IOException, InterruptedException {
-            final int number = 0;
-            final double _double = 1.5;
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("number", number),
-                    Map.entry("operator", _double)
-            );
-
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
-            final var result = response.body();
-
-            assertEquals(406, response.statusCode());
-            assertEquals(getNotTypeErrorMsg(String.valueOf(_double)), result);
-        }
-
-        @Test
         void testOnInteger() throws URISyntaxException, IOException, InterruptedException {
             final int number = 1;
             final int operator = 0;
@@ -113,6 +97,22 @@ class EnumTests extends AbstractTests {
 
             assertEquals(406, response.statusCode());
             assertEquals(getNotTypeErrorMsg(String.valueOf(operator)), result);
+        }
+
+        @Test
+        void testNoExist() throws URISyntaxException, IOException, InterruptedException {
+            final int number = 0;
+            final String invalid = "XYZ";
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("number", number),
+                    Map.entry("operator", invalid)
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);;
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNotTypeErrorMsg(invalid), result);
         }
     }
 

@@ -58,6 +58,20 @@ class StringTests extends AbstractTests {
             assertEquals(200, response.statusCode());
             assertEquals(STR."Hello \{empty}!", result);
         }
+
+        @Test
+        void testSpecial() throws URISyntaxException, IOException, InterruptedException {
+            final String special = "这是一些中文字符 + some English 1234567890 !@#$%^&*()_+-=[]{};':\\\",./<>?";
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("s", special)
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."Hello \{special}!", result);
+        }
     }
 
     @Nested
