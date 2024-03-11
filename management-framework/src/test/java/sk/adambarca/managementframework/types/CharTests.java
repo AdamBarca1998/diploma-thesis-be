@@ -81,38 +81,6 @@ class CharTests extends AbstractTests {
         }
 
         @Test
-        void testOnSpecial() throws URISyntaxException, IOException, InterruptedException {
-            final char special = '\t';
-            final Character charWrap = 'B';
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("charPrim", special),
-                    Map.entry("charWrap", charWrap)
-            );
-
-            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
-            final var result = response.body();
-
-            assertEquals(200, response.statusCode());
-            assertEquals(STR."\{special}\{charWrap}", result);
-        }
-
-        @Test
-        void testOnEmpty() throws URISyntaxException, IOException, InterruptedException {
-            final char empty = '\u0000';
-            final Character charWrap = 'B';
-            final Map<String, Object> params = Map.ofEntries(
-                    Map.entry("charPrim", empty),
-                    Map.entry("charWrap", charWrap)
-            );
-
-            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
-            final var result = response.body();
-
-            assertEquals(200, response.statusCode());
-            assertEquals(STR."\{empty}\{charWrap}", result);
-        }
-
-        @Test
         void testMin() throws URISyntaxException, IOException, InterruptedException {
             final var min = Character.MIN_VALUE;
             final Character charWrap = 'B';
@@ -158,6 +126,54 @@ class CharTests extends AbstractTests {
 
             assertEquals(200, response.statusCode());
             assertEquals(STR."\{Character.MIN_VALUE}\{charWrap}", result);
+        }
+
+        @Test
+        void testOnEmpty() throws URISyntaxException, IOException, InterruptedException {
+            final char empty = '\u0000';
+            final Character charWrap = 'B';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", empty),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{empty}\{charWrap}", result);
+        }
+
+        @Test
+        void testOnSpecial() throws URISyntaxException, IOException, InterruptedException {
+            final char special = '\t';
+            final Character charWrap = 'B';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", special),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{special}\{charWrap}", result);
+        }
+
+        @Test
+        void testOnChinese() throws URISyntaxException, IOException, InterruptedException {
+            final char special = '漢';
+            final Character charWrap = 'B';
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", special),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{special}\{charWrap}", result);
         }
     }
 

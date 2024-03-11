@@ -159,6 +159,7 @@ Test's tables for framework:
 | Underflow                           | ❌             | ❌              | ❌      | ❌             | ❌            | ❌             | ❌            |
 | Empty                               |                |                |        |               |               |               | ✔            |
 | Special                             |                |                |        |               |               |               | ✔            |
+| Chinese                             |                |                |        |               |               |               | ✔            |
 
 ### Nested types
 | Test            | List | Map  | Set  | Record        |
@@ -170,3 +171,5 @@ Test's tables for framework:
 | Null Validity   | ❌    | ❌    | ❌    | ❌             |
 | On Null         | ❌    | ❌    | ❌    | ❌             |
 | Different Types | ❌    | ❌    | ❌    | ❌             |
+
+### Other types
