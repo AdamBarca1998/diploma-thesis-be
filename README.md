@@ -161,12 +161,12 @@ Test's tables for framework:
 | Special                             |                |                |        |               |               |               | ✔            |
 
 ### Nested types
-| Test            | List | Map  | Set  | Record |
-|-----------------|------|------|------|--------|
-| Validity Type   | ✔    | ✔    | ✔    | ✔      |
-| Empty           | ✔    | ✔    | ✔    | ❌      |
-| Nested          | ✔    | ✔    | ✔    | ✔      |
-| Invalidity Type | ❌    | ❌    | ❌    | ❌      |
-| Null Validity   | ❌    | ❌    | ❌    | ❌      |
-| On Null         | ❌    | ❌    | ❌    | ❌      |
-| Different Types | ❌    | ❌    | ❌    | ❌      |
+| Test            | List | Map  | Set  | Record        |
+|-----------------|------|------|------|---------------|
+| Validity Type   | ✔    | ✔    | ✔    | ✔             |
+| Empty           | ✔    | ✔    | ✔    | ✔ ❌ (2 types) |
+| Nested          | ✔    | ✔    | ✔    | ✔             |
+| Invalidity Type | ❌    | ❌    | ❌    | ❌             |
+| Null Validity   | ❌    | ❌    | ❌    | ❌             |
+| On Null         | ❌    | ❌    | ❌    | ❌             |
+| Different Types | ❌    | ❌    | ❌    | ❌             |

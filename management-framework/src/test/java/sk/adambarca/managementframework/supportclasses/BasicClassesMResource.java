@@ -31,4 +31,8 @@ public class BasicClassesMResource {
     public int sumAges(Person person) {
         return person.age() + (person.child().isPresent() ? sumAges(person.child().get()) : 0);
     }
+
+    public boolean isEmptyRecord(EmptyRecord emptyRecord) {
+        return true;
+    }
 }

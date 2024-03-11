@@ -23,7 +23,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest(classes = ManagementFrameworkApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RecordTests extends AbstractTests {
 
-    public static final String METHOD = "sumAges";
+    private static final String SUM_AGES = "sumAges";
+    private static final String IS_EMPTY_RECORD = "isEmptyRecord";
+
     @LocalServerPort
     private int port;
 
@@ -41,11 +43,22 @@ class RecordTests extends AbstractTests {
                     Map.entry("person", new Person("Adam", age, null))
             );
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_AGES, params);
             final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
             assertEquals(age, result);
+        }
+
+        @Test
+        void testOnEmpty() throws URISyntaxException, IOException, InterruptedException {
+            final Map<String, Object> params = Map.ofEntries(Map.entry("emptyRecord", objectMapper.createObjectNode()));
+
+            final var response = callFunction(BasicClassesMResource.class, IS_EMPTY_RECORD, params);
+            final var result = Boolean.parseBoolean(response.body());
+
+            assertEquals(200, response.statusCode());
+            assertTrue(result);
         }
 
         @Test
@@ -56,7 +69,7 @@ class RecordTests extends AbstractTests {
                     Map.entry("person", new Person("Adam", adamAge, Optional.of(new Person("John", johnAge, null))))
             );
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_AGES, params);
             final var result = Double.parseDouble(response.body());
 
             assertEquals(200, response.statusCode());
@@ -76,7 +89,7 @@ class RecordTests extends AbstractTests {
                     Map.entry("person", person)
             );
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_AGES, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -90,7 +103,7 @@ class RecordTests extends AbstractTests {
                     Map.entry("person", new ErrorPerson(Optional.empty(), 20, null)) // name = null
             );
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_AGES, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -102,7 +115,7 @@ class RecordTests extends AbstractTests {
         void testOnNull() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries(Map.entry("person", objectMapper.nullNode()));
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_AGES, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -115,7 +128,7 @@ class RecordTests extends AbstractTests {
                     Map.entry("person", new ErrorPerson(Optional.of("Adam"), 20.45, null)) // wrong age
             );
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_AGES, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
@@ -127,7 +140,7 @@ class RecordTests extends AbstractTests {
         void testOnEmpty() throws URISyntaxException, IOException, InterruptedException {
             final Map<String, Object> params = Map.ofEntries(Map.entry("person", objectMapper.createObjectNode()));
 
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var response = callFunction(BasicClassesMResource.class, SUM_AGES, params);
             final var result = response.body();
 
             assertEquals(406, response.statusCode());
