@@ -159,3 +159,14 @@ Test's tables for framework:
 | Underflow                           | ❌             | ❌              | ❌      | ❌             | ❌            | ❌             | ❌            |
 | Empty                               |                |                |        |               |               |               | ✔            |
 | Special                             |                |                |        |               |               |               | ✔            |
+
+### Nested types
+| Test            | List | Map  | Set  | Record |
+|-----------------|------|------|------|--------|
+| Validity Type   | ✔    | ✔    | ✔    | ✔      |
+| Empty           | ✔    | ✔    | ✔    | ❌      |
+| Nested          | ✔    | ✔    | ✔    | ✔      |
+| Invalidity Type | ❌    | ❌    | ❌    | ❌      |
+| Null Validity   | ❌    | ❌    | ❌    | ❌      |
+| On Null         | ❌    | ❌    | ❌    | ❌      |
+| Different Types | ❌    | ❌    | ❌    | ❌      |

@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import sk.adambarca.managementframework.AbstractTests;
 import sk.adambarca.managementframework.ManagementFrameworkApplication;
 import sk.adambarca.managementframework.supportclasses.BasicClassesMResource;
+import sk.adambarca.managementframework.supportclasses.ErrorPerson;
 import sk.adambarca.managementframework.supportclasses.Person;
 
 import java.io.IOException;
@@ -67,28 +68,6 @@ class RecordTests extends AbstractTests {
     class Error {
 
         @Test
-        void testOnNull() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("person", objectMapper.nullNode()));
-
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
-            final var result = response.body();
-
-            assertEquals(406, response.statusCode());
-            assertEquals(getNullErrorMsg() , result);
-        }
-
-        @Test
-        void testOnEmpty() throws URISyntaxException, IOException, InterruptedException {
-            final Map<String, Object> params = Map.ofEntries(Map.entry("person", objectMapper.createObjectNode()));
-
-            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
-            final var result = response.body();
-
-            assertEquals(406, response.statusCode());
-            assertTrue(result.startsWith("Error converting JSON to type"));
-        }
-
-        @Test
         void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
             final var person = objectMapper.createObjectNode(); // missing age
             person.set("name", new TextNode("Adam"));
@@ -103,6 +82,56 @@ class RecordTests extends AbstractTests {
             assertEquals(406, response.statusCode());
             assertTrue(result.startsWith("Error converting JSON to type"));
             assertTrue(result.contains("The Property 'age' has error:"));
+        }
+
+        @Test
+        void testNullValidity() throws URISyntaxException, IOException, InterruptedException {
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("person", new ErrorPerson(Optional.empty(), 20, null)) // name = null
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertTrue(result.startsWith("Error converting JSON to type"));
+            assertTrue(result.contains("The Property 'name' has error:"));
+        }
+
+        @Test
+        void testOnNull() throws URISyntaxException, IOException, InterruptedException {
+            final Map<String, Object> params = Map.ofEntries(Map.entry("person", objectMapper.nullNode()));
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getNullErrorMsg() , result);
+        }
+
+        @Test
+        void testDifferentTypes() throws URISyntaxException, IOException, InterruptedException {
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("person", new ErrorPerson(Optional.of("Adam"), 20.45, null)) // wrong age
+            );
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertTrue(result.startsWith("Error converting JSON to type"));
+            assertTrue(result.contains("The Property 'age' has error:"));
+        }
+
+        @Test
+        void testOnEmpty() throws URISyntaxException, IOException, InterruptedException {
+            final Map<String, Object> params = Map.ofEntries(Map.entry("person", objectMapper.createObjectNode()));
+
+            final var response = callFunction(BasicClassesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertTrue(result.startsWith("Error converting JSON to type"));
         }
     }
 
