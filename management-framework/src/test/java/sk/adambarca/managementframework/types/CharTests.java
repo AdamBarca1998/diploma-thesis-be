@@ -32,6 +32,23 @@ class CharTests extends AbstractTests {
 
     @Nested
     class Success {
+
+        @Test
+        void testPositive() throws URISyntaxException, IOException, InterruptedException {
+            final char charPrim = 65; // 'A'
+            final Character charWrap = 66; // 'B'
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", charPrim),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(200, response.statusCode());
+            assertEquals(STR."\{charPrim}\{charWrap}", result);
+        }
+
         @Test
         void testValidityType() throws URISyntaxException, IOException, InterruptedException {
             final char charPrim = 'A';
@@ -179,6 +196,22 @@ class CharTests extends AbstractTests {
 
     @Nested
     class Error {
+
+        @Test
+        void testNegative() throws URISyntaxException, IOException, InterruptedException {
+            final byte charPrim = -1;
+            final Character charWrap = 'B'; // 'B'
+            final Map<String, Object> params = Map.ofEntries(
+                    Map.entry("charPrim", charPrim),
+                    Map.entry("charWrap", charWrap)
+            );
+
+            final var response = callFunction(PrimitivesMResource.class, METHOD, params);
+            final var result = response.body();
+
+            assertEquals(406, response.statusCode());
+            assertEquals(getRangeErrorMsg(String.valueOf(charPrim)), result);
+        }
 
         @Test
         void testInvalidityType() throws URISyntaxException, IOException, InterruptedException {
