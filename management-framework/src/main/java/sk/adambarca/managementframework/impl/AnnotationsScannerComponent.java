@@ -36,7 +36,7 @@ final class AnnotationsScannerComponent {
             .toList();
 
     AnnotationsScannerComponent() {
-        objects.forEach(it -> LOGGER.info("Created Resource: \n" + it.getClass().getSimpleName()));
+        objects.forEach(it -> LOGGER.info(STR."Created Resource: \{it.getClass().getSimpleName()}"));
     }
 
     List<Resource> getResourceList() {

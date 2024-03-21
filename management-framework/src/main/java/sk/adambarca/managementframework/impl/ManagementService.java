@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public final class ManagementService {
+public class ManagementService {
 
     private final TypeConversionFactory typeConversionFactory = new TypeConversionFactory();
     private final AnnotationsScannerComponent annotationsScanner;
@@ -46,15 +46,15 @@ public final class ManagementService {
         return new Info(type, propertyMapper.mapToProperties(clazz), enumValues);
     }
 
-    Object callFunction(String classType, String functionName, Optional<Map<String, Object>> params)
+    public Object callFunction(String classType, String functionName, Optional<Map<String, Object>> params)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
         final Object clazz = annotationsScanner.getClassByClassType(classType)
-                .orElseThrow(() -> new ClassNotFoundException("Class '" + classType + "' not found!"));
+                .orElseThrow(() -> new ClassNotFoundException(STR."Class '\{classType}' not found!"));
         final Method method = Arrays.stream(clazz.getClass().getMethods())
                 .filter(m -> m.getName().equals(functionName))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchMethodException("Method '" + functionName + "' not found!"));
+                .orElseThrow(() -> new NoSuchMethodException(STR."Method '\{functionName}' not found!"));
 
         return invokeMethodWithParams(clazz, method, params);
     }
