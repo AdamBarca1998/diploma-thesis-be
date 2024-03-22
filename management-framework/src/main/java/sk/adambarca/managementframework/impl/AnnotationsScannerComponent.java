@@ -4,6 +4,7 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ConfigurationBuilder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.util.HtmlUtils;
 import sk.adambarca.managementframework.resource.MResource;
 import sk.adambarca.managementframework.resource.Resource;
 import sk.adambarca.managementframework.resource.ResourceMapper;

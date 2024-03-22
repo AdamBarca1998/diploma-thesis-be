@@ -16,7 +16,8 @@ Resource is a class with annotation ```@MResource```.
 @MResource(
         name = "Calculator ABC",
         description = "Calculator description",
-        icon = "fa-solid fa-paper-plane"
+        icon = "fa-solid fa-paper-plane",
+        periodTimeMs = 600000
 )
 public final class Calculator {
     // ...
@@ -28,6 +29,7 @@ public final class Calculator {
 * name - default class simple type ```class.getSimpleName()```
 * description - default empty string ```""```
 * icon - from library FontAwesome https://fontawesome.com/. Default empty string ```""```
+* periodTimeMs - default ```10min = 600 000ms```
 
 ## Property (Field)
 

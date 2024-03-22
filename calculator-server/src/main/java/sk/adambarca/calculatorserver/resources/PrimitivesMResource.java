@@ -7,7 +7,8 @@ import static java.lang.StringTemplate.STR;
 @MResource(
         name = "Primitives",
         description = "Primitives description",
-        icon = "fa-solid fa-paper-plane"
+        icon = "fa-solid fa-paper-plane",
+        periodTimeMs = 60000
 )
 public class PrimitivesMResource {
 

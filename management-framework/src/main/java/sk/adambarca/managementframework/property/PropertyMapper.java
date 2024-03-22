@@ -16,17 +16,16 @@ public class PropertyMapper {
         final List<String> validations = new ArrayList<>();
 
         try {
-            final var value = clazz.getMethod("get" + capitalizedFieldName).invoke(mObject);
+            final var value = clazz.getMethod(STR."get\{capitalizedFieldName}").invoke(mObject);
 
             try {
-                clazz.getMethod("set" + capitalizedFieldName, field.getType());
+                clazz.getMethod(STR."set\{capitalizedFieldName}", field.getType());
             } catch (NoSuchMethodException e) {
                 validations.add("Disable");
             }
 
             return new Property(
                     fieldName,
-                    "",
                     field.getType().getTypeName(),
                     value,
                     validations
@@ -40,7 +39,6 @@ public class PropertyMapper {
     public Property mapToProperty(Field field) {
         return new Property(
                 field.getName(),
-                "",
                 field.getGenericType().getTypeName(),
                 null,
                 List.of()
@@ -50,7 +48,6 @@ public class PropertyMapper {
     public Property mapToProperty(Parameter param) {
         return new Property(
                 param.getName(),
-                "",
                 param.getParameterizedType().getTypeName(),
                 null,
                 List.of()
