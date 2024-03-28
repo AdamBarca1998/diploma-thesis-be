@@ -24,10 +24,12 @@ final class AnnotationsScannerComponent {
             new ConfigurationBuilder()
                     .forPackage("")
     );
-    private final List<Object> objects = reflections.get(Scanners.TypesAnnotated.with(MResource.class).asClass()).stream()
-            .map(it -> {
+    private final List<Object> objects = reflections
+            .get(Scanners.TypesAnnotated.with(MResource.class).asClass())
+            .stream()
+            .map(clazz -> {
                 try {
-                    return Class.forName(it.getName()).getConstructor().newInstance();
+                    return clazz.getConstructor().newInstance();
                 } catch (Exception e) {
                     LOGGER.severe(e.fillInStackTrace().getMessage());
                     return "";

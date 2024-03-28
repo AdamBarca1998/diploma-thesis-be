@@ -32,7 +32,7 @@ public class ResourceMapper {
                 .toList();
 
         if (isDuplicityMethods(methods)) {
-            LOGGER.severe("Class '" + mObject.getClass().getName() + "' has duplicity method names!");
+            LOGGER.severe(STR."Class '\{mObject.getClass().getName()}' has duplicity method names!");
             return null;
         }
         // build
