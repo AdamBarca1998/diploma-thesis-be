@@ -12,8 +12,7 @@ public record Resource(
         int periodTimeMs,
         String type,
         List<Property> properties,
-        List<Function> functions,
-        List<String> validations
+        List<Function> functions
 ) {
 
     public static final class Builder {
@@ -25,7 +24,6 @@ public record Resource(
         private String type;
         private List<Property> properties;
         private List<Function> functions;
-        private List<String> validations;
 
         public Builder name(String name) {
             this.name = name;
@@ -62,13 +60,8 @@ public record Resource(
             return this;
         }
 
-        public Builder validations(List<String> validations) {
-            this.validations = validations;
-            return this;
-        }
-
         public Resource build() {
-            return new Resource(name, description, icon, periodTimeMs, type, properties, functions, validations);
+            return new Resource(name, description, icon, periodTimeMs, type, properties, functions);
         }
     }
 }

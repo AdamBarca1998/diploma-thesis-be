@@ -17,10 +17,8 @@ public final class FunctionMapper {
 
         return new Function(
                 method.getName(),
-                "",
                 method.getReturnType().getSimpleName(),
-                properties,
-                List.of()
+                properties
         );
     }
 }

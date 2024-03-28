@@ -56,10 +56,10 @@ public final class TypeConversionFactory {
                     return conversionMap.get(Enum.class.getTypeName());
                 }
             } catch (ClassNotFoundException e) {
-                throw new ConversionStrategyNotFoundException("Class not found: " + typeName);
+                throw new ConversionStrategyNotFoundException(STR."Class not found: \{typeName}");
             }
 
-            throw new ConversionStrategyNotFoundException("Strategy for type '" + type + "' not found!");
+            throw new ConversionStrategyNotFoundException(STR."Strategy for type '\{type}' not found!");
         }
 
         return strategy;

@@ -55,9 +55,7 @@ public class ResourceMapper {
                 })
         ;
 
-        resourceBuilder
-                .functions(getFunctions(properties, methods))
-                .validations(List.of());
+        resourceBuilder.functions(getFunctions(properties, methods));
 
         return resourceBuilder.build();
     }
