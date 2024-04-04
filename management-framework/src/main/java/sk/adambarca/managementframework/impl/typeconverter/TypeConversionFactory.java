@@ -44,8 +44,8 @@ public final class TypeConversionFactory {
     }
 
     public TypeConversionStrategy<?> getStrategy(Type type) {
-        final var strategy = conversionMap.get(type.getTypeName());
         final var typeName = type.getTypeName();
+        final var strategy = conversionMap.get(typeName);
 
         if (strategy == null) {
             try {

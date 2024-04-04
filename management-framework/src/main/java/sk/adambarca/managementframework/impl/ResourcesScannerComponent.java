@@ -4,7 +4,6 @@ import org.reflections.Reflections;
 import org.reflections.scanners.Scanners;
 import org.reflections.util.ConfigurationBuilder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.HtmlUtils;
 import sk.adambarca.managementframework.resource.MResource;
 import sk.adambarca.managementframework.resource.Resource;
 import sk.adambarca.managementframework.resource.ResourceMapper;
@@ -15,9 +14,9 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Component
-final class AnnotationsScannerComponent {
+final class ResourcesScannerComponent {
 
-    private static final Logger LOGGER = Logger.getLogger(AnnotationsScannerComponent.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ResourcesScannerComponent.class.getName());
 
     private final ResourceMapper resourceMapper = new ResourceMapper();
     private final Reflections reflections = new Reflections(
@@ -38,7 +37,7 @@ final class AnnotationsScannerComponent {
             .filter(it -> !(it instanceof String))
             .toList();
 
-    AnnotationsScannerComponent() {
+    ResourcesScannerComponent() {
         objects.forEach(it -> LOGGER.info(STR."Created Resource: \{it.getClass().getSimpleName()}"));
     }
 
@@ -56,7 +55,7 @@ final class AnnotationsScannerComponent {
                 .map(resourceMapper::mapToResource);
     }
 
-    Optional<Object> getClassByClassType(String classType) {
+    Optional<Object> getObjectByClassType(String classType) {
         return objects.stream()
                 .filter(resource -> resource.getClass().getSimpleName().equals(classType))
                 .findFirst();

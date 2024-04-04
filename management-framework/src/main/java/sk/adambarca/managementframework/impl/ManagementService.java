@@ -17,22 +17,22 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class ManagementService {
+final class ManagementService {
 
     private final TypeConversionFactory typeConversionFactory = new TypeConversionFactory();
-    private final AnnotationsScannerComponent annotationsScanner;
+    private final ResourcesScannerComponent resourcesScanner;
     private final PropertyMapper propertyMapper = new PropertyMapper();
 
-    ManagementService(AnnotationsScannerComponent annotationsScanner) {
-        this.annotationsScanner = annotationsScanner;
+    ManagementService(ResourcesScannerComponent resourcesScanner) {
+        this.resourcesScanner = resourcesScanner;
     }
 
     List<Resource> getResourceList() {
-        return annotationsScanner.getResourceList();
+        return resourcesScanner.getResourceList();
     }
 
     Optional<Resource> findResourceByType(String type) {
-        return annotationsScanner.findResourceByType(type);
+        return resourcesScanner.findResourceByType(type);
     }
 
     Info getInfoByType(String type) throws ClassNotFoundException {
@@ -46,25 +46,25 @@ public class ManagementService {
         return new Info(type, propertyMapper.mapToProperties(clazz), enumValues);
     }
 
-    public Object callFunction(String classType, String functionName, Optional<Map<String, Object>> params)
+    Object callFunction(String classType, String functionName, Optional<Map<String, Object>> args)
             throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException
     {
-        final Object clazz = annotationsScanner.getClassByClassType(classType)
+        final Object obj = resourcesScanner.getObjectByClassType(classType)
                 .orElseThrow(() -> new ClassNotFoundException(STR."Class '\{classType}' not found!"));
-        final Method method = Arrays.stream(clazz.getClass().getMethods())
+        final Method method = Arrays.stream(obj.getClass().getMethods())
                 .filter(m -> m.getName().equals(functionName))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchMethodException(STR."Method '\{functionName}' not found!"));
 
-        return invokeMethodWithParams(clazz, method, params);
+        return invokeMethodWithParams(obj, method, args);
     }
 
-    private Object invokeMethodWithParams(Object clazz, Method method, Optional<Map<String, Object>> params) throws InvocationTargetException, IllegalAccessException {
+    private Object invokeMethodWithParams(Object clazz, Method method, Optional<Map<String, Object>> args) throws InvocationTargetException, IllegalAccessException {
         final var parameters = method.getParameters();
         final var requiredCount = Arrays.stream(parameters)
                 .filter(this::isNotOptional)
                 .count();
-        final var paramsSize = params.map(Map::size).orElse(0);
+        final var paramsSize = args.map(Map::size).orElse(0);
 
         if (requiredCount > paramsSize) {
             throw new NotCorrectNumberOfPropertiesException(
@@ -72,12 +72,12 @@ public class ManagementService {
             );
         }
 
-        return method.invoke(clazz, convertParams(parameters, params).toArray());
+        return method.invoke(clazz, convertParams(parameters, args).toArray());
     }
 
-    private List<Object> convertParams(Parameter[] parameters, Optional<Map<String, Object>> params) {
+    private List<Object> convertParams(Parameter[] parameters, Optional<Map<String, Object>> args) {
         final List<Object> userParameters = new ArrayList<>();
-        final JsonNode jsonNode = new ObjectMapper().valueToTree(params.orElse(null));
+        final JsonNode jsonNode = new ObjectMapper().valueToTree(args.orElse(null));
 
         Arrays.stream(parameters).forEach(parameter -> {
             final var value = jsonNode.get(parameter.getName());

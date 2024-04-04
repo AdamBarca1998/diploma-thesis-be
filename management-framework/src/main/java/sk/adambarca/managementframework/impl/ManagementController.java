@@ -49,10 +49,10 @@ final class ManagementController {
     ResponseEntity<Object> callFunction(
             @PathVariable String classType,
             @PathVariable String functionName,
-            @RequestBody(required = false) Optional<Map<String, Object>> params
+            @RequestBody(required = false) Optional<Map<String, Object>> args
     ) {
         try {
-            return ResponseEntity.ok(managementService.callFunction(classType, functionName, params));
+            return ResponseEntity.ok(managementService.callFunction(classType, functionName, args));
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
         }
