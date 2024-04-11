@@ -19,6 +19,6 @@ public @interface MResource {
      * Represent an icon from FontAwesome
      * @see https://fontawesome.com/
      */
-    String icon() default "";
+    String icon() default "fa-brands fa-sourcetree";
     int periodTimeMs() default 600000; // 10min
 }

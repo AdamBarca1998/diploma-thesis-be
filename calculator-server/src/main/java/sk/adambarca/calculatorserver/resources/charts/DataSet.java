@@ -6,6 +6,7 @@ public record DataSet(
         String label,
         List<Double> data,
         List<String> backgroundColor,
+        List<String> borderColor,
         int hoverOffset
 ) {
 }

@@ -1,69 +1,53 @@
 package sk.adambarca.calculatorserver.resources;
 
-import sk.adambarca.calculatorserver.resources.charts.DataSet;
-import sk.adambarca.calculatorserver.resources.charts.PieChart;
+import sk.adambarca.calculatorserver.resources.charts.*;
 import sk.adambarca.managementframework.resource.MResource;
 
-import java.time.LocalDateTime;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @MResource(
-        periodTimeMs = 5000000
+        name = "Charts example",
+        periodTimeMs = 60 * 1000
 )
 public class MemoryMResource {
 
-    private String dateTime = LocalDateTime.now().toString();
-    private PieChart memoryChart = createPieChart();
+    private PieChart fileStore;
+    private LineChart cpu;
+    private final CpuChart cpuChart = new CpuChart();
+    private final FileStoreChart fileStoreChart = new FileStoreChart();
 
     public MemoryMResource() {
-        periodUpdateDateTime();
+        periodUpdates();
     }
 
-    public String getTime() {
-        return dateTime;
+    public PieChart getFileStore() {
+        return fileStore;
     }
 
-    // getters/setters
-
-    public String getDateTime() {
-        return dateTime;
+    public LineChart getCpu() {
+        return cpu;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void cleanCpuChart() {
+        cpuChart.clear();
+        cpu = cpuChart.getChart();
     }
 
-    public PieChart getMemoryChart() {
-        return memoryChart;
-    }
-
-    // private
-
-    private void periodUpdateDateTime() {
+    private void periodUpdates() {
         Thread.startVirtualThread(() -> {
             while (true) {
                 try {
-                    dateTime = LocalDateTime.now().toString();
-                    memoryChart = createPieChart();
+                    fileStore = fileStoreChart.getChart();
+                    cpu = cpuChart.getChart();
 
-                    Thread.sleep(1000000);
+                    Thread.sleep(60 * 1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
-
-    private PieChart createPieChart() {
-        final var total = Double.valueOf(Runtime.getRuntime().totalMemory());
-        final var free = Double.valueOf(Runtime.getRuntime().freeMemory());
-
-        final var dataSet = new DataSet(
-                STR."Memory Chart}",
-                List.of(total, free), List.of("rgb(255, 99, 132)", "rgb(54, 162, 235)"),
-                4
-        );
-
-        return new PieChart(List.of("Total", "Free"), List.of(dataSet));
     }
 }
