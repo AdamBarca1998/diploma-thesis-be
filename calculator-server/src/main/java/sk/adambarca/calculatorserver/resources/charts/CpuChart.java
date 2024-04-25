@@ -4,7 +4,7 @@ package sk.adambarca.calculatorserver.resources.charts;
 import com.sun.management.OperatingSystemMXBean;
 
 import java.lang.management.ManagementFactory;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +13,14 @@ public class CpuChart {
 
     private final List<CpuPerformance> cpuPerformanceList = new ArrayList<>();
 
-    public LineChart getChart() {
-        addPerformance();
+    public void clearFromTo(LocalTime from, LocalTime to) {
+        cpuPerformanceList.removeIf(performance ->
+                (performance.localTime.equals(from) || performance.localTime.isAfter(from)) &&
+                        (performance.localTime.equals(to) || performance.localTime.isBefore(to))
+        );
+    }
 
+    public LineChart getChart() {
         final var dataSet = new DataSet(
                 "load",
                 getAllCpuLoads(),
@@ -27,16 +32,12 @@ public class CpuChart {
         return new LineChart(getAllDateTimes(), List.of(dataSet));
     }
 
-    public void clear() {
-        cpuPerformanceList.clear();
-    }
-
-    private void addPerformance() {
+    public void addPerformance() {
         OperatingSystemMXBean operatingSystemMXBean = (com.sun.management.OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
 
         cpuPerformanceList.add(
                 new CpuPerformance(
-                        LocalDateTime.now(),
+                        LocalTime.now(),
                         operatingSystemMXBean.getCpuLoad() * 100
                 )
         );
@@ -46,7 +47,7 @@ public class CpuChart {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
         return cpuPerformanceList.stream()
-                .map(CpuPerformance::localDateTime)
+                .map(CpuPerformance::localTime)
                 .map(dateTime -> dateTime.format(formatter))
                 .toList();
     }
@@ -58,7 +59,7 @@ public class CpuChart {
     }
 
     private record CpuPerformance(
-            LocalDateTime localDateTime,
+            LocalTime localTime,
             double cpuLoad
     ) {
     }

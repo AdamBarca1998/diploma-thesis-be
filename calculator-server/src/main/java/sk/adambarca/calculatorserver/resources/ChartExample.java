@@ -3,23 +3,21 @@ package sk.adambarca.calculatorserver.resources;
 import sk.adambarca.calculatorserver.resources.charts.*;
 import sk.adambarca.managementframework.resource.MResource;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @MResource(
         name = "Charts example",
         periodTimeMs = 60 * 1000
 )
-public class MemoryMResource {
+public class ChartExample {
 
     private PieChart fileStore;
     private LineChart cpu;
     private final CpuChart cpuChart = new CpuChart();
     private final FileStoreChart fileStoreChart = new FileStoreChart();
 
-    public MemoryMResource() {
+    public ChartExample() {
         periodUpdates();
     }
 
@@ -31,8 +29,10 @@ public class MemoryMResource {
         return cpu;
     }
 
-    public void cleanCpuChart() {
-        cpuChart.clear();
+    public void cleanCpuChartFromTo(String from, String to) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        cpuChart.clearFromTo(LocalTime.parse(from, formatter), LocalTime.parse(to, formatter));
         cpu = cpuChart.getChart();
     }
 
@@ -41,6 +41,7 @@ public class MemoryMResource {
             while (true) {
                 try {
                     fileStore = fileStoreChart.getChart();
+                    cpuChart.addPerformance();
                     cpu = cpuChart.getChart();
 
                     Thread.sleep(60 * 1000);
