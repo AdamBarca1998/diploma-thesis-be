@@ -2,6 +2,8 @@ package sk.adambarca.calculatorserver.resources.charts;
 
 
 import com.sun.management.OperatingSystemMXBean;
+import sk.adambarca.calculatorserver.resources.charts.structure.DataSet;
+import sk.adambarca.calculatorserver.resources.charts.structure.LineChart;
 
 import java.lang.management.ManagementFactory;
 import java.time.LocalTime;
@@ -24,9 +26,7 @@ public class CpuChart {
         final var dataSet = new DataSet(
                 "load",
                 getAllCpuLoads(),
-                List.of("rgb(255, 99, 132)"),
-                List.of("rgb(255, 99, 132)"),
-                0
+                List.of("rgb(255, 99, 132)")
         );
 
         return new LineChart(getAllDateTimes(), List.of(dataSet));

@@ -1,5 +1,8 @@
 package sk.adambarca.calculatorserver.resources.charts;
 
+import sk.adambarca.calculatorserver.resources.charts.structure.DataSet;
+import sk.adambarca.calculatorserver.resources.charts.structure.PieChart;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,9 +23,7 @@ public class FileStoreChart {
             final var dataSet = new DataSet(
                     "File Store",
                     List.of(convertToGiB(free), convertToGiB(used)),
-                    List.of("rgb(255, 99, 132)", "rgb(54, 162, 235)"),
-                    List.of("rgb(255, 255, 255)"),
-                    4
+                    List.of("rgb(255, 99, 132)", "rgb(54, 162, 235)")
             );
 
             return new PieChart(List.of("Free", "Used"), List.of(dataSet));

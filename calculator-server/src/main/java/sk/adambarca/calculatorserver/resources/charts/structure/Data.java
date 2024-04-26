@@ -1,8 +1,8 @@
-package sk.adambarca.calculatorserver.resources.charts;
+package sk.adambarca.calculatorserver.resources.charts.structure;
 
 import java.util.List;
 
-public record PieChart(
+public record Data(
 
         List<String> labels,
         List<DataSet> datasets

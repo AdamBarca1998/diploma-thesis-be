@@ -1,6 +1,8 @@
 package sk.adambarca.calculatorserver.resources;
 
 import sk.adambarca.calculatorserver.resources.charts.*;
+import sk.adambarca.calculatorserver.resources.charts.structure.LineChart;
+import sk.adambarca.calculatorserver.resources.charts.structure.PieChart;
 import sk.adambarca.managementframework.resource.MResource;
 
 import java.time.LocalTime;

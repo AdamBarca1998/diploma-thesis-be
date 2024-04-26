@@ -1,4 +1,4 @@
-package sk.adambarca.calculatorserver.resources.charts;
+package sk.adambarca.calculatorserver.resources.charts.structure;
 
 import java.util.List;
 
