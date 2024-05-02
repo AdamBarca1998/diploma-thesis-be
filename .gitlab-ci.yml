@@ -23,7 +23,7 @@ build:
   stage: build
   script:
     - echo "We are building your project, $GITLAB_USER_LOGIN"
-    - mvn clean build
+    - mvn clean compile
 
 test:
   stage: test
