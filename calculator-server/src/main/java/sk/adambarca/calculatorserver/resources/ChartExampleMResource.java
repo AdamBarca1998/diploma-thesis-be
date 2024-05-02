@@ -12,14 +12,14 @@ import java.time.format.DateTimeFormatter;
         name = "Charts example",
         periodTimeMs = 60 * 1000
 )
-public class ChartExample {
+public class ChartExampleMResource {
 
     private PieChart fileStore;
     private LineChart cpu;
     private final CpuChart cpuChart = new CpuChart();
     private final FileStoreChart fileStoreChart = new FileStoreChart();
 
-    public ChartExample() {
+    public ChartExampleMResource() {
         periodUpdates();
     }
 

@@ -1,5 +1,7 @@
 package sk.adambarca.calculatorserver.resources;
 
+import sk.adambarca.calculatorserver.resources.data.Operator;
+import sk.adambarca.calculatorserver.resources.data.Person;
 import sk.adambarca.managementframework.resource.MResource;
 
 import java.util.Optional;

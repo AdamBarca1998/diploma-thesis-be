@@ -1,17 +1,16 @@
-package sk.adambarca.calculatorserver.resources.charts;
+package sk.adambarca.calculatorserver.resources;
 
 import sk.adambarca.calculatorserver.resources.charts.structure.*;
 import sk.adambarca.managementframework.resource.MResource;
 
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 @MResource(
+        name = "DoughnutExample",
         periodTimeMs = 60 * 1000
 )
-public class DoughnutExample {
+public class DoughnutExampleMResource {
 
     private DoughnutChart doughnutChart = new DoughnutChart(
             getData(),

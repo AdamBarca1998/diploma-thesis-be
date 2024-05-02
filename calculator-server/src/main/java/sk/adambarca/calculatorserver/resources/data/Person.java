@@ -1,4 +1,4 @@
-package sk.adambarca.calculatorserver.resources;
+package sk.adambarca.calculatorserver.resources.data;
 
 import java.util.Optional;
 
