@@ -18,16 +18,15 @@ cache:
 stages:
   - build
   - test
-  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "We are building your project, $GITLAB_USER_LOGIN"
+    - mvn clean build
 
 test:
   stage: test
   script:
     - echo "We are testing your project, $GITLAB_USER_LOGIN"
     - mvn test
-
-build:
-    stage: build
-    script:
-     - echo "We are building your project, $GITLAB_USER_LOGIN"
-     - mvn clean
