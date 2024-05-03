@@ -24,8 +24,4 @@ public class BasicClassesMResource {
     public double sumOptional(double num1, Optional<Double> num2) {
         return num1 + num2.orElse(0.0);
     }
-
-    public int sumAges(Person person) {
-        return person.age() + (person.child().isPresent() ? sumAges(person.child().get()) : 0);
-    }
 }
