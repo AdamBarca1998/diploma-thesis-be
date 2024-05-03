@@ -38,8 +38,8 @@ Properties are fields in classes. Syntax for getter and setter is Java syntax **
 --------------------------------------------------
 
 They are divided into three types:
-### Hide
-Hide property doesn't have any getter or setter.
+### Hidden
+Hidden property doesn't have any getter or setter.
 
 ```java
 @MResource
@@ -49,8 +49,8 @@ public class MemoryMResource {
 }
 ```
 
-### Disable
-Disable property doesn't have any setter.
+### Disabled
+Disabled property doesn't have any setter.
 
 ```java
 @MResource
@@ -64,8 +64,8 @@ public class MemoryMResource {
 }
 ```
 
-### Enable
-Enable property **has to** have one getter and setter.
+### Enabled
+Enabled property **has to** have one getter and setter.
 
 ```java
 @MResource

@@ -37,10 +37,10 @@ public class PropertyFieldTests extends AbstractTests {
     }
 
     @Nested
-    class HideTest {
+    class HiddenTest {
 
         @Test
-        void isHide() throws URISyntaxException, IOException, InterruptedException {
+        void isHidden() throws URISyntaxException, IOException, InterruptedException {
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(MemoryMResource.class.getSimpleName()))
                     .GET()
@@ -55,10 +55,10 @@ public class PropertyFieldTests extends AbstractTests {
     }
 
     @Nested
-    class DisableTest {
+    class DisabledTest {
 
         @Test
-        void isDisable() throws URISyntaxException, IOException, InterruptedException {
+        void isDisabled() throws URISyntaxException, IOException, InterruptedException {
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(MemoryMResource.class.getSimpleName()))
                     .GET()
@@ -72,15 +72,15 @@ public class PropertyFieldTests extends AbstractTests {
                     .orElseThrow();
 
             assertEquals(200, response.statusCode());
-            assertEquals(List.of("Disable"), id.validations());
+            assertEquals(List.of("Disabled"), id.validations());
         }
     }
 
     @Nested
-    class EnableTest {
+    class EnabledTest {
 
         @Test
-        void IsEnable() throws URISyntaxException, IOException, InterruptedException {
+        void IsEnabled() throws URISyntaxException, IOException, InterruptedException {
             final var request = HttpRequest.newBuilder()
                     .uri(getUri(MemoryMResource.class.getSimpleName()))
                     .GET()

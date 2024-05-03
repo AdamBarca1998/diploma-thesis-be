@@ -21,7 +21,7 @@ public class PropertyMapper {
             try {
                 clazz.getMethod(STR."set\{capitalizedFieldName}", field.getType());
             } catch (NoSuchMethodException e) {
-                validations.add("Disable");
+                validations.add("Disabled");
             }
 
             return new Property(
@@ -31,7 +31,7 @@ public class PropertyMapper {
                     validations
             );
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            // hide
+            // hidden
             return null;
         }
     }
